@@ -1,0 +1,249 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap");
+
+@import "./variables.scss";
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  background-color: #f5f5f5;
+}
+
+html,
+body,
+#root {
+}
+
+a {
+  cursor: pointer !important;
+  text-decoration: none;
+}
+a,
+a:visited {
+  color: $green;
+}
+
+.site-content {
+  max-width: 1450px;
+  margin: auto;
+  padding: 24px;
+  padding-bottom: 120px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  margin-top: 32px;
+}
+
+//Material UI Overrides
+.MuiOutlinedInput-notchedOutline {
+  border: 2px solid $gold !important;
+}
+
+.MuiTabs-indicator {
+  border: 2px solid $black !important;
+}
+
+.MuiInputLabel-outlined.MuiInputLabel-shrink {
+  transform: translate(14px, -5px) scale(0.8) !important;
+}
+.MuiOutlinedInput-multiline {
+  padding: 13px !important;
+}
+.MuiInputBase-inputMultiline {
+  //height: 1.1876em !important;
+}
+
+//Stripe form styles:
+.StripeElement {
+  height: 40px;
+  padding: 10px 12px;
+  width: 100%;
+  color: #32325d;
+  background-color: white;
+  border: 1px solid transparent;
+  border-radius: 4px;
+
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+
+//CSSTransition styles
+.comment-enter {
+  opacity: 0;
+}
+.comment-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+.comment-exit {
+  opacity: 1;
+}
+.comment-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+// logo styles
+
+.logo-container {
+  cursor: pointer;
+
+  .ball-l {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: $black;
+  }
+  .logo-l {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid $black;
+    background-color: $white;
+    height: 50px;
+    width: 25px;
+    margin: 2px;
+    will-change: transform;
+  }
+  .ball-r {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: $white;
+  }
+  .logo-r {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $black;
+    height: 48px;
+    width: 23px;
+    margin: 4px;
+    will-change: transform;
+  }
+}
+
+// advocate carousel
+.advocate-slides {
+  max-width: 1020px;
+}
+
+.user-comments-list {
+  width: 600px;
+}
+
+@media (max-width: 1280px) {
+  .content-list {
+    width: 948px !important;
+  }
+}
+
+@media (max-width: 1120px) {
+  .advocate-slides {
+    max-width: calc(1020px - 340px);
+  }
+}
+
+@media (max-width: 980px) {
+  .comments-section {
+    max-height: unset !important;
+    overflow-y: visible !important;
+  }
+  .content-list {
+    width: 628px !important;
+  }
+}
+
+@media (max-width: 780px) {
+  .site-content,
+  .home-hero-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .advocate-slides {
+    max-width: calc(1020px - 680px);
+  }
+  .user-comments-list {
+    width: 320px;
+  }
+}
+
+@media (max-width: 680px) {
+  .content-container,
+  .profile-container {
+    width: 100% !important;
+  }
+  .profile-header-text {
+    max-height: unset !important;
+  }
+  .content-list {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 12px !important;
+  }
+  .content-preview {
+    width: 100% !important;
+    padding-bottom: 15.25% !important;
+
+    height: auto !important;
+  }
+  .content-thumb,
+  .preview-placeholder-thumb {
+    width: 100% !important;
+    padding-bottom: 56.25% !important;
+  }
+  .image-thumb {
+    padding-bottom: 100% !important;
+  }
+}
+
+// ANIMATIONS
+
+@keyframes pulse-light {
+  0% {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+
+  50% {
+    background-color: rgba(0, 0, 0, 0.07);
+  }
+
+  100% {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+}
+@keyframes pulse-dark {
+  0% {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+
+  50% {
+    background-color: rgba(0, 0, 0, 0.12);
+  }
+
+  100% {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+}
