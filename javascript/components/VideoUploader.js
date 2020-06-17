@@ -171,6 +171,7 @@ class VideoUploader extends Component {
     const { classes } = this.props;
     const {
       uploading,
+      uploadPercentage,
       _id,
       crop,
       thumbSrc,
@@ -180,7 +181,7 @@ class VideoUploader extends Component {
     } = this.state;
 
     return (
-      <div style={{ width: "100%" }}>
+      <div style={{ width: "100%", padding: 12 }}>
         <form className={classes.form} onSubmit={this.onSubmitHandler}>
           <Grid container>
             <Grid item xs={12}>
@@ -257,7 +258,8 @@ class VideoUploader extends Component {
               </div>
               {uploading && (
                 <ProgressPercentage
-                  progress={this.state.uploadPercentage}
+                  progress={uploadPercentage}
+                  completeMessage="We received your upload. Publishing to newsfeed..."
                   style={{ marginTop: 28 }}
                 />
               )}

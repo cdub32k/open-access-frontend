@@ -4,13 +4,26 @@ import Box from "@material-ui/core/Box";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "@material-ui/core/Typography";
 
-export default function CircularProgressWithLabel({ progress, style }) {
+export default function CircularProgressWithLabel({
+  progress,
+  completeMessage,
+  style,
+}) {
+  let variant = progress < 100 ? "static" : "indeterminate";
   return (
-    <Box style={{ ...style, position: "relative" }}>
+    <Box
+      style={{
+        ...style,
+        position: "relative",
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: "center",
+      }}
+    >
       <CircularProgress
         style={{ width: 50, height: 50 }}
-        variant="static"
-        value={progress * 0.9}
+        value={progress}
+        variant={variant}
       />
       <Box
         style={{ width: 50, height: 50 }}
@@ -23,10 +36,17 @@ export default function CircularProgressWithLabel({ progress, style }) {
         alignItems="center"
         justifyContent="center"
       >
-        <Typography variant="caption" component="div">{`${Math.round(
-          progress * 0.9
-        )}%`}</Typography>
+        {progress < 100 && (
+          <Typography variant="caption" component="div">{`${Math.round(
+            progress
+          )}%`}</Typography>
+        )}
       </Box>
+      {progress == 100 && (
+        <Typography variant="caption" style={{ marginLeft: 12 }}>
+          {completeMessage}
+        </Typography>
+      )}
     </Box>
   );
 }

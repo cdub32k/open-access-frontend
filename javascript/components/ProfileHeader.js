@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     width: 300,
     height: 300,
     border: `4px solid ${theme.palette.secondary.main}`,
+    borderRadius: 0,
     cursor: "pointer",
   },
   bio: {
@@ -82,7 +83,14 @@ const ProfileHeader = ({
   ) : (
     <Grid container className={classes.container}>
       <Grid className={classes.avatarContainer} item xs={12} md={6}>
-        <img src={profilePic} onClick={handleOpen} className={classes.avatar} />
+        {profilePic && (
+          <img
+            src={profilePic}
+            onClick={handleOpen}
+            className={classes.avatar}
+          />
+        )}
+        {!profilePic && <Avatar src={null} className={classes.avatar} />}
       </Grid>
       <Grid item xs={12} md={6}>
         <div className={`${classes.textContainer} profile-header-text`}>

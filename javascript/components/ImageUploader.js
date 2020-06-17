@@ -150,7 +150,14 @@ class ImageUploader extends Component {
       return <Redirect to={`/image/${this.state._id}`} />;
 
     const { classes } = this.props;
-    const { uploading, crop, imageSrc, title, caption } = this.state;
+    const {
+      uploading,
+      uploadPercentage,
+      crop,
+      imageSrc,
+      title,
+      caption,
+    } = this.state;
     return (
       <div style={{ width: "100%" }}>
         <form className={classes.form} onSubmit={this.onSubmitHandler}>
@@ -207,7 +214,8 @@ class ImageUploader extends Component {
               </div>
               {uploading && (
                 <ProgressPercentage
-                  progress={this.state.uploadPercentage}
+                  progress={uploadPercentage}
+                  completeMessage="We received your upload. Publishing to newsfeed..."
                   style={{ marginTop: 28 }}
                 />
               )}
