@@ -9,7 +9,7 @@ import "react-image-crop/lib/ReactCrop.scss";
 import Typography from "@material-ui/core/Typography";
 import FormGroup from "@material-ui/core/FormGroup";
 import Grid from "@material-ui/core/Grid";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import ProgressPercentage from "./ProgressPercentage";
 import { withStyles } from "@material-ui/core/styles";
 
 import CustomInput from "./CustomInput";
@@ -17,7 +17,8 @@ import CustomButton from "./CustomButton";
 
 class VideoUploader extends Component {
   state = {
-    loading: false,
+    uploading: false,
+    uploadPercentage: 0,
     videoFile: null,
     videoSrc: null,
 
@@ -126,7 +127,7 @@ class VideoUploader extends Component {
     e.preventDefault();
 
     this.setState({
-      loading: true,
+      uploading: true,
     });
 
     const data = new FormData();
@@ -135,13 +136,24 @@ class VideoUploader extends Component {
     data.append("title", this.state.title);
     data.append("caption", this.state.caption);
 
-    axios.post("/videos/upload", data).then((res) => {
-      if (res.data)
-        this.setState({
-          goToProfile: true,
-          _id: res.data.video._id,
-        });
-    });
+    axios
+      .post("/videos/upload", data, {
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity,
+        onUploadProgress: (e) => {
+          console.log("loaded:", e.loaded, e.total);
+          this.setState({
+            uploadPercentage: parseInt(Math.round((e.loaded / e.total) * 100)),
+          });
+        },
+      })
+      .then((res) => {
+        if (res.data)
+          this.setState({
+            goToProfile: true,
+            _id: res.data.video._id,
+          });
+      });
   };
 
   uploadThumb = (e) => {
@@ -157,7 +169,15 @@ class VideoUploader extends Component {
       return <Redirect to={`/video-player/${this.state._id}`} />;
 
     const { classes } = this.props;
-    const { _id, crop, thumbSrc, videoSrc, title, caption } = this.state;
+    const {
+      uploading,
+      _id,
+      crop,
+      thumbSrc,
+      videoSrc,
+      title,
+      caption,
+    } = this.state;
 
     return (
       <div style={{ width: "100%" }}>
@@ -174,7 +194,7 @@ class VideoUploader extends Component {
                   type="file"
                   name="video"
                   onChange={this.videoHandler}
-                  accept="video/mp4,video/x-m4v,video/*"
+                  accept="video/mp4,video/ogg,video/,video/webm"
                 />
                 <CustomButton
                   style={{ margin: "12px 0" }}
@@ -235,16 +255,17 @@ class VideoUploader extends Component {
                   onChange={this.onTextChange}
                 />
               </div>
-              {this.state.loading && (
-                <CircularProgress
-                  style={{ margin: "28px 0", display: "block" }}
-                  disableShrink
+              {uploading && (
+                <ProgressPercentage
+                  progress={this.state.uploadPercentage}
+                  style={{ marginTop: 28 }}
                 />
               )}
 
               <CustomButton
                 disabled={!thumbSrc || !videoSrc || !title || !caption}
-                style={{ marginTop: 24, marginLeft: 0 }}
+                style={{ marginTop: 28, marginLeft: 0 }}
+                disabled={uploading}
                 text="Upload"
                 type="submit"
               />

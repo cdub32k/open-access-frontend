@@ -1,4 +1,4 @@
-import React, { Component, createRef } from "react";
+import React, { Component, createRef, useState } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
@@ -9,7 +9,7 @@ import "react-image-crop/lib/ReactCrop.scss";
 import Typography from "@material-ui/core/Typography";
 import FormGroup from "@material-ui/core/FormGroup";
 import Grid from "@material-ui/core/Grid";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import ProgressPercentage from "./ProgressPercentage";
 import { withStyles } from "@material-ui/core/styles";
 
 import CustomInput from "./CustomInput";
@@ -17,7 +17,7 @@ import CustomButton from "./CustomButton";
 
 class ImageUploader extends Component {
   state = {
-    loading: false,
+    uploading: false,
     croppedImage: null,
     imageSrc: null,
     crop: {
@@ -30,6 +30,7 @@ class ImageUploader extends Component {
     caption: "",
 
     goToProfile: false,
+    uploadPercentage: 0,
   };
 
   constructor(props) {
@@ -115,7 +116,7 @@ class ImageUploader extends Component {
     e.preventDefault();
 
     this.setState({
-      loading: true,
+      uploading: true,
     });
 
     const data = new FormData();
@@ -123,13 +124,21 @@ class ImageUploader extends Component {
     data.append("title", this.state.title);
     data.append("caption", this.state.caption);
 
-    axios.post("/images/upload", data).then((res) => {
-      if (res.data)
-        this.setState({
-          goToProfile: true,
-          _id: res.data.image._id,
-        });
-    });
+    axios
+      .post("/images/upload", data, {
+        onUploadProgress: (e) => {
+          this.setState({
+            uploadPercentage: parseInt(Math.round((e.loaded / e.total) * 100)),
+          });
+        },
+      })
+      .then((res) => {
+        if (res.data)
+          this.setState({
+            goToProfile: true,
+            _id: res.data.image._id,
+          });
+      });
   };
 
   uploadImage = (e) => {
@@ -141,7 +150,7 @@ class ImageUploader extends Component {
       return <Redirect to={`/image/${this.state._id}`} />;
 
     const { classes } = this.props;
-    const { crop, imageSrc, title, caption } = this.state;
+    const { uploading, crop, imageSrc, title, caption } = this.state;
     return (
       <div style={{ width: "100%" }}>
         <form className={classes.form} onSubmit={this.onSubmitHandler}>
@@ -196,16 +205,16 @@ class ImageUploader extends Component {
                   onChange={this.onTextChange}
                 />
               </div>
-              {this.state.loading && (
-                <CircularProgress
-                  style={{ margin: "28px 0", display: "block" }}
-                  disableShrink
+              {uploading && (
+                <ProgressPercentage
+                  progress={this.state.uploadPercentage}
+                  style={{ marginTop: 28 }}
                 />
               )}
-
               <CustomButton
                 disabled={!imageSrc || !title || !caption}
-                style={{ marginTop: 24, marginLeft: 0 }}
+                style={{ marginTop: 28, marginLeft: 0 }}
+                disabled={uploading}
                 text="Upload"
                 type="submit"
               />

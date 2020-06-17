@@ -203,20 +203,24 @@ class VideoEdit extends Component {
               )}
             </Grid>
             <Grid item xs={12} sm={8} lg={6} style={{ marginTop: 48 }}>
-              <CustomInput
-                name="title"
-                label="Title"
-                value={title}
-                onChange={this.onTextChange}
-              />
-              <CustomInput
-                multiline={true}
-                rows={3}
-                name="caption"
-                label="Caption"
-                value={caption}
-                onChange={this.onTextChange}
-              />
+              <div className={classes.inputContainer}>
+                <CustomInput
+                  name="title"
+                  label="Title"
+                  value={title}
+                  onChange={this.onTextChange}
+                />
+              </div>
+              <div className={classes.inputContainer}>
+                <CustomInput
+                  multiline={true}
+                  rows={3}
+                  name="caption"
+                  label="Caption"
+                  value={caption}
+                  onChange={this.onTextChange}
+                />
+              </div>
               <br />
               <CustomButton
                 style={{
@@ -258,6 +262,7 @@ const styles = (theme) => ({
     marginLeft: 12,
     backgroundColor: theme.palette.secondary.main,
   },
+  ...theme.globalClasses,
 });
 
 const mapStateToProps = (state) => ({
