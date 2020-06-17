@@ -30,6 +30,15 @@ axios.interceptors.response.use(
 import apolloCache from "../apollo";
 import { parse } from "graphql";
 
+const GET_ALL_USERNAMES_QUERY = `
+  query Usernames {
+    users {
+      username
+      smallPic
+    }
+  }
+`;
+
 const GET_USER_INFO_QUERY = `
   query UserInfo($username: String!) {
     user(username: $username) {
@@ -1444,6 +1453,18 @@ export default [
           );
         })
         .catch((error) => ActionCreators.loadNoteSearchResultsError(error));
+    } else if (action.type == ActionTypes.GET_ALL_USERNAMES) {
+      next(action);
+      axios
+        .post("/api", {
+          query: GET_ALL_USERNAMES_QUERY,
+        })
+        .then((res) => {
+          const userData = res.data.data;
+
+          next(ActionCreators.getAllUsernamesSuccess(userData.users));
+        })
+        .catch((error) => ActionCreators.getAllUsernamesSuccess(error));
     } else next(action);
   },
 ];

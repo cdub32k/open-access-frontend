@@ -36,6 +36,7 @@ const initialState = {
     charges: [],
     subscriptions: [],
   },
+  all: [],
 };
 
 const subscribeToNotifications = (username) => {
@@ -300,6 +301,23 @@ const userReducer = (state = initialState, action) => {
         ...state,
         error: action.error,
         loading: false,
+      };
+    case ActionTypes.GET_ALL_USERNAMES:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionTypes.GET_ALL_USERNAMES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        all: action.payload.users,
+      };
+    case ActionTypes.GET_ALL_USERNAMES_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
       };
     default:
       return { ...state };

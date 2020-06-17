@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   header: {
-    marginBottom: 18,
+    margin: 12,
   },
   tabHeaders: {
     marginBottom: 24,

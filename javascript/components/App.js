@@ -44,6 +44,7 @@ class DynamicImport extends Component {
 
 import AuthRedirect from "./AuthRedirect";
 import UnAuthRedirect from "./UnAuthRedirect";
+import ScrollTopButton from "./ScrollTopButton";
 //import Account from "./Account";
 const Account = (props) => (
   <DynamicImport load={() => import("./Account")}>
@@ -175,6 +176,15 @@ const NewsFeed = (props) => (
 //import NewsFeed from "./SearchResultsPage";
 const SearchResultsPage = (props) => (
   <DynamicImport load={() => import("./SearchResultsPage")}>
+    {(Component) =>
+      Component == null ? <p>Loading...</p> : <Component {...props} />
+    }
+  </DynamicImport>
+);
+
+//import NewsFeed from "./SearchResultsPage";
+const UsersList = (props) => (
+  <DynamicImport load={() => import("./UsersList")}>
     {(Component) =>
       Component == null ? <p>Loading...</p> : <Component {...props} />
     }
@@ -315,6 +325,12 @@ class App extends Component {
                 )}
               />
               <Route
+                path="/users"
+                render={(props) => (
+                  <UnAuthRedirect {...props} component={UsersList} />
+                )}
+              />
+              <Route
                 exact
                 path="/"
                 render={(props) => <AuthRedirect {...props} component={Home} />}
@@ -322,6 +338,7 @@ class App extends Component {
               <Route path="*" component={NotFound} />
             </Switch>
           </div>
+          <ScrollTopButton />
         </div>
       </Router>
     );

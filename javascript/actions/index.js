@@ -158,6 +158,9 @@ export const ActionTypes = {
   DISLIKE_VIDEO_COMMENT_SUCCESS: "DISLIKE_VIDEO_COMMENT_SUCCESS",
   DISLIKE_IMAGE_COMMENT_SUCCESS: "DISLIKE_IMAGE_COMMENT_SUCCESS",
   DISLIKE_NOTE_COMMENT_SUCCESS: "DISLIKE_NOTE_COMMENT_SUCCESS",
+  GET_ALL_USERNAMES: "GET_ALL_USERNAMES",
+  GET_ALL_USERNAMES_SUCCESS: "GET_ALL_USERNAMES_SUCCESS",
+  GET_ALL_USERNAMES_ERROR: "GET_ALL_USERNAMES_ERROR",
 };
 
 export const ActionCreators = {
@@ -843,5 +846,14 @@ export const ActionCreators = {
   },
   updateImage: (title, caption) => {
     return { type: ActionTypes.UPDATE_IMAGE, payload: { title, caption } };
+  },
+  getAllUsernames: () => {
+    return { type: ActionTypes.GET_ALL_USERNAMES };
+  },
+  getAllUsernamesSuccess: (users) => {
+    return { type: ActionTypes.GET_ALL_USERNAMES_SUCCESS, payload: { users } };
+  },
+  getAllUsernamesError: (error) => {
+    return { type: ActionTypes.GET_ALL_USERNAMES_SUCCESS, error };
   },
 };
