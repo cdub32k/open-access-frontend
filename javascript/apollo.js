@@ -13,9 +13,12 @@ import { WebSocketLink } from "apollo-link-ws";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 
 const wsLink = new WebSocketLink(
-  new SubscriptionClient("ws://localhost:5000/subs", {
-    reconnect: true,
-  })
+  new SubscriptionClient(
+    `${process.env.API_URL.replace(/http(s?):\/\//, "ws$1://")}subs`,
+    {
+      reconnect: true,
+    }
+  )
 );
 
 const client = new ApolloClient({
@@ -33,7 +36,7 @@ const client = new ApolloClient({
     },
     wsLink,
     new HttpLink({
-      uri: "http://localhost:5000/api",
+      uri: `${process.env.API_URL}`,
     })
   ),
 });

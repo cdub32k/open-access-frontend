@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf dist/ && webpack --env.MODE=development --config webpack.config.js",
-    "build-prod": "rm -rf dist/ && webpack --env.MODE=production -p --config webpack.config.js",
-    "serve": "webpack-dev-server --env.MODE=development --env.API_URL=http://localhost:5000"
+    "build-prod": "rm -rf dist/ && webpack --env.MODE=production --env.API_URL=https://open-access-network.herokuapp.com/ -p --config webpack.config.js",
+    "serve": "webpack-dev-server --env.MODE=development --env.API_URL=http://localhost:5000/"
   },
   "author": "Christopher Wood",
   "license": "MIT",

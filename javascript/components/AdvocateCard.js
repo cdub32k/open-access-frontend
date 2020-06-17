@@ -47,10 +47,7 @@ const AdvocateCard = (props) => {
 
   return (
     <div className={classes.slide} {...props}>
-      <Avatar
-        className={classes.avatar}
-        src="http://localhost:5000/img/default-profile.png"
-      />
+      <Avatar className={classes.avatar} src="/img/default-profile.png" />
       <div className={classes.content}>
         <Typography className={classes.name} variant="h6">
           Loren Robinson
