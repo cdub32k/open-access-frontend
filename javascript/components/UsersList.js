@@ -41,7 +41,7 @@ const UserList = ({ getAllUsernames, users, loading }) => {
       )}
       {users.map((user) => {
         return (
-          <div>
+          <div key={user.username}>
             <Link className={classes.link} to={`/profile/${user.username}`}>
               <Avatar src={user.profilePic} className={classes.avatar} />
               <Typography variant="subtitle1">@{user.username}</Typography>

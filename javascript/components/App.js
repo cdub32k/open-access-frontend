@@ -199,6 +199,16 @@ const Home = (props) => (
     }
   </DynamicImport>
 );
+
+//import PasswordReset from "./PasswordReset";
+const PasswordReset = (props) => (
+  <DynamicImport load={() => import("./PasswordReset")}>
+    {(Component) =>
+      Component == null ? <p>Loading...</p> : <Component {...props} />
+    }
+  </DynamicImport>
+);
+
 //import NotFound from "./NotFound";
 const NotFound = (props) => (
   <DynamicImport load={() => import("./404")}>
@@ -328,6 +338,12 @@ class App extends Component {
                 path="/users"
                 render={(props) => (
                   <UnAuthRedirect {...props} component={UsersList} />
+                )}
+              />
+              <Route
+                path="/password-reset/:tempKey?"
+                render={(props) => (
+                  <AuthRedirect {...props} component={PasswordReset} />
                 )}
               />
               <Route

@@ -95,7 +95,7 @@ const SignUp = ({ error, signupStart, ...rest }) => {
   };
 
   const checkPassword = (password) => {
-    if (password.length < 8) setPasswordError("Password too short");
+    if (password.length < 6) setPasswordError("Password too short");
     else setPasswordError("");
   };
 
@@ -194,7 +194,7 @@ const SignUp = ({ error, signupStart, ...rest }) => {
                     name="password"
                     label="Password"
                     onChange={updateCredentials}
-                    minLength={8}
+                    minLength={6}
                     required
                   />
                 </Grid>
