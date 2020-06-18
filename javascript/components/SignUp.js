@@ -17,7 +17,7 @@ import Grid from "@material-ui/core/Grid";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -59,6 +59,7 @@ const SignUp = ({ error, signupStart, ...rest }) => {
   const stripe = useStripe();
   const elements = useElements();
 
+  const [loading, setLoading] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -120,7 +121,7 @@ const SignUp = ({ error, signupStart, ...rest }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     if (!stripe || !elements) {
       return;
     }
@@ -134,6 +135,7 @@ const SignUp = ({ error, signupStart, ...rest }) => {
     });
 
     if (result.error) {
+      setLoading(false);
       setCardError(result.error.message);
       setTimeout(() => {
         setCardError("");
@@ -226,19 +228,23 @@ const SignUp = ({ error, signupStart, ...rest }) => {
                 {cardError && <div className={classes.error}>{cardError}</div>}
               </Grid>
             </Grid>
+            {loading && (
+              <CircularProgress style={{ marginTop: 28 }} disableShrink />
+            )}
             <Grid container justify="center" className={classes.btn}>
-              <Grid item xs={12} style={{ textAlign: "right" }}>
+              <Grid item xs={12}>
                 <CustomButton
                   text="Sign up"
                   disabled={
                     !email ||
                     !username ||
                     !password ||
-                    emailError ||
-                    usernameError ||
-                    passwordError ||
-                    cardError
+                    !!emailError ||
+                    !!usernameError ||
+                    !!passwordError ||
+                    !!cardError
                   }
+                  style={{ marginLeft: 0 }}
                   onClick={onSubmit}
                 />
               </Grid>

@@ -5,6 +5,7 @@ import { ActionCreators } from "../actions";
 import Grid from "@material-ui/core/Grid";
 import FormGroup from "@material-ui/core/FormGroup";
 import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 
 import CustomInput from "./CustomInput";
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const Login = ({ error, loginStart }) => {
   const classes = useStyles();
 
+  const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -50,6 +52,7 @@ const Login = ({ error, loginStart }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     loginStart({ username, password });
   };
 
@@ -86,10 +89,14 @@ const Login = ({ error, loginStart }) => {
                 />
               </Grid>
             </Grid>
+            {loading && (
+              <CircularProgress style={{ marginTop: 28 }} disableShrink />
+            )}
             <Grid container justify="center" className={classes.btn}>
-              <Grid style={{ textAlign: "right" }} item xs={12}>
+              <Grid item xs={12}>
                 <CustomButton
                   text="Sign in"
+                  style={{ marginLeft: 0 }}
                   disabled={!username || !password}
                   onClick={onSubmit}
                 />

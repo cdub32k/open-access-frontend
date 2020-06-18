@@ -683,11 +683,24 @@ export default [
       axios
         .post("auth/sign-up", action.payload.userInfo)
         .then((res) => {
-          if (res.data.auth)
+          if (res.data.auth) {
             next(
               ActionCreators.loginSuccess(res.data.token, res.data.refreshToken)
             );
-          else throw new Error("sign up failed!");
+            axios
+              .post("/api", {
+                query: GET_USER_NOTIFICATIONS_QUERY,
+                variables: { username: action.payload.userInfo.username },
+              })
+              .then((res) => {
+                next(
+                  ActionCreators.getUserAccountInfoSuccess(res.data.data.user)
+                );
+              })
+              .catch((err) =>
+                next(ActionCreators.getUserAccountInfoError(err))
+              );
+          } else throw new Error("sign up failed!");
         })
         .catch((err) => next(ActionCreators.signupError(err)));
     } else if (action.type == ActionTypes.GET_USER_INFO_START) {

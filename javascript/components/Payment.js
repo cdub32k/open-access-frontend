@@ -45,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
     marginBottom: 12,
   },
+  chargesList: {
+    margin: "8px 0 32px 18px",
+  },
   charge: {},
   sub: {
     "& .subCaption": {
@@ -136,42 +139,65 @@ const Payment = ({
         <Typography className={classes.header} variant="h3">
           Payment History
         </Typography>
-        <Typography color="primary" variant="h6">
-          Charges
-        </Typography>
-        {charges.map((charge, i) => {
-          return (
-            <div key={i} className={classes.charge}>
-              {printCentsToCurreny(charge.amount)} on{" "}
-              {date2str(charge.createdAt)} (confrimation #
-              {charge._id.substring(charge._id.length - 8).toUpperCase()})
-            </div>
-          );
-        })}
       </Grid>
       <Grid item xs={12}>
         <Typography color="primary" variant="h6">
           Subscriptions
         </Typography>
-        {subscriptions.map((sub, i) => {
-          return (
-            <div key={i} className={classes.sub}>
-              {printCentsToCurreny(sub.amount)}/mo. on {date2str(sub.createdAt)}{" "}
-              (confrimation #
-              {sub._id.substring(sub._id.length - 8).toUpperCase()})
-              {!sub.terminated && (
-                <Typography variant="subtitle2" className="subCaption">
-                  ACTIVE
-                </Typography>
-              )}
-              {sub.terminated && (
-                <Typography variant="subtitle2" className="subCaption">
-                  terminated on {date2str(sub.terminatedAt)}
-                </Typography>
-              )}
-            </div>
-          );
-        })}
+        <ul className={classes.chargesList}>
+          {subscriptions.length == 0 && (
+            <li>
+              <div className={classes.charge}>no subscriptions</div>
+            </li>
+          )}
+          {subscriptions.map((sub, i) => {
+            return (
+              <li>
+                <div key={i} className={classes.sub}>
+                  {printCentsToCurreny(sub.amount)}/mo. on{" "}
+                  {date2str(sub.createdAt)} (confrimation #
+                  <b>{sub._id.substring(sub._id.length - 8).toUpperCase()}</b>)
+                  {!sub.terminated && (
+                    <Typography variant="subtitle2" className="subCaption">
+                      ACTIVE
+                    </Typography>
+                  )}
+                  {sub.terminated && (
+                    <Typography variant="subtitle2" className="subCaption">
+                      terminated on {date2str(sub.terminatedAt)}
+                    </Typography>
+                  )}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography color="primary" variant="h6">
+          1 Time Charges
+        </Typography>
+        <ul className={classes.chargesList}>
+          {charges.length == 0 && (
+            <li>
+              <div className={classes.charge}>no charges</div>
+            </li>
+          )}
+          {charges.map((charge, i) => {
+            return (
+              <li>
+                <div key={i} className={classes.charge}>
+                  {printCentsToCurreny(charge.amount)} on{" "}
+                  {date2str(charge.createdAt)} (confrimation #
+                  <b>
+                    {charge._id.substring(charge._id.length - 8).toUpperCase()}
+                  </b>
+                  )
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </Grid>
       <Dialog
         className={classes.dialog}
