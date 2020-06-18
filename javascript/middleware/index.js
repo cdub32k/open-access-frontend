@@ -683,7 +683,10 @@ export default [
       axios
         .post("auth/sign-up", action.payload.userInfo)
         .then((res) => {
-          if (res.data.auth) next(ActionCreators.loginSuccess(res.data.token));
+          if (res.data.auth)
+            next(
+              ActionCreators.loginSuccess(res.data.token, res.data.refreshToken)
+            );
           else throw new Error("sign up failed!");
         })
         .catch((err) => next(ActionCreators.signupError(err)));
