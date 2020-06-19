@@ -47,6 +47,7 @@ const CommentsSection = ({
             key={comment._id}
           >
             <Comment
+              level={1}
               type={contentType}
               mediaId={id}
               _id={comment._id}

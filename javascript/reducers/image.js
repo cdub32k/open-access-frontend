@@ -81,11 +81,11 @@ const imageReducer = (state = initialState, action) => {
       };
     case ActionTypes.GET_IMAGE_INFO_ERROR:
       return { ...state, error: action.error, loading: false };
-    case ActionTypes.LIKE_IMAGE_SUCCESS:
+    case ActionTypes.LIKE_IMAGE_START:
       return { ...state, liked: !state.liked };
     case ActionTypes.LIKE_IMAGE_ERROR:
       return { ...state };
-    case ActionTypes.DISLIKE_IMAGE_SUCCESS:
+    case ActionTypes.DISLIKE_IMAGE_START:
       return { ...state, disliked: !state.disliked };
     case ActionTypes.DISLIKE_IMAGE_ERROR:
       return { ...state };
@@ -165,14 +165,14 @@ const imageReducer = (state = initialState, action) => {
       return { ...state, comments: nComments };
     case ActionTypes.UPDATE_IMAGE:
       return { ...state, ...action.payload };
-    case ActionTypes.LIKE_IMAGE_COMMENT_SUCCESS:
+    case ActionTypes.LIKE_IMAGE_COMMENT:
       nComments = [...state.comments];
-      c = findComment(nComments, action.payload._id);
+      c = findComment(nComments, action.payload.commentId);
       c.liked = !c.liked;
       return { ...state, comments: nComments };
-    case ActionTypes.DISLIKE_IMAGE_COMMENT_SUCCESS:
+    case ActionTypes.DISLIKE_IMAGE_COMMENT:
       nComments = [...state.comments];
-      c = findComment(nComments, action.payload._id);
+      c = findComment(nComments, action.payload.commentId);
       c.disliked = !c.disliked;
       return { ...state, comments: nComments };
     default:

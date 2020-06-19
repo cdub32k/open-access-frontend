@@ -81,11 +81,11 @@ const noteReducer = (state = initialState, action) => {
       };
     case ActionTypes.GET_NOTE_INFO_ERROR:
       return { ...state, error: action.error, loading: false };
-    case ActionTypes.LIKE_NOTE_SUCCESS:
+    case ActionTypes.LIKE_NOTE_START:
       return { ...state, liked: !state.liked };
     case ActionTypes.LIKE_NOTE_ERROR:
       return { ...state };
-    case ActionTypes.DISLIKE_NOTE_SUCCESS:
+    case ActionTypes.DISLIKE_NOTE_START:
       return { ...state, disliked: !state.disliked };
     case ActionTypes.DISLIKE_NOTE_ERROR:
       return { ...state };
@@ -164,14 +164,14 @@ const noteReducer = (state = initialState, action) => {
       parent.replies = action.payload.replies;
 
       return { ...state, comments: nComments };
-    case ActionTypes.LIKE_NOTE_COMMENT_SUCCESS:
+    case ActionTypes.LIKE_NOTE_COMMENT:
       nComments = [...state.comments];
-      c = findComment(nComments, action.payload._id);
+      c = findComment(nComments, action.payload.commentId);
       c.liked = !c.liked;
       return { ...state, comments: nComments };
-    case ActionTypes.DISLIKE_NOTE_COMMENT_SUCCESS:
+    case ActionTypes.DISLIKE_NOTE_COMMENT:
       nComments = [...state.comments];
-      c = findComment(nComments, action.payload._id);
+      c = findComment(nComments, action.payload.commentId);
       c.disliked = !c.disliked;
       return { ...state, comments: nComments };
     default:

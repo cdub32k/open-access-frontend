@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     margin: 12,
     marginBottom: 36,
   },
+  userContainer: {
+    margin: 12,
+  },
   avatar: {
     width: 98,
     height: 98,
@@ -41,9 +44,9 @@ const UserList = ({ getAllUsernames, users, loading }) => {
       )}
       {users.map((user) => {
         return (
-          <div key={user.username}>
+          <div className={classes.userContainer} key={user.username}>
             <Link className={classes.link} to={`/profile/${user.username}`}>
-              <Avatar src={user.profilePic} className={classes.avatar} />
+              <Avatar src={user.smallPic} className={classes.avatar} />
               <Typography variant="subtitle1">@{user.username}</Typography>
             </Link>
           </div>

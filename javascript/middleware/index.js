@@ -756,6 +756,7 @@ export default [
         })
         .catch((err) => next(ActionCreators.updateAccountInfoError(err)));
     } else if (action.type == ActionTypes.LIKE_NOTE_START) {
+      next(action);
       axios
         .post("/api", {
           query: `
@@ -769,6 +770,7 @@ export default [
           else next(ActionCreators.likeNoteError());
         });
     } else if (action.type == ActionTypes.DISLIKE_NOTE_START) {
+      next(action);
       axios
         .post("/api", {
           query: `
@@ -783,6 +785,7 @@ export default [
           else next(ActionCreators.dislikeNoteError());
         });
     } else if (action.type == ActionTypes.LIKE_IMAGE_START) {
+      next(action);
       axios
         .post("/api", {
           query: `
@@ -796,6 +799,7 @@ export default [
           else next(ActionCreators.likeImageError());
         });
     } else if (action.type == ActionTypes.DISLIKE_IMAGE_START) {
+      next(action);
       axios
         .post("/api", {
           query: `
@@ -845,6 +849,7 @@ export default [
           else next(ActionCreators.recordVideoViewError());
         });
     } else if (action.type == ActionTypes.LIKE_VIDEO_START) {
+      next(action);
       axios
         .post("/api", {
           query: `
@@ -858,6 +863,7 @@ export default [
           else next(ActionCreators.likeVideoError());
         });
     } else if (action.type == ActionTypes.DISLIKE_VIDEO_START) {
+      next(action);
       axios
         .post("/api", {
           query: `
@@ -1295,6 +1301,7 @@ export default [
           );
         });
     } else if (action.type == ActionTypes.LIKE_VIDEO_COMMENT) {
+      next(action);
       axios
         .post("/api", {
           query: `
@@ -1313,6 +1320,7 @@ export default [
             );
         });
     } else if (action.type == ActionTypes.DISLIKE_VIDEO_COMMENT) {
+      next(action);
       axios
         .post("/api", {
           query: `
@@ -1331,6 +1339,7 @@ export default [
             );
         });
     } else if (action.type == ActionTypes.LIKE_IMAGE_COMMENT) {
+      next(action);
       axios
         .post("/api", {
           query: `
@@ -1349,6 +1358,7 @@ export default [
             );
         });
     } else if (action.type == ActionTypes.DISLIKE_IMAGE_COMMENT) {
+      next(action);
       axios
         .post("/api", {
           query: `
@@ -1367,6 +1377,7 @@ export default [
             );
         });
     } else if (action.type == ActionTypes.LIKE_NOTE_COMMENT) {
+      next(action);
       axios
         .post("/api", {
           query: `
@@ -1385,6 +1396,7 @@ export default [
             );
         });
     } else if (action.type == ActionTypes.DISLIKE_NOTE_COMMENT) {
+      next(action);
       axios
         .post("/api", {
           query: `

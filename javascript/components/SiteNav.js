@@ -84,6 +84,8 @@ const SiteNav = ({
   };
 
   const handleNotifsMenuClose = () => {
+    setAnchorEl(null);
+    setMobileMoreAnchorEl(null);
     setNotifsAnchorEl(null);
     markNotificationsRead();
   };

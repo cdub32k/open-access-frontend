@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, memo, Fragment } from "react";
 import { connect } from "react-redux";
 import { ActionCreators } from "../actions";
 import { Link } from "react-router-dom";
@@ -101,6 +101,7 @@ let Comment = ({
   like,
   dislike,
   highlighted,
+  level,
 }) => {
   const classes = useStyles();
   const [newBody, setNewBody] = useState(body);
@@ -208,16 +209,20 @@ let Comment = ({
           </IconButton>
           <span className={classes.metric}>{num2str(dislikeCount)}</span>
         </div>
-        <a className={classes.replyLink} onClick={showReplyForm}>
-          {!replyFormOpen ? "REPLY" : "CANCEL"}
-        </a>
-        {replyFormOpen && (
-          <CommentForm
-            className={classes.replyForm}
-            contentType={type}
-            id={mediaId}
-            replyId={_id}
-          />
+        {level < 5 && (
+          <Fragment>
+            <a className={classes.replyLink} onClick={showReplyForm}>
+              {!replyFormOpen ? "REPLY" : "CANCEL"}
+            </a>
+            {replyFormOpen && (
+              <CommentForm
+                className={classes.replyForm}
+                contentType={type}
+                id={mediaId}
+                replyId={_id}
+              />
+            )}
+          </Fragment>
         )}
       </div>
       {replyCount > 0 && (
@@ -246,6 +251,7 @@ let Comment = ({
                     key={reply._id}
                   >
                     <Comment
+                      level={level + 1}
                       key={reply._id}
                       type={type}
                       mediaId={mediaId}
