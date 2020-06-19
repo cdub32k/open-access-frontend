@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   statement: {
     textAlign: "center",
     maxHeight: 145,
-    overflowY: "scroll",
+    overflowY: "auto",
     pointerEvents: "all",
   },
 }));

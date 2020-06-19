@@ -74,6 +74,7 @@ const SearchBar = (props) => {
       />
       <CustomButton
         Icon={SearchIcon}
+        disabled={!query}
         onClick={() => setRedirect(true)}
         className={classes.button}
       />

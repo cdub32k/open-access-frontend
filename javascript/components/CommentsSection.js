@@ -16,8 +16,9 @@ const useStyles = makeStyles((theme) => ({
   },
   section: {
     paddingRight: 32,
-    overflowY: "scroll",
+    overflowY: "auto",
     maxHeight: 800,
+    paddingTop: 24,
   },
 }));
 

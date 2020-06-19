@@ -65,7 +65,7 @@ module.exports = (env) => ({
   ],
   output: {
     path: path.resolve(__dirname, "dist"),
-    publicPath: "https://open-access-dev.b-cdn.net/",
+    publicPath: "https://open-access-dev.b-cdn.net/app/",
     filename: "[name].[hash].bundle.js",
     chunkFilename: "[name].[chunkhash].bundle.js",
   },

@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     maxHeight: 300,
     textAlign: "center",
-    overflowY: "scroll",
+    overflowY: "auto",
     padding: "0 12px",
   },
 }));

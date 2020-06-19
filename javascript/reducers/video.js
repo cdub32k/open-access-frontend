@@ -88,11 +88,19 @@ const videoReducer = (state = initialState, action) => {
     case ActionTypes.RECORD_VIDEO_VIEW_ERROR:
       return { ...state };
     case ActionTypes.LIKE_VIDEO_START:
-      return { ...state, liked: !state.liked };
+      return {
+        ...state,
+        liked: !state.liked,
+        likeCount: state.likeCount + (state.liked ? -1 : 1),
+      };
     case ActionTypes.LIKE_VIDEO_ERROR:
       return { ...state };
     case ActionTypes.DISLIKE_VIDEO_START:
-      return { ...state, disliked: !state.disliked };
+      return {
+        ...state,
+        disliked: !state.disliked,
+        dislikeCount: state.dislikeCount + (state.disliked ? -1 : 1),
+      };
     case ActionTypes.DISLIKE_VIDEO_ERROR:
       return { ...state };
     case ActionTypes.POST_VIDEO_COMMENT_SUCCESS:
@@ -171,11 +179,13 @@ const videoReducer = (state = initialState, action) => {
       nComments = [...state.comments];
       c = findComment(nComments, action.payload.commentId);
       c.liked = !c.liked;
+      c.likeCount += c.liked ? 1 : -1;
       return { ...state, comments: nComments };
     case ActionTypes.DISLIKE_VIDEO_COMMENT:
       nComments = [...state.comments];
       c = findComment(nComments, action.payload.commentId);
       c.disliked = !c.disliked;
+      c.dislikeCount += c.disliked ? 1 : -1;
       return { ...state, comments: nComments };
     default:
       return state;

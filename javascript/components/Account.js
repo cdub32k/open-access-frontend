@@ -253,21 +253,21 @@ class Account extends Component {
             {!editInfo && (
               <Fragment>
                 <a onClick={this.editInfo}>edit</a>
-                <Typography variant="body1">
-                  <b>Display name</b>
-                  <br /> {displayName}
+                <Typography className={classes.userField} variant="body1">
+                  <b>Display name:</b>
+                  <br /> {displayName || "N/A"}
                 </Typography>
-                <Typography variant="body1">
-                  <b>Email</b>
-                  <br /> {email}
+                <Typography className={classes.userField} variant="body1">
+                  <b>Email:</b>
+                  <br /> {email || "N/A"}
                 </Typography>
-                <Typography variant="body1">
-                  <b>Phone Number</b>
-                  <br /> {phoneNumber}
+                <Typography className={classes.userField} variant="body1">
+                  <b>Phone Number:</b>
+                  <br /> {phoneNumber || "N/A"}
                 </Typography>
-                <Typography variant="body1">
-                  <b>Bio</b>
-                  <br /> {bio}
+                <Typography className={classes.userField} variant="body1">
+                  <b>Bio:</b>
+                  <br /> {bio || "N/A"}
                 </Typography>
               </Fragment>
             )}
@@ -277,7 +277,6 @@ class Account extends Component {
                   <CustomInput
                     label="Display Name"
                     name="displayName"
-                    placeholder={displayName || ""}
                     value={this.state.displayName}
                     onChange={this.onTextChange}
                   />
@@ -286,7 +285,6 @@ class Account extends Component {
                   <CustomInput
                     label="Email"
                     name="email"
-                    placeholder={email || ""}
                     value={this.state.email}
                     onChange={this.onTextChange}
                   />
@@ -295,7 +293,6 @@ class Account extends Component {
                   <CustomInput
                     label="Phone Number"
                     name="phoneNumber"
-                    placeholder={phoneNumber || ""}
                     value={this.state.phoneNumber}
                     onChange={this.onTextChange}
                   />
@@ -305,7 +302,6 @@ class Account extends Component {
                     label="Bio"
                     value={this.state.bio}
                     name="bio"
-                    placeholder={bio || ""}
                     multiline={true}
                     onChange={this.onTextChange}
                     inputProps={{ maxLength: 420 }}
@@ -374,6 +370,9 @@ const styles = (theme) => ({
     height: 200,
     border: `4px solid ${theme.palette.secondary.main}`,
     marginBottom: 12,
+  },
+  userField: {
+    marginBottom: 18,
   },
   ...theme.globalClasses,
 });

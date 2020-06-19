@@ -9,7 +9,6 @@ import CustomButton from "./CustomButton";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    marginBottom: 24,
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",

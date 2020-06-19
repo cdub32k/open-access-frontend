@@ -112,6 +112,9 @@ const SiteNav = ({
       <MenuItem onClick={handleMenuClose} component={Link} to="/my-account">
         My Account
       </MenuItem>
+      <MenuItem onClick={handleMenuClose} component={Link} to="/Users">
+        Users
+      </MenuItem>
       <MenuItem onClick={handleMenuClose} component={Link} to="/logout">
         Logout
       </MenuItem>

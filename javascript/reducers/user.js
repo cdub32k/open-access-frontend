@@ -12,7 +12,7 @@ import { removeNull } from "../utils/helpers";
 import { API_TOKEN_NAME, REFRESH_TOKEN_NAME } from "../constants";
 
 const initialState = {
-  active: false,
+  active: true,
   activeUntil: null,
   profilePic: "",
   email: "",
