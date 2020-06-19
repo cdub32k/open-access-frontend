@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { ActionCreators } from "../actions";
 
@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = ({ error, loginStart }) => {
   const classes = useStyles();
+
+  useEffect(() => {
+    setLoading(false);
+  }, [error]);
 
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
@@ -97,7 +101,7 @@ const Login = ({ error, loginStart }) => {
                 <CustomButton
                   text="Sign in"
                   style={{ marginLeft: 0 }}
-                  disabled={!username || !password}
+                  disabled={!username || !password || loading}
                   onClick={onSubmit}
                 />
               </Grid>

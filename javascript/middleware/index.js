@@ -731,6 +731,8 @@ export default [
           query: `
             {
               user(username:"${action.payload.username}") {
+                active
+                activeUntil
                 profilePic
                 email
                 username

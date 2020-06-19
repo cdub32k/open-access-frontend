@@ -242,7 +242,8 @@ const SignUp = ({ error, signupStart, ...rest }) => {
                     !!emailError ||
                     !!usernameError ||
                     !!passwordError ||
-                    !!cardError
+                    !!cardError ||
+                    loading
                   }
                   style={{ marginLeft: 0 }}
                   onClick={onSubmit}

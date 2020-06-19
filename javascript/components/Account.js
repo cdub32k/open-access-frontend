@@ -23,6 +23,7 @@ class Account extends Component {
     super(props);
 
     this.state = {
+      uploading: false,
       croppedImage: null,
       imageSrc: null,
       crop: {
@@ -113,16 +114,27 @@ class Account extends Component {
 
   uploadProfilePic = (e) => {
     e.preventDefault();
-
+    this.setState({
+      uploading: true,
+    });
     const data = new FormData();
     data.append("image", this.state.croppedImage);
 
-    axios.post("/images/profile/upload", data).then((res) => {
-      this.setState({
-        imageSrc: null,
-        croppedImage: null,
+    axios
+      .post("/images/profile/upload", data)
+      .then((res) => {
+        this.setState({
+          imageSrc: null,
+          croppedImage: null,
+          uploading: false,
+          profilePic: res.data.user.profilePic,
+        });
+      })
+      .catch((e) => {
+        this.setState({
+          uploading: false,
+        });
       });
-    });
   };
 
   onTextChange = (e) => {
@@ -160,7 +172,7 @@ class Account extends Component {
       classes,
     } = this.props;
 
-    const { imageSrc, crop, editInfo } = this.state;
+    const { imageSrc, crop, editInfo, uploading } = this.state;
 
     return (
       <div className={classes.container}>
@@ -180,7 +192,10 @@ class Account extends Component {
             <FormGroup>
               {!imageSrc && (
                 <Fragment>
-                  <Avatar src={profilePic} className={classes.large} />
+                  <Avatar
+                    src={this.state.profilePic || profilePic}
+                    className={classes.large}
+                  />
                   <input
                     hidden
                     ref={this.imageInput}
@@ -229,9 +244,10 @@ class Account extends Component {
             </FormGroup>
           </form>
         </div>
-        {loading && (
-          <CircularProgress style={{ marginBottom: 28 }} disableShrink />
-        )}
+        {loading ||
+          (uploading && (
+            <CircularProgress style={{ marginBottom: 28 }} disableShrink />
+          ))}
         <Grid className={classes.sectionsContainer} container>
           <Grid className={classes.section} item xs={12} md={6}>
             {!editInfo && (

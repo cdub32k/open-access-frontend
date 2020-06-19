@@ -107,6 +107,7 @@ const userReducer = (state = initialState, action) => {
 
       return {
         ...state,
+        loading: true,
         loggedIn: true,
         username,
         email,
