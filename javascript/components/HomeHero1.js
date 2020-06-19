@@ -45,7 +45,7 @@ const HomeHero = (props) => {
           </Grid>
           <Grid item xs={12} className={classes.btn}>
             <Link to="/sign-up">
-              <CustomButton text="Become A Member" />
+              <CustomButton text="Become A Member" style={{ marginLeft: 0 }} />
             </Link>
           </Grid>
         </Grid>

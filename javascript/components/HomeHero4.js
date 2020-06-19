@@ -108,7 +108,7 @@ const HomeHero4 = ({ subscribe }) => {
               onClick={sendEmail}
               size="large"
               text="Subscribe"
-              style={{ display: "block" }}
+              style={{ display: "block", marginLeft: 0 }}
             />
             {error && (
               <Typography className={classes.error} variant="caption">

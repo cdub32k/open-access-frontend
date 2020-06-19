@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     maxHeight: 145,
     overflowY: "auto",
+    overflowX: "hidden",
     pointerEvents: "all",
   },
 }));
