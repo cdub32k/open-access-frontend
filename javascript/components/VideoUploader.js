@@ -176,10 +176,11 @@ class VideoUploader extends Component {
       crop,
       thumbSrc,
       videoSrc,
+      videoFile,
+      croppedThumb,
       title,
       caption,
     } = this.state;
-
     return (
       <div style={{ width: "100%", padding: 12 }}>
         <form className={classes.form} onSubmit={this.onSubmitHandler}>
@@ -230,6 +231,8 @@ class VideoUploader extends Component {
                     crop={crop}
                     minHeight={169}
                     minWidth={300}
+                    ruleOfThirds
+                    keepSelection
                     onImageLoaded={this.onImageLoaded}
                     onComplete={this.onCropComplete}
                     onChange={this.onCropChange}
@@ -267,7 +270,9 @@ class VideoUploader extends Component {
               <CustomButton
                 disabled={!thumbSrc || !videoSrc || !title || !caption}
                 style={{ marginTop: 28, marginLeft: 0 }}
-                disabled={uploading}
+                disabled={
+                  uploading || !videoFile || !croppedThumb || !title || !caption
+                }
                 text="Upload"
                 type="submit"
               />

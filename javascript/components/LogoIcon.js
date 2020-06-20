@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     justifyContent: "center",
+    width: 60,
   },
 }));
 
@@ -24,26 +25,28 @@ const LogoIcon = () => {
   });
 
   return (
-    <div className={`${classes.container} logo-container`}>
-      <animated.div
-        className="logo-l"
-        style={{ transform: radians.interpolate(interp(0)) }}
-      >
+    <Link to={"/"}>
+      <div className={`${classes.container} logo-container`}>
         <animated.div
-          className="ball-l"
-          style={{ transform: radians.interpolate(interp(3)) }}
-        />
-      </animated.div>
-      <animated.div
-        className="logo-r"
-        style={{ transform: radians.interpolate(interp(1)) }}
-      >
+          className="logo-l"
+          style={{ transform: radians.interpolate(interp(0)) }}
+        >
+          <animated.div
+            className="ball-l"
+            style={{ transform: radians.interpolate(interp(3)) }}
+          />
+        </animated.div>
         <animated.div
-          className="ball-r"
-          style={{ transform: radians.interpolate(interp(2)) }}
-        />
-      </animated.div>
-    </div>
+          className="logo-r"
+          style={{ transform: radians.interpolate(interp(1)) }}
+        >
+          <animated.div
+            className="ball-r"
+            style={{ transform: radians.interpolate(interp(2)) }}
+          />
+        </animated.div>
+      </div>
+    </Link>
   );
 };
 

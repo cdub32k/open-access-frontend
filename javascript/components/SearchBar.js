@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
   container: {
     height: 40,
     display: "flex",
+    justifyContent: "center",
     flexGrow: 1,
-    marginRight: 42,
   },
   input: {
     width: "100%",

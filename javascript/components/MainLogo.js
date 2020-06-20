@@ -9,8 +9,7 @@ import LogoIcon from "./LogoIcon";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    width: 420,
-    margin: 12,
+    width: 345,
   },
   topRow: {
     marginBottom: 5,
@@ -20,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     color: theme.palette.primary.main,
   },
+  logoContainer: {
+    display: "flex",
+    justifyContent: "flex-start",
+  },
 }));
 
 const MainLogo = (props) => {
@@ -28,12 +31,15 @@ const MainLogo = (props) => {
   return (
     <Grid container className={classes.container}>
       <Grid container alignItems="center" className={classes.topRow}>
-        <Grid item xs={2}>
-          <Link to="/">
-            <LogoIcon />
-          </Link>
+        <Grid
+          item
+          className={classes.logoContainer}
+          style={{ flexBasis: 0, marginRight: 12 }}
+          xs={3}
+        >
+          <LogoIcon />
         </Grid>
-        <Grid item xs={10}>
+        <Grid item className={classes.logoContainer} xs={9}>
           <Typography color="inherit" variant="h3" className={classes.title}>
             <Link to="/">Open Access</Link>
           </Typography>

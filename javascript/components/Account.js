@@ -219,6 +219,8 @@ class Account extends Component {
                     crop={crop}
                     minHeight={300}
                     minWidth={300}
+                    ruleOfThirds
+                    keepSelection
                     onImageLoaded={this.onImageLoaded}
                     onComplete={this.onCropComplete}
                     onChange={this.onCropChange}

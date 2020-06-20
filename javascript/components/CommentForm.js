@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { ActionCreators } from "../actions";
 
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
 
@@ -13,6 +14,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     maxWidth: 600,
+  },
+  counter: {
+    display: "inline-block",
+    position: "absolute",
+    top: -18,
   },
   textField: {},
 }));
@@ -55,18 +61,24 @@ const CommentForm = ({
       onSubmit={postComment}
       className={`${classes.container} ${className || ""}`}
     >
-      <CustomInput
-        value={body}
-        name="body"
-        onChange={(e) => setBody(e.target.value)}
-        multiline
-        className={classes.textField}
-      />
+      <div style={{ position: "relative", width: "100%" }}>
+        <Typography className={classes.counter} variant="caption">
+          {body.length} / 800 chars
+        </Typography>
+        <CustomInput
+          value={body}
+          name="body"
+          onChange={(e) => setBody(e.target.value)}
+          multiline
+          className={classes.textField}
+          maxLength={800}
+        />
+      </div>
       <CustomButton
         disabled={!body.trim()}
         text={!replyId ? "comment" : "reply"}
         onClick={postComment}
-        style={{ width: 100 }}
+        style={{ width: 118 }}
         size="small"
       />
     </form>

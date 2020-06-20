@@ -9,7 +9,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import PeopleIcon from "@material-ui/icons/People";
+import NewReleasesIcon from "@material-ui/icons/NewReleases";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Badge from "@material-ui/core/Badge";
 import Box from "@material-ui/core/Box";
@@ -21,6 +24,7 @@ import { ActionCreators } from "../actions";
 import { date2rel } from "../utils/helpers";
 
 import MainLogo from "./MainLogo";
+import LogoIcon from "./LogoIcon";
 import SearchBar from "./SearchBar";
 
 const useStyles = makeStyles((theme) => {
@@ -38,6 +42,7 @@ const useStyles = makeStyles((theme) => {
     },
     sectionDesktop: {
       display: "none",
+      marginLeft: 24,
       [theme.breakpoints.up("md")]: {
         display: "flex",
       },
@@ -112,9 +117,6 @@ const SiteNav = ({
       <MenuItem onClick={handleMenuClose} component={Link} to="/my-account">
         My Account
       </MenuItem>
-      <MenuItem onClick={handleMenuClose} component={Link} to="/Users">
-        Users
-      </MenuItem>
       <MenuItem onClick={handleMenuClose} component={Link} to="/logout">
         Logout
       </MenuItem>
@@ -140,13 +142,25 @@ const SiteNav = ({
             <NotificationsIcon className={classes.icon} />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        <Typography variant="body1">Notifications</Typography>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton color="inherit">
           <AccountCircle className={classes.icon} />
         </IconButton>
-        <p>Account</p>
+        <Typography variant="body1">Account</Typography>
+      </MenuItem>
+      <MenuItem onClick={handleMobileMenuClose} component={Link} to="/users">
+        <IconButton color="inherit">
+          <PeopleIcon className={classes.icon} />
+        </IconButton>
+        <Typography variant="body1">Users</Typography>
+      </MenuItem>
+      <MenuItem onClick={handleMobileMenuClose} component={Link} to="/feed">
+        <IconButton color="inherit">
+          <NewReleasesIcon className={classes.icon} />
+        </IconButton>
+        <Typography variant="body1">Newsfeed</Typography>
       </MenuItem>
     </Menu>
   );
@@ -214,11 +228,12 @@ const SiteNav = ({
   return (
     <AppBar position="static" elevation={0} className={classes.container}>
       <Toolbar>
-        {loggedIn && (
-          <Box display={{ xs: "none", md: "block" }}>
-            <MainLogo />
-          </Box>
-        )}
+        <Box display={{ xs: "none", md: "block" }}>
+          <MainLogo />
+        </Box>
+        <Box display={{ xs: "block", md: "none" }} style={{ marginRight: 24 }}>
+          <LogoIcon />
+        </Box>
         {!loggedIn && <MainLogo />}
         {renderMobileMenu}
         {renderMenu}
@@ -237,7 +252,11 @@ const SiteNav = ({
           <Fragment>
             <SearchBar />
             <div className={classes.sectionDesktop}>
-              <IconButton onClick={handleNotifsMenuOpen} color="inherit">
+              <IconButton
+                edge="start"
+                onClick={handleNotifsMenuOpen}
+                color="inherit"
+              >
                 <Badge
                   badgeContent={
                     notifications.filter((notif) => !notif.read).length
@@ -248,12 +267,19 @@ const SiteNav = ({
                   <NotificationsIcon className={classes.icon} />
                 </Badge>
               </IconButton>
+              <IconButton component={Link} to="/feed" color="inherit">
+                <NewReleasesIcon className={classes.icon} />
+              </IconButton>
+              <IconButton onClick={handleProfileMenuOpen} color="inherit">
+                <AccountCircle className={classes.icon} />
+              </IconButton>
               <IconButton
                 edge="end"
-                onClick={handleProfileMenuOpen}
+                component={Link}
+                to="/users"
                 color="inherit"
               >
-                <AccountCircle className={classes.icon} />
+                <PeopleIcon className={classes.icon} />
               </IconButton>
             </div>
             <div className={classes.sectionMobile}>

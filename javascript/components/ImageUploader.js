@@ -155,6 +155,7 @@ class ImageUploader extends Component {
       uploadPercentage,
       crop,
       imageSrc,
+      croppedImage,
       title,
       caption,
     } = this.state;
@@ -187,6 +188,8 @@ class ImageUploader extends Component {
                   crop={crop}
                   minHeight={300}
                   minWidth={300}
+                  ruleOfThirds
+                  keepSelection
                   onImageLoaded={this.onImageLoaded}
                   onComplete={this.onCropComplete}
                   onChange={this.onCropChange}
@@ -222,7 +225,7 @@ class ImageUploader extends Component {
               <CustomButton
                 disabled={!imageSrc || !title || !caption}
                 style={{ marginTop: 28, marginLeft: 0 }}
-                disabled={uploading}
+                disabled={uploading || !croppedImage || !title || !caption}
                 text="Upload"
                 type="submit"
               />

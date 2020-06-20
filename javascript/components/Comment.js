@@ -64,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
   replyForm: {
     marginLeft: 12,
+    marginTop: 12,
     marginBottom: 12,
   },
   repliesSection: {

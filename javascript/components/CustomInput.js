@@ -43,9 +43,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomInput = ({ value, name, label, onChange, multiline, ...rest }) => {
+const CustomInput = ({
+  value,
+  name,
+  label,
+  onChange,
+  multiline,
+  maxLength,
+  ...rest
+}) => {
   const classes = useStyles();
-
   return (
     <FormControl
       className={multiline ? classes.textareaContainer : classes.control}
@@ -53,7 +60,10 @@ const CustomInput = ({ value, name, label, onChange, multiline, ...rest }) => {
     >
       <TextField
         className={multiline ? classes.multiline : classes.textField}
-        InputProps={{ className: multiline ? classes.textarea : classes.input }}
+        InputProps={{
+          className: multiline ? classes.textarea : classes.input,
+        }}
+        inputProps={{ maxLength }}
         InputLabelProps={{ className: classes.inputLabel }}
         variant="outlined"
         name={name}

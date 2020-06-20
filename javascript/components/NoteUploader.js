@@ -72,7 +72,7 @@ const NoteUploader = ({ username }) => {
         Post Note
       </Typography>
       <Typography className={classes.counter} variant="caption">
-        {caption.length} / 420 chars
+        {caption.length} / 800 chars
       </Typography>
       <form onSubmit={onSubmitHandler}>
         <CustomInput
@@ -81,7 +81,7 @@ const NoteUploader = ({ username }) => {
           onChange={updateCaption}
           multiline={true}
           rows={3}
-          inputProps={{ maxLength: 420 }}
+          maxLength={800}
         />
         {loading && (
           <CircularProgress
@@ -90,7 +90,7 @@ const NoteUploader = ({ username }) => {
           />
         )}
         <CustomButton
-          disabled={!caption}
+          disabled={!caption || loading}
           className={classes.btn}
           text="Post"
           onClick={onSubmitHandler}
