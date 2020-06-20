@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   imageSection: {
     position: "relative",
     [theme.breakpoints.up("md")]: {
-      paddingRight: 32,
+      paddingRight: 4,
     },
     [theme.breakpoints.down("sm")]: {
       paddingRight: 0,

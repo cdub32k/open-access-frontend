@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   ownerActions: {
     position: "absolute",
     top: 0,
-    right: 56,
+    right: 28,
     backgroundColor: "rgba(255,255,255,0.4)",
     borderRadius: "50%",
     [theme.breakpoints.down("sm")]: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   playerSection: {
     position: "relative",
     [theme.breakpoints.up("md")]: {
-      paddingRight: 32,
+      paddingRight: 4,
     },
     [theme.breakpoints.down("sm")]: {
       paddingRight: 0,

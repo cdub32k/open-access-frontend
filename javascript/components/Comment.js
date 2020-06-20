@@ -28,10 +28,11 @@ import CommentForm from "./CommentForm";
 const useStyles = makeStyles((theme) => ({
   container: {
     marginBottom: 54,
-    minWidth: 320,
+    maxWidth: "100%",
   },
   comment: {
     display: "flex",
+    flexDirection: "column",
     marginBottom: 8,
     position: "relative",
   },
@@ -39,6 +40,13 @@ const useStyles = makeStyles((theme) => ({
     width: 49,
     height: 49,
     marginRight: 16,
+  },
+  avatarSection: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    marginBottom: 8,
   },
   textSection: {
     display: "flex",
@@ -56,10 +64,14 @@ const useStyles = makeStyles((theme) => ({
   replyLink: {
     fontSize: 11,
     cursor: "pointer",
+    display: "inline-block",
     marginLeft: 12,
+    marginBottom: 12,
   },
   showRepliesLink: {
     fontSize: 11,
+    marginBottom: 12,
+    display: "inline-block",
     cursor: "pointer",
   },
   replyForm: {
@@ -160,22 +172,24 @@ let Comment = ({
         <div className={classes.highlighted}>highlighted comment</div>
       )}
       <article className={classes.comment}>
-        <Link to={`/profile/${user.username}`}>
-          <Avatar
-            src={user.profilePic}
-            className={classes.avatar}
-            style={replyStyle.avatar}
-          />
-        </Link>
-        <div className={classes.textSection}>
+        <div className={classes.avatarSection}>
+          <Link to={`/profile/${user.username}`}>
+            <Avatar
+              src={user.profilePic}
+              className={classes.avatar}
+              style={replyStyle.avatar}
+            />
+          </Link>
           <Typography className={classes.userInfo} variant="body2">
             <Link to={`/profile/${user.username}`}>
               <b>@{user.username}</b>
             </Link>
             &nbsp;&#8226;&nbsp;{date2rel(createdAt)}
           </Typography>
+        </div>
+        <div className={classes.textSection}>
           <Typography
-            style={{ whiteSpace: "pre-wrap" }}
+            style={{ whiteSpace: "pre-wrap", paddingRight: 2 }}
             variant="body1"
             dangerouslySetInnerHTML={{
               __html: body,

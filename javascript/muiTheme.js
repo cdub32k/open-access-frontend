@@ -82,12 +82,16 @@ const theme = createMuiTheme({
     fontFamily: ["Montserrat", "sans-serif"].join(","),
   },
   breakpoints: {
-    xs: 0,
-    sm: 600,
-    md: 960,
-    lg: 1280,
-    xl: 1920,
+    keys: ["xs", "xm", "md", "lg", "xl"],
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 1024,
+      lg: 1280,
+      xl: 1920,
+    },
   },
+
   globalClasses: {
     inputContainer: {
       margin: `${defaultTheme.spacing(2)}px 0 0 0`,

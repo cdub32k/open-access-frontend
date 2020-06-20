@@ -78,7 +78,7 @@ const CommentForm = ({
         disabled={!body.trim()}
         text={!replyId ? "comment" : "reply"}
         onClick={postComment}
-        style={{ width: 118 }}
+        style={{ width: 118, margin: 0, marginLeft: 12 }}
         size="small"
       />
     </form>

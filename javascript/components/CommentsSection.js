@@ -15,8 +15,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 12,
   },
   section: {
-    paddingRight: 32,
-    overflowY: "auto",
+    overflow: "auto",
     maxHeight: 800,
     paddingTop: 24,
   },
