@@ -78,9 +78,7 @@ const CheckoutForm = ({
             window.location.href = url;
           } else {
             let sub = res.data.subscription;
-            url += `?p=${charge._id
-              .substring(charge._id.length - 8)
-              .toUpperCase()}`;
+            url += `?p=${sub._id.substring(sub._id.length - 8).toUpperCase()}`;
             window.location.href = url;
           }
         })
