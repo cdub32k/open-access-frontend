@@ -21,7 +21,7 @@ import axios from "axios";
 
 import CustomButton from "./CustomButton";
 
-import { date2str, printCentsToCurreny } from "../utils/helpers";
+import { date2str, printCentsToCurreny, getPaymentId } from "../utils/helpers";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     padding: 12,
+    maxWidth: 820,
   },
   dialog: {
     padding: 14,
@@ -71,9 +72,11 @@ const Payment = ({
   subscriptions,
   active,
   activeUntil,
+  location,
 }) => {
   const classes = useStyles();
   const theme = useTheme();
+  const [paymentId, setPaymentId] = useState(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
@@ -90,6 +93,8 @@ const Payment = ({
 
   useEffect(() => {
     loadPaymentInfo();
+    let p = getPaymentId(location.search);
+    if (p) setPaymentId(p);
   }, []);
 
   const confirmClose = () => {
@@ -99,6 +104,11 @@ const Payment = ({
   return (
     <Grid container className={classes.container}>
       <Grid className={classes.main} item xs={12}>
+        {paymentId && (
+          <Typography style={{ marginBottom: 28 }} color="primary" variant="h5">
+            Payment Received! Confirmation #{paymentId}
+          </Typography>
+        )}
         <Typography className={classes.header} variant="h3">
           Payment Status
         </Typography>
@@ -117,6 +127,7 @@ const Payment = ({
             <Typography variant="h5">Thank you loyal subscriber</Typography>
             <CustomButton
               text="Cancel Subscription"
+              style={{ marginLeft: 0 }}
               onClick={() => setConfirmOpen(true)}
             />
           </div>
@@ -128,7 +139,7 @@ const Payment = ({
       {(activeUntil || !active) && (
         <Grid className={classes.newPayment} item xs={12}>
           <Typography variant="h5">
-            Make a new payment (1 month or subsribe)
+            Make a new payment (1 month or subscribe)
           </Typography>
           <Elements stripe={stripePromise}>
             <CheckoutForm />
@@ -152,8 +163,8 @@ const Payment = ({
           )}
           {subscriptions.map((sub, i) => {
             return (
-              <li>
-                <div key={i} className={classes.sub}>
+              <li key={i}>
+                <div className={classes.sub}>
                   {printCentsToCurreny(sub.amount)}/mo. on{" "}
                   {date2str(sub.createdAt)} (confrimation #
                   <b>{sub._id.substring(sub._id.length - 8).toUpperCase()}</b>)
@@ -185,8 +196,8 @@ const Payment = ({
           )}
           {charges.map((charge, i) => {
             return (
-              <li>
-                <div key={i} className={classes.charge}>
+              <li key={i}>
+                <div className={classes.charge}>
                   {printCentsToCurreny(charge.amount)} on{" "}
                   {date2str(charge.createdAt)} (confrimation #
                   <b>

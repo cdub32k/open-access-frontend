@@ -161,6 +161,9 @@ export const ActionTypes = {
   GET_ALL_USERNAMES: "GET_ALL_USERNAMES",
   GET_ALL_USERNAMES_SUCCESS: "GET_ALL_USERNAMES_SUCCESS",
   GET_ALL_USERNAMES_ERROR: "GET_ALL_USERNAMES_ERROR",
+  MAKE_PAYMENT_START: "MAKE_PAYMENT_START",
+  MAKE_PAYMENT_SUCCESS: "MAKE_PAYMENT_SUCCESS",
+  MAKE_PAYMENT_ERROR: "MAKE_PAYMENT_ERROR",
 };
 
 export const ActionCreators = {
@@ -202,6 +205,15 @@ export const ActionCreators = {
   },
   getUserInfoError: (error) => {
     return { type: ActionTypes.GET_USER_INFO_ERROR, error };
+  },
+  makePaymentStart: () => {
+    return { type: ActionTypes.MAKE_PAYMENT_START };
+  },
+  makePaymentSuccess: () => {
+    return { type: ActionTypes.MAKE_PAYMENT_SUCCESS };
+  },
+  makePaymentError: () => {
+    return { type: ActionTypes.MAKE_PAYMENT_ERROR };
   },
   clearUserData: () => {
     return { type: ActionTypes.CLEAR_USER_DATA };

@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { ActionCreators } from "../actions";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import axios from "axios";
 
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 
 import CardSection from "./CardSection";
+import CustomButton from "./CustomButton";
 
 const useStyles = makeStyles((theme) => ({
   error: {
@@ -18,11 +20,18 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
   },
   orderBtn: {
-    marginTop: 32,
+    marginTop: 28,
+    marginLeft: 0,
   },
 }));
 
-const CheckoutForm = ({ email }) => {
+const CheckoutForm = ({
+  loading,
+  email,
+  paymentStart,
+  paymentSuccess,
+  paymentError,
+}) => {
   const classes = useStyles();
 
   const stripe = useStripe();
@@ -33,6 +42,7 @@ const CheckoutForm = ({ email }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    paymentStart();
 
     if (!stripe || !elements) {
       return;
@@ -47,6 +57,7 @@ const CheckoutForm = ({ email }) => {
     });
 
     if (result.error) {
+      paymentError();
       setCardError(result.error.message);
       setTimeout(() => {
         setCardError("");
@@ -57,7 +68,23 @@ const CheckoutForm = ({ email }) => {
           payment_method: result.paymentMethod.id,
           subscribed,
         })
-        .then((res) => {});
+        .then((res) => {
+          let url = window.location.pathname;
+          if (!subscribed) {
+            let charge = res.data.charge;
+            url += `?p=${charge._id
+              .substring(charge._id.length - 8)
+              .toUpperCase()}`;
+            window.location.href = url;
+          } else {
+            let sub = res.data.subscription;
+            url += `?p=${charge._id
+              .substring(charge._id.length - 8)
+              .toUpperCase()}`;
+            window.location.href = url;
+          }
+        })
+        .catch((error) => {});
     }
   };
 
@@ -79,22 +106,31 @@ const CheckoutForm = ({ email }) => {
           />
         </FormGroup>
         {cardError && <div className={classes.error}>{cardError}</div>}
-        <Button
+        {loading && (
+          <CircularProgress
+            style={{ marginTop: 28, display: "block" }}
+            disableShrink
+          />
+        )}
+        <CustomButton
           className={classes.orderBtn}
           type="submit"
-          variant="contained"
-          color="primary"
-          disabled={!stripe}
-        >
-          Confirm order
-        </Button>
+          disabled={!stripe || loading}
+          text="Confirm order"
+        ></CustomButton>
       </form>
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
+  loading: state.user.loading,
   email: state.user.email,
 });
+const mapDispatchToProps = (dispatch) => ({
+  paymentStart: () => dispatch(ActionCreators.makePaymentStart()),
+  paymentSuccess: () => dispatch(ActionCreators.makePaymentSuccess()),
+  paymentError: (e) => dispatch(ActionCreators.makePaymentError(e)),
+});
 
-export default connect(mapStateToProps)(CheckoutForm);
+export default connect(mapStateToProps, mapDispatchToProps)(CheckoutForm);

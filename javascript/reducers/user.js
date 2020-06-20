@@ -129,6 +129,12 @@ const userReducer = (state = initialState, action) => {
         viewed: { ...state.viewed, ...action.payload.userInfo, loading: false },
         loading: false,
       };
+    case ActionTypes.MAKE_PAYMENT_START:
+      return { ...state, loading: true };
+    case ActionTypes.MAKE_PAYMENT_SUCCESS:
+      return { ...state, loading: false };
+    case ActionTypes.MAKE_PAYMENT_ERROR:
+      return { ...state, loading: false };
     case ActionTypes.GET_USER_INFO_ERROR:
       return {
         ...state,

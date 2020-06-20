@@ -112,6 +112,18 @@ export function getCommentId(search) {
   return null;
 }
 
+export function getPaymentId(search) {
+  search = decodeURI(search.slice(1));
+  if (search.indexOf("p=") > -1) {
+    let c = null;
+    search.split("&").forEach((kv) => {
+      if (kv.split("=")[0] == "p") c = kv.split("=")[1];
+    });
+    return c;
+  }
+  return null;
+}
+
 export function getSearchQuery(search) {
   search = decodeURI(search.slice(1));
   if (search.indexOf("s=") > -1) {
