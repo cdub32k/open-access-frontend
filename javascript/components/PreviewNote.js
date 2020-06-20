@@ -13,17 +13,18 @@ import ContentActions from "./ContentActions";
 const useStyles = makeStyles((theme) => ({
   container: {
     position: "relative",
-    width: "calc(100% - 48px);",
-    margin: 24,
+    width: "calc(100% - 24px);",
+    margin: 12,
+    marginTop: 0,
     display: "inline-block",
   },
   text: {
-    height: 22,
+    height: 12,
     backgroundColor: "rgba(0, 0, 0, 0.1)",
     margin: "4px 0",
   },
   noteContainer: {
-    paddingBottom: "56.25%",
+    paddingBottom: "36.25%",
     position: "relative",
     backgroundColor: "rgba(0, 0, 0, 0.1)",
   },

@@ -12,6 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import AddCommentIcon from "@material-ui/icons/AddComment";
+import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
 import ContentActions from "./ContentActions";
@@ -21,8 +22,8 @@ import { num2str, date2rel, convertHashtagsToLinks } from "../utils/helpers";
 const styles = (theme) => ({
   container: {
     position: "relative",
-    width: "calc(100% - 48px);",
-    margin: 24,
+    width: "calc(100% - 24px);",
+    margin: 12,
     marginTop: 0,
     marginBottom: 80,
     display: "inline-block",
@@ -48,7 +49,11 @@ const styles = (theme) => ({
     left: 0,
     bottom: 0,
   },
+  header: {
+    paddingBottom: 0,
+  },
   caption: {
+    padding: 12,
     fontSize: 15,
     fontWeight: 400,
     whiteSpace: "pre-wrap",
@@ -88,7 +93,7 @@ class Image_C extends PureComponent {
     } = this.props;
 
     return (
-      <Card className={classes.container}>
+      <Card className={classes.container} elevation={4}>
         <CardMedia className={classes.imageContainer}>
           <img className={classes.img} src={url} />
         </CardMedia>
@@ -98,11 +103,13 @@ class Image_C extends PureComponent {
             <span style={{ fontSize: 12 }}>
               <span style={{ fontSize: 18 }}>{title}</span>
               <br />
-              by {user.username}
-              <br />
-              {date2rel(uploadedAt)}
+              <Typography variant="body2">by {user.username}</Typography>
+              <Typography variant="body2">
+                <i>{date2rel(uploadedAt)}</i>
+              </Typography>
             </span>
           }
+          className={classes.header}
         />
         <CardContent
           className={classes.caption}

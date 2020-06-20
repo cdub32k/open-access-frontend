@@ -7,7 +7,7 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import { num2str, date2rel, truncateNotePreview } from "../utils/helpers";
 
@@ -34,15 +34,15 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: 16,
     fontWeight: "bold",
-    minHeight: 44,
-    lineHeight: 0,
+
+    textAlign: "left",
   },
   previewDetails: {
     display: "flex",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    alignItems: "flex-start",
     fontSize: "10px",
     maxWidth: "75%",
-    marginTop: 8,
   },
   link: {
     color: `${theme.palette.text.primary} !important`,
@@ -79,6 +79,7 @@ const ContentPreview = ({
       break;
   }
   const classes = useStyles();
+  const theme = useTheme();
   const [elevation, setElevation] = useState(4);
   const onMouseOver = () => setElevation(12);
   const onMouseOut = () => setElevation(4);
@@ -86,6 +87,7 @@ const ContentPreview = ({
   return (
     <Card
       className={`${classes.container} content-preview`}
+      style={{ height: contentType == "image" ? 300 : 240 }}
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
       elevation={elevation}
@@ -97,26 +99,33 @@ const ContentPreview = ({
               `${classes.thumb} content-thumb` +
               (contentType == "image" ? " image-thumb" : "")
             }
+            style={{ height: contentType == "image" ? 300 : 169 }}
             image={thumbUrl}
           />
         )}
         {contentType == "note" && (
           <CardContent className={`${classes.thumb} content-thumb`}>
-            <div style={{ fontSize: 14 }}>{truncateNotePreview(caption)}</div>
+            <div style={{ fontSize: 14, color: theme.palette.dark.main }}>
+              {truncateNotePreview(caption)}
+            </div>
           </CardContent>
         )}
       </Link>
-      <CardHeader
-        className={classes.previewDetailsContainer}
-        avatar={<Avatar src={user.profilePic} />}
-        title={<span className={classes.title}>{title}</span>}
-        subheader={
-          <div className={classes.previewDetails}>
-            <div>{metric}</div>
-            <div>{date2rel(uploadedAt)}</div>
-          </div>
-        }
-      />
+      {contentType != "image" && (
+        <CardHeader
+          className={classes.previewDetailsContainer}
+          avatar={<Avatar src={user.profilePic} />}
+          title={<div className={classes.title}>{title}</div>}
+          subheader={
+            <div className={classes.previewDetails}>
+              <div>{metric}</div>
+              <div>
+                <i>{date2rel(uploadedAt)}</i>
+              </div>
+            </div>
+          }
+        />
+      )}
     </Card>
   );
 };

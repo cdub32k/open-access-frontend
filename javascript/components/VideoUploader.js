@@ -141,7 +141,6 @@ class VideoUploader extends Component {
         maxContentLength: Infinity,
         maxBodyLength: Infinity,
         onUploadProgress: (e) => {
-          console.log("loaded:", e.loaded, e.total);
           this.setState({
             uploadPercentage: parseInt(Math.round((e.loaded / e.total) * 100)),
           });

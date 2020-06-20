@@ -12,11 +12,13 @@ import { withStyles } from "@material-ui/core/styles";
 import { num2str } from "../utils/helpers";
 
 const styles = (theme) => ({
+  container: { padding: 0 },
   metric: {
     fontSize: 14,
     marginRight: 12,
     minWidth: 30,
   },
+  icon: {},
 });
 
 const ContentActions = ({
@@ -33,12 +35,16 @@ const ContentActions = ({
   const likeIcon = liked ? <FavoriteIcon /> : <FavoriteBorderIcon />;
   const dislikeIcon = disliked ? <ThumbDownIcon /> : <ThumbDownOutline />;
   return (
-    <CardActions disableSpacing>
-      <IconButton onClick={like}>{likeIcon}</IconButton>
+    <CardActions className={classes.container} disableSpacing>
+      <IconButton className={classes.icon} onClick={like}>
+        {likeIcon}
+      </IconButton>
       <span className={classes.metric}>{num2str(likeCount)}</span>
-      <IconButton onClick={dislike}>{dislikeIcon}</IconButton>
+      <IconButton className={classes.icon} onClick={dislike}>
+        {dislikeIcon}
+      </IconButton>
       <span className={classes.metric}>{num2str(dislikeCount)}</span>
-      <IconButton style={{ pointerEvents: "none" }}>
+      <IconButton className={classes.icon} style={{ pointerEvents: "none" }}>
         <AddCommentIcon />
       </IconButton>
       <span className={classes.metric}>{num2str(commentCount)}</span>

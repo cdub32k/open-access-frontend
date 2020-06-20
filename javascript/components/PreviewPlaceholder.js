@@ -51,22 +51,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PreviewPlaceholder = () => {
+const PreviewPlaceholder = ({ type }) => {
   const classes = useStyles();
   return (
-    <Card className={`${classes.container} content-preview`}>
-      <CardContent className={`${classes.thumb} preview-placeholder-thumb`} />
-      <CardHeader
-        className={classes.previewDetailsContainer}
-        avatar={<Avatar />}
-        title={<span className={classes.title}></span>}
-        subheader={
-          <div className={classes.previewDetails}>
-            <div></div>
-            <div></div>
-          </div>
-        }
+    <Card
+      className={`${classes.container} content-preview`}
+      style={{ height: type == "image" ? 300 : 240 }}
+    >
+      <CardContent
+        className={`${classes.thumb} preview-placeholder-thumb`}
+        style={{ height: type == "image" ? 300 : 169 }}
       />
+      {type != "image" && (
+        <CardHeader
+          className={classes.previewDetailsContainer}
+          avatar={<Avatar />}
+          title={<span className={classes.title}></span>}
+          subheader={
+            <div className={classes.previewDetails}>
+              <div></div>
+              <div></div>
+            </div>
+          }
+        />
+      )}
     </Card>
   );
 };

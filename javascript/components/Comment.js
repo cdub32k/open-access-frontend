@@ -27,7 +27,7 @@ import CommentForm from "./CommentForm";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    marginBottom: 54,
+    marginBottom: 48,
     maxWidth: "100%",
   },
   comment: {
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    marginBottom: 8,
+    marginBottom: 4,
   },
   textSection: {
     display: "flex",

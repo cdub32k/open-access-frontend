@@ -140,20 +140,14 @@ const NewsFeedItem = ({
               background: `linear-gradient(45deg, ${bgL} 68%, ${bgR})`,
             }}
           >
-            <Typography
-              style={{ color: f }}
-              gutterBottom
-              variant="h5"
-              component="h2"
-            >
+            <Typography style={{ color: f }} gutterBottom variant="h5">
               {title || truncateNotePreview(caption)}
             </Typography>
             {type != "note" && (
               <Typography
                 style={{ color: f }}
-                variant="body2"
+                variant="body1"
                 color="textSecondary"
-                component="p"
               >
                 {caption}
               </Typography>

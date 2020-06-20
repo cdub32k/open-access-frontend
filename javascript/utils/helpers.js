@@ -95,9 +95,8 @@ export function findAndDeleteComment(comms, id) {
 }
 
 export function truncateNotePreview(body) {
-  // if (body.length > 222) return body.substring(222) + "...";
-  // else return body;
-  return body;
+  if (body.length > 222) return body.substring(0, 222) + "...";
+  else return body;
 }
 
 export function getCommentId(search) {

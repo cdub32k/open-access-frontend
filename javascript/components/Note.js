@@ -11,6 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import AddCommentIcon from "@material-ui/icons/AddComment";
+import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
 import ContentActions from "./ContentActions";
@@ -20,8 +21,8 @@ import { num2str, date2rel, convertHashtagsToLinks } from "../utils/helpers";
 const styles = (theme) => ({
   container: {
     position: "relative",
-    width: "calc(100% - 48px);",
-    margin: 24,
+    width: "calc(100% - 24px);",
+    margin: 12,
     marginTop: 0,
     marginBottom: 80,
     display: "inline-block",
@@ -37,8 +38,10 @@ const styles = (theme) => ({
     justifyContent: "space-between",
   },
   noteContainer: {
-    paddingBottom: "56.25%",
     position: "relative",
+  },
+  header: {
+    paddingBottom: 0,
   },
   note: {
     left: 0,
@@ -48,7 +51,6 @@ const styles = (theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    position: "absolute",
   },
   metric: {
     fontSize: 14,
@@ -82,11 +84,15 @@ class Note extends PureComponent {
       subscribeToUpdates,
     } = this.props;
     return (
-      <Card className={classes.container}>
+      <Card className={classes.container} elevation={4}>
         <CardContent className={classes.noteContainer}>
           <div className={classes.note}>
             <div
-              style={{ whiteSpace: "pre-wrap", width: "90%" }}
+              style={{
+                whiteSpace: "pre-wrap",
+                padding: 24,
+                fontSize: caption.length > 400 ? 14 : 16,
+              }}
               dangerouslySetInnerHTML={{
                 __html: convertHashtagsToLinks(caption),
               }}
@@ -97,11 +103,13 @@ class Note extends PureComponent {
           avatar={<Avatar src={user.profilePic} />}
           title={
             <span style={{ fontSize: 12 }}>
-              by {user.username}
-              <br />
-              {date2rel(uploadedAt)}
+              <Typography variant="body2">by {user.username}</Typography>
+              <Typography variant="body2">
+                <i>{date2rel(uploadedAt)}</i>
+              </Typography>
             </span>
           }
+          className={classes.header}
         />
         <ContentActions
           contentType="note"

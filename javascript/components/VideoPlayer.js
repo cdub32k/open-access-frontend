@@ -8,6 +8,7 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
+import Typography from "@material-ui/core/Typography";
 
 import { makeStyles } from "@material-ui/core/styles";
 import ContentActions from "./ContentActions";
@@ -21,8 +22,8 @@ import {
 const useStyles = makeStyles((theme) => ({
   container: {
     position: "relative",
-    width: "calc(100% - 48px);",
-    margin: 24,
+    width: "calc(100% - 24px);",
+    margin: 12,
     marginTop: 0,
     marginBottom: 80,
     display: "inline-block",
@@ -47,6 +48,15 @@ const useStyles = makeStyles((theme) => ({
     height: "100% !important",
     left: 0,
     bottom: 0,
+  },
+  header: {
+    paddingBottom: 0,
+  },
+  views: {
+    padding: 12,
+  },
+  caption: {
+    padding: 12,
   },
   ownerActions: {
     width: 100,
@@ -89,7 +99,10 @@ const VideoPlayer = ({
   const classes = useStyles();
 
   return (
-    <Card className={`${classes.container} video-player-container`}>
+    <Card
+      className={`${classes.container} video-player-container`}
+      elevation={4}
+    >
       <CardMedia className={classes.playerContainer}>
         <ReactPlayer
           className={classes.player}
@@ -107,18 +120,21 @@ const VideoPlayer = ({
           <span style={{ fontSize: 12 }}>
             <span style={{ fontSize: 18 }}>{title}</span>
             <br />
-            by {user.username}
-            <br />
-            {date2rel(uploadedAt)}
+            <Typography variant="body2">by {user.username}</Typography>
+            <Typography variant="body2">
+              <i>{date2rel(uploadedAt)}</i>
+            </Typography>
           </span>
         }
+        className={classes.header}
       />
-      <CardContent style={{ paddingTop: 0, whiteSpace: "pre-wrap" }}>
-        <div style={{ fontWeight: 400 }}>
+      <CardContent className={classes.views}>
+        <Typography variant="body1">
           {thousandsSeparators(viewCount)} views
-        </div>
+        </Typography>
       </CardContent>
       <CardContent
+        className={classes.caption}
         dangerouslySetInnerHTML={{
           __html: convertHashtagsToLinks(caption),
         }}

@@ -64,7 +64,7 @@ class ImageList extends Component {
           })
           .concat(
             Array.from({ length: 4 }).map((preview, i) => {
-              return <PreviewPlaceholder key={i} />;
+              return <PreviewPlaceholder key={i} type="image" />;
             })
           )
       : images.map((image, i) => {

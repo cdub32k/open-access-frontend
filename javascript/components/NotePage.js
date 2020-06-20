@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   ownerActions: {
     position: "absolute",
     top: 0,
-    right: 28,
+    right: 16,
     backgroundColor: "rgba(255,255,255,0.4)",
     borderRadius: "50%",
     [theme.breakpoints.down("sm")]: {

@@ -59,7 +59,7 @@ const theme = createMuiTheme({
       color: dark,
       whiteSpace: "pre-wrap",
     },
-    h5: { color: dark, fontSize: 18, fontWeight: 700, whiteSpace: "pre-wrap" },
+    h5: { color: dark, fontSize: 18, whiteSpace: "pre-wrap" },
     h6: { color: dark, whiteSpace: "pre-wrap" },
     subtitle1: {
       color: dark,
@@ -70,7 +70,6 @@ const theme = createMuiTheme({
     subtitle2: {
       color: dark,
       fontSize: 12,
-      fontWeight: 700,
       whiteSpace: "pre-wrap",
     },
     body1: { color: dark, fontSize: 13, lineHeight: 2, whiteSpace: "pre-wrap" },
@@ -82,11 +81,11 @@ const theme = createMuiTheme({
     fontFamily: ["Montserrat", "sans-serif"].join(","),
   },
   breakpoints: {
-    keys: ["xs", "xm", "md", "lg", "xl"],
+    keys: ["xs", "sm", "md", "lg", "xl"],
     values: {
       xs: 0,
       sm: 600,
-      md: 1024,
+      md: 1025,
       lg: 1280,
       xl: 1920,
     },
