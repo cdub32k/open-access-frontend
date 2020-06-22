@@ -86,9 +86,7 @@ const UserLikeList = ({ loading, likes, hasMore, loadMore }) => {
           </div>
         );
       })}
-      {loading && (
-        <CircularProgress style={{ margin: "28px 0" }} disableShrink />
-      )}
+      {loading && <CircularProgress style={{ margin: "28px 0" }} />}
       {hasMore && (
         <div>
           <CustomButton

@@ -50,9 +50,7 @@ const UserCommentList = ({ loading, comments, hasMore, loadMore }) => {
           </UserComment>
         );
       })}
-      {loading && (
-        <CircularProgress style={{ margin: "28px 0" }} disableShrink />
-      )}
+      {loading && <CircularProgress style={{ margin: "28px 0" }} />}
       {hasMore && (
         <div>
           <CustomButton

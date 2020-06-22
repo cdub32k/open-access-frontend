@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   textarea: {
     color: theme.palette.dark.main,
-    width: "100%",
+    maxWidth: 600,
   },
   input: {
     color: theme.palette.dark.main,

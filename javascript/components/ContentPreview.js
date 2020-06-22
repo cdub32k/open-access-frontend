@@ -9,7 +9,12 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
-import { num2str, date2rel, truncateNotePreview } from "../utils/helpers";
+import {
+  num2str,
+  date2rel,
+  truncateCaptionPreview,
+  truncateTitlePreview,
+} from "../utils/helpers";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -32,9 +37,7 @@ const useStyles = makeStyles((theme) => ({
     height: 72,
   },
   title: {
-    fontSize: 16,
-    fontWeight: "bold",
-
+    fontSize: 13,
     textAlign: "left",
   },
   previewDetails: {
@@ -106,7 +109,7 @@ const ContentPreview = ({
         {contentType == "note" && (
           <CardContent className={`${classes.thumb} content-thumb`}>
             <div style={{ fontSize: 14, color: theme.palette.dark.main }}>
-              {truncateNotePreview(caption)}
+              {truncateCaptionPreview(caption)}
             </div>
           </CardContent>
         )}
@@ -115,7 +118,11 @@ const ContentPreview = ({
         <CardHeader
           className={classes.previewDetailsContainer}
           avatar={<Avatar src={user.profilePic} />}
-          title={<div className={classes.title}>{title}</div>}
+          title={
+            title && (
+              <div className={classes.title}>{truncateTitlePreview(title)}</div>
+            )
+          }
           subheader={
             <div className={classes.previewDetails}>
               <div>{metric}</div>

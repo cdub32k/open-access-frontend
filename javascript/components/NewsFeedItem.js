@@ -14,7 +14,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-import { num2str, date2rel, truncateNotePreview } from "../utils/helpers";
+import { num2str, date2rel, truncateCaptionPreview } from "../utils/helpers";
 
 const useStyles = makeStyles({
   root: {
@@ -141,7 +141,7 @@ const NewsFeedItem = ({
             }}
           >
             <Typography style={{ color: f }} gutterBottom variant="h5">
-              {title || truncateNotePreview(caption)}
+              {title || truncateCaptionPreview(caption)}
             </Typography>
             {type != "note" && (
               <Typography
@@ -149,7 +149,7 @@ const NewsFeedItem = ({
                 variant="body1"
                 color="textSecondary"
               >
-                {caption}
+                {truncateCaptionPreview(caption)}
               </Typography>
             )}
           </CardContent>

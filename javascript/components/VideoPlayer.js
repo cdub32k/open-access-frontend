@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 12,
   },
   caption: {
+    whiteSpace: "pre-wrap",
     padding: 12,
   },
   ownerActions: {

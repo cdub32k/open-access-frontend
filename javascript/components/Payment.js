@@ -133,7 +133,7 @@ const Payment = ({
           </div>
         )}
         {(loading || deleting) && (
-          <CircularProgress style={{ margin: "28px 0" }} disableShrink />
+          <CircularProgress style={{ margin: "28px 0" }} />
         )}
       </Grid>
       {(activeUntil || !active) && (

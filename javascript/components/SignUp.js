@@ -228,9 +228,7 @@ const SignUp = ({ error, signupStart, ...rest }) => {
                 {cardError && <div className={classes.error}>{cardError}</div>}
               </Grid>
             </Grid>
-            {loading && (
-              <CircularProgress style={{ marginTop: 28 }} disableShrink />
-            )}
+            {loading && <CircularProgress style={{ marginTop: 28 }} />}
             <Grid container justify="center" className={classes.btn}>
               <Grid item xs={12}>
                 <CustomButton

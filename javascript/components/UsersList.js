@@ -39,9 +39,7 @@ const UserList = ({ getAllUsernames, users, loading }) => {
       <Typography className={classes.header} variant="h4">
         Users
       </Typography>
-      {loading && (
-        <CircularProgress style={{ margin: "28px 0" }} disableShrink />
-      )}
+      {loading && <CircularProgress style={{ margin: "28px 0" }} />}
       {users.map((user) => {
         return (
           <div className={classes.userContainer} key={user.username}>

@@ -92,6 +92,7 @@ class Note extends PureComponent {
                 whiteSpace: "pre-wrap",
                 padding: 24,
                 fontSize: caption.length > 400 ? 14 : 16,
+                wordBreak: "break-word",
               }}
               dangerouslySetInnerHTML={{
                 __html: convertHashtagsToLinks(caption),

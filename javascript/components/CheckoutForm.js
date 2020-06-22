@@ -105,10 +105,7 @@ const CheckoutForm = ({
         </FormGroup>
         {cardError && <div className={classes.error}>{cardError}</div>}
         {loading && (
-          <CircularProgress
-            style={{ marginTop: 28, display: "block" }}
-            disableShrink
-          />
+          <CircularProgress style={{ marginTop: 28, display: "block" }} />
         )}
         <CustomButton
           className={classes.orderBtn}

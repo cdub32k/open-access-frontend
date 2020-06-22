@@ -152,6 +152,10 @@ class VideoUploader extends Component {
             goToProfile: true,
             _id: res.data.video._id,
           });
+      })
+      .catch((err) => {
+        alert("There was an error! Please try again");
+        window.location.reload();
       });
   };
 
@@ -239,22 +243,29 @@ class VideoUploader extends Component {
                 </div>
               )}
             </Grid>
-            <Grid item xs={12} sm={8} lg={6} style={{ marginTop: 48 }}>
+            <Grid item xs={12} style={{ marginTop: 48 }}>
               <div className={classes.inputContainer}>
+                <Typography className={classes.counter} variant="caption">
+                  {title.length} / 120 chars
+                </Typography>
                 <CustomInput
                   name="title"
                   label="Title"
                   value={title}
+                  maxLength={120}
                   onChange={this.onTextChange}
                 />
               </div>
               <div className={classes.inputContainer}>
+                <Typography className={classes.counter} variant="caption">
+                  {caption.length} / 2000 chars
+                </Typography>
                 <CustomInput
                   multiline={true}
-                  rows={3}
                   name="caption"
                   label="Caption"
                   value={caption}
+                  maxLength={2000}
                   onChange={this.onTextChange}
                 />
               </div>
@@ -285,10 +296,14 @@ class VideoUploader extends Component {
 
 const styles = (theme) => ({
   form: {
+    maxWidth: 820,
     display: "flex",
-    maxWidth: 1450,
     justifyContent: "space-between",
     margin: "auto",
+  },
+  counter: {
+    marginBottom: 5,
+    display: "block",
   },
   ...theme.globalClasses,
 });

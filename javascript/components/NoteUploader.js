@@ -6,6 +6,7 @@ import axios from "axios";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 
 import CustomInput from "./CustomInput";
@@ -13,11 +14,12 @@ import CustomButton from "./CustomButton";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    width: 320,
+    width: "100%",
+    padding: 12,
   },
   form: {
     display: "flex",
-    maxWidth: 1450,
+    maxWidth: 820,
     justifyContent: "space-between",
     margin: "auto",
   },
@@ -32,6 +34,14 @@ const useStyles = makeStyles((theme) => ({
     margin: `${theme.spacing(2)}px 0`,
   },
 }));
+
+const POST_NOTE_QUERY = `
+  mutation PostNote($caption: String!) {
+    postNote(caption: $caption) {
+      _id
+    }
+  }
+`;
 
 const NoteUploader = ({ username }) => {
   const classes = useStyles();
@@ -48,19 +58,18 @@ const NoteUploader = ({ username }) => {
     setLoading(true);
     axios
       .post("/api", {
-        query: `
-      mutation {
-        postNote(caption:"${caption}") {
-          _id
-        }
-      }
-    `,
+        query: POST_NOTE_QUERY,
+        variables: { caption },
       })
       .then((res) => {
         if (res.data.data.postNote) {
           setNoteId(res.data.data.postNote._id);
           setGoToProfile(true);
         }
+      })
+      .catch((err) => {
+        alert("There was an error! Please try again");
+        window.location.reload();
       });
   };
 
@@ -68,34 +77,38 @@ const NoteUploader = ({ username }) => {
 
   return (
     <div className={classes.container}>
-      <Typography color="primary" variant="h3">
-        Post Note
-      </Typography>
-      <Typography className={classes.counter} variant="caption">
-        {caption.length} / 800 chars
-      </Typography>
-      <form onSubmit={onSubmitHandler}>
-        <CustomInput
-          className={classes.input}
-          value={caption}
-          onChange={updateCaption}
-          multiline={true}
-          rows={3}
-          maxLength={800}
-        />
-        {loading && (
-          <CircularProgress
-            style={{ margin: "28px 0", display: "block" }}
-            disableShrink
-          />
-        )}
-        <CustomButton
-          disabled={!caption || loading}
-          className={classes.btn}
-          text="Post"
-          onClick={onSubmitHandler}
-        />
-      </form>
+      <div className={classes.form}>
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography color="primary" variant="h3">
+              Post Note
+            </Typography>
+            <Typography className={classes.counter} variant="caption">
+              {caption.length} / 800 chars
+            </Typography>
+            <form onSubmit={onSubmitHandler}>
+              <CustomInput
+                className={classes.input}
+                value={caption}
+                onChange={updateCaption}
+                multiline={true}
+                maxLength={800}
+              />
+              {loading && (
+                <CircularProgress
+                  style={{ margin: "28px 0", display: "block" }}
+                />
+              )}
+              <CustomButton
+                disabled={!caption || loading}
+                className={classes.btn}
+                text="Post"
+                onClick={onSubmitHandler}
+              />
+            </form>
+          </Grid>
+        </Grid>
+      </div>
     </div>
   );
 };
