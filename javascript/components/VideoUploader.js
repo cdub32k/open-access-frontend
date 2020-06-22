@@ -130,32 +130,72 @@ class VideoUploader extends Component {
       uploading: true,
     });
 
-    const data = new FormData();
-    data.append("video", this.state.videoFile);
-    data.append("thumb", this.state.croppedThumb);
-    data.append("title", this.state.title);
-    data.append("caption", this.state.caption);
+    const { videoFile, croppedThumb, title, caption } = this.state;
+
+    var tmpName = videoFile.name;
+    var fileExtension = tmpName.split(".")[tmpName.split(".").length - 1];
+    let fileName = Date.now() + "." + fileExtension;
+
+    let fileType = videoFile.type;
 
     axios
-      .post("/videos/upload", data, {
-        maxContentLength: Infinity,
-        maxBodyLength: Infinity,
-        onUploadProgress: (e) => {
-          this.setState({
-            uploadPercentage: parseInt(Math.round((e.loaded / e.total) * 100)),
-          });
-        },
+      .post("/auth/sign-s3", {
+        fileName: `vid/${this.props.username}/${fileName}`,
+        fileType,
       })
       .then((res) => {
-        if (res.data)
-          this.setState({
-            goToProfile: true,
-            _id: res.data.video._id,
-          });
+        if (res.data.signedRequest) {
+          const { signedRequest, videoUrl } = res.data;
+
+          //s3 requires to delete Authorization header
+          let token = axios.defaults.headers.common["Authorization"];
+          delete axios.defaults.headers.common["Authorization"];
+          axios
+            .put(signedRequest, videoFile, {
+              headers: {
+                "Content-Type": videoFile.type,
+              },
+              onUploadProgress: (e) => {
+                this.setState({
+                  uploadPercentage: parseInt(
+                    Math.round((e.loaded / e.total) * 100)
+                  ),
+                });
+              },
+            })
+            .then((res) => {
+              axios.defaults.headers.common["Authorization"] = token;
+
+              const data = new FormData();
+              data.append("thumb", this.state.croppedThumb);
+              data.append("title", this.state.title);
+              data.append("caption", this.state.caption);
+              data.append("videoUrl", videoUrl);
+              axios
+                .post("/videos/upload", data)
+                .then((res) => {
+                  if (res.data)
+                    this.setState({
+                      goToProfile: true,
+                      _id: res.data.video._id,
+                    });
+                })
+                .catch((err) => {
+                  alert("There was an error! Please try again");
+                  //window.location.reload();
+                });
+            })
+            .catch((err) => {
+              axios.defaults.headers.common["Authorization"] = token;
+
+              alert("There was an error! Please try again");
+              //window.location.reload();
+            });
+        }
       })
       .catch((err) => {
         alert("There was an error! Please try again");
-        window.location.reload();
+        //window.location.reload();
       });
   };
 
