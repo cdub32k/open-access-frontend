@@ -126,7 +126,9 @@ const OwnerActions = ({
         <MoreIcon className={classes.icon} />
       </IconButton>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        <MenuItem onClick={() => setEditOpen(true)}>edit</MenuItem>
+        {type != "note" && (
+          <MenuItem onClick={() => setEditOpen(true)}>edit</MenuItem>
+        )}
         <MenuItem onClick={() => setConfirmOpen(true)}>delete</MenuItem>
       </Menu>
 

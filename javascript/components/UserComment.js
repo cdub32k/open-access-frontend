@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { date2rel, convertHashtagsToLinks } from "../utils/helpers";
+import {
+  date2rel,
+  convertHashtagsToLinks,
+  truncateTitlePreview,
+} from "../utils/helpers";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -18,15 +22,17 @@ const useStyles = makeStyles((theme) => ({
 const UserComment = ({ comment }) => {
   const classes = useStyles();
 
-  let type, mediaTitle, mediaLink, link;
+  let type, mediaTitle, mediaLink, link, p;
   if (comment.video) {
     type = "video";
-    mediaTitle = `image ${comment.video.title}`;
+    p = "a video ";
+    mediaTitle = `${comment.video.title}`;
     mediaLink = `/video-player/${comment.video._id}`;
     link = `/video-player/${comment.video._id}?c=${comment._id}`;
   } else if (comment.image) {
     type = "image";
-    mediaTitle = `video ${comment.image.title}`;
+    p = "an image ";
+    mediaTitle = `${comment.image.title}`;
     mediaLink = `/image/${comment.image._id}`;
     link = `/image/${comment.image._id}?c=${comment._id}`;
   } else if (comment.note) {
@@ -41,12 +47,12 @@ const UserComment = ({ comment }) => {
       {comment.replyId ? (
         <Typography variant="body1">
           <Link to={link}>replied</Link> to a comment on{" "}
-          <Link to={mediaLink}>{mediaTitle}</Link>
+          <Link to={mediaLink}>{truncateTitlePreview(mediaTitle)}</Link>
         </Typography>
       ) : (
         <Typography variant="body1">
-          <Link to={link}>commented</Link> on{" "}
-          <Link to={mediaLink}>{mediaTitle}</Link>
+          <Link to={link}>commented</Link> on {p}
+          <Link to={mediaLink}>{truncateTitlePreview(mediaTitle)}</Link>
         </Typography>
       )}
       <Typography

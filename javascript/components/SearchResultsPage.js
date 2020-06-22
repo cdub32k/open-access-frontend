@@ -44,6 +44,7 @@ const SearchResultsPage = ({
   hasMoreNotes,
   hasMoreImages,
   location,
+  clearFeedData,
 }) => {
   let s = getSearchQuery(location.search);
   let h = getHashtag(location.search);
@@ -68,6 +69,7 @@ const SearchResultsPage = ({
       Object.values(newsfeedNoteSubscriptions).forEach((sub) =>
         sub.unsubscribe()
       );
+      clearFeedData();
     };
   }, []);
 
@@ -142,6 +144,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreators.loadImageSearchResultsStart(query, hashtag)),
   loadNoteSearchResults: (query, hashtag) =>
     dispatch(ActionCreators.loadNoteSearchResultsStart(query, hashtag)),
+  clearFeedData: () => dispatch(ActionCreators.clearFeedData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResultsPage);

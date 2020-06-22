@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     right: theme.spacing(4),
   },
   upArrow: {
-    color: theme.palette.dark.main,
+    color: theme.palette.light.main,
     fontSize: 28,
   },
 }));

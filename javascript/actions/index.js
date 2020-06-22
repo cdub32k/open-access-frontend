@@ -13,6 +13,7 @@ export const ActionTypes = {
   GET_USER_INFO_SUCCESS: "GET_USER_INFO_SUCCESS",
   GET_USER_INFO_ERROR: "GET_USER_INFO_ERROR",
   CLEAR_USER_DATA: "CLEAR_USER_DATA",
+  CLEAR_FEED_DATA: "CLEAR_FEED_DATA",
   VIDEO_LOADING: "VIDEO_LOADING",
   GET_VIDEO_INFO_START: "GET_VIDEO_INFO_START",
   GET_VIDEO_INFO_SUCCESS: "GET_VIDEO_INFO_SUCCESS",
@@ -217,6 +218,9 @@ export const ActionCreators = {
   },
   clearUserData: () => {
     return { type: ActionTypes.CLEAR_USER_DATA };
+  },
+  clearFeedData: () => {
+    return { type: ActionTypes.CLEAR_FEED_DATA };
   },
   videoLoading: () => {
     return { type: ActionTypes.VIDEO_LOADING };

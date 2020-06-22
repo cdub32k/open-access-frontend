@@ -628,7 +628,6 @@ const LOAD_NOTE_COMMENT_REPLIES_QUERY = `
 `;
 export default [
   (store) => (next) => (action) => {
-    next(ActionCreators.clearErrors());
     if (action.type == ActionTypes.MARK_NOTIFICATIONS_READ_START) {
       axios
         .post("/api", {

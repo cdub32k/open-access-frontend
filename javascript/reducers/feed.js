@@ -185,6 +185,8 @@ const feedReducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.CLEAR_ERRORS:
       return { ...state, error: null };
+    case ActionTypes.CLEAR_FEED_DATA:
+      return { ...initialState };
     case ActionTypes.NEWSFEED_VIDEO_UPDATE:
       return {
         ...state,

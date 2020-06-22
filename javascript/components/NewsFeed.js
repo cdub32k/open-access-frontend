@@ -39,6 +39,7 @@ const NewsFeed = ({
   videos,
   images,
   notes,
+  clearFeedData,
 }) => {
   const [tab, setTab] = useState(0);
   const changeTab = (e, newValue) => {
@@ -61,6 +62,7 @@ const NewsFeed = ({
       Object.values(newsfeedNoteSubscriptions).forEach((sub) =>
         sub.unsubscribe()
       );
+      clearFeedData();
     };
   }, []);
 
@@ -113,6 +115,7 @@ const mapDispatchToProps = (dispatch) => ({
   loadNewsfeedVideos: () => dispatch(ActionCreators.loadNewsfeedVideoStart()),
   loadNewsfeedImages: () => dispatch(ActionCreators.loadNewsfeedImagesStart()),
   loadNewsfeedNotes: () => dispatch(ActionCreators.loadNewsfeedNotesStart()),
+  clearFeedData: () => dispatch(ActionCreators.clearFeedData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewsFeed);
