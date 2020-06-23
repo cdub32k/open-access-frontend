@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
       paddingRight: 0,
     },
   },
+  ...theme.globalClasses,
 }));
 
 const ImagePage = ({
@@ -112,20 +113,24 @@ const ImagePage = ({
                 editCallback={update}
                 editForm={
                   <Fragment>
-                    <CustomInput
-                      name="title"
-                      label="Title"
-                      value={newTitle}
-                      multiline={true}
-                      onChange={(e) => setNewTitle(e.target.value)}
-                    />
-                    <CustomInput
-                      name="caption"
-                      label="Caption"
-                      value={newCaption}
-                      multiline={true}
-                      onChange={(e) => setNewCaption(e.target.value)}
-                    />
+                    <div className={classes.inputContainer}>
+                      <CustomInput
+                        name="title"
+                        label="Title"
+                        value={newTitle}
+                        multiline={true}
+                        onChange={(e) => setNewTitle(e.target.value)}
+                      />
+                    </div>
+                    <div className={classes.inputContainer}>
+                      <CustomInput
+                        name="caption"
+                        label="Caption"
+                        value={newCaption}
+                        multiline={true}
+                        onChange={(e) => setNewCaption(e.target.value)}
+                      />
+                    </div>
                   </Fragment>
                 }
               />

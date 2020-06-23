@@ -3,6 +3,7 @@ const path = require("path");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = (env) => ({
   entry: ["babel-polyfill", "./javascript/index.js"],
@@ -62,10 +63,15 @@ module.exports = (env) => ({
       "process.env.MODE": JSON.stringify(env.MODE),
       "process.env.API_URL": JSON.stringify(env.API_URL),
     }),
+    new CompressionPlugin({
+      algorithm: "gzip",
+      test: /\.(js|css)$/i,
+      filename: "[path]",
+    }),
   ],
   output: {
     path: path.resolve(__dirname, "dist"),
-    publicPath: "https://open-access-dev.b-cdn.net/app/",
+    publicPath: "https://open-access-dev.s3.amazonaws.com/app/",
     filename: "[name].[hash].bundle.js",
     chunkFilename: "[name].[chunkhash].bundle.js",
   },
@@ -83,5 +89,4 @@ module.exports = (env) => ({
     },
   },
   mode: "development",
-  devtool: "source-map",
 });

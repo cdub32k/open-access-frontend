@@ -228,12 +228,19 @@ const SiteNav = ({
   return (
     <AppBar position="static" elevation={0} className={classes.container}>
       <Toolbar>
-        <Box display={{ xs: "none", md: "block" }}>
-          <MainLogo />
-        </Box>
-        <Box display={{ xs: "block", md: "none" }} style={{ marginRight: 24 }}>
-          <LogoIcon />
-        </Box>
+        {loggedIn && (
+          <Fragment>
+            <Box display={{ xs: "none", md: "block" }}>
+              <MainLogo />
+            </Box>
+            <Box
+              display={{ xs: "block", md: "none" }}
+              style={{ marginRight: 24 }}
+            >
+              <LogoIcon />
+            </Box>
+          </Fragment>
+        )}
         {!loggedIn && <MainLogo />}
         {renderMobileMenu}
         {renderMenu}

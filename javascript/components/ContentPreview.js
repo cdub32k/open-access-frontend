@@ -107,7 +107,7 @@ const ContentPreview = ({
           />
         )}
         {contentType == "note" && (
-          <CardContent className={`${classes.thumb} content-thumb`}>
+          <CardContent className={`${classes.thumb} content-thumb note-thumb`}>
             <div style={{ fontSize: 14, color: theme.palette.dark.main }}>
               {truncateCaptionPreview(caption)}
             </div>

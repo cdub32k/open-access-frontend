@@ -101,7 +101,7 @@ const userReducer = (state = initialState, action) => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       axios.defaults.headers.common["x-refresh-token"] = refreshToken;
       let decodedToken = jwt_decode(token);
-      const { username, email, profilePic } = decodedToken;
+      const { username, email } = decodedToken;
 
       const notificationsSubscription = subscribeToNotifications(username);
 
@@ -111,7 +111,6 @@ const userReducer = (state = initialState, action) => {
         loggedIn: true,
         username,
         email,
-        profilePic,
         notificationsSubscription,
       };
     }

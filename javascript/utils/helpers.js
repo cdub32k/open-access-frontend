@@ -167,10 +167,13 @@ export function getHashtag(search) {
 }
 
 export function convertHashtagsToLinks(str) {
-  return str.replace(
-    /(#[a-z\d-]+)/g,
-    (match) => `<a href='/search?h=${match.slice(1)}'>${match}</a>`
-  );
+  return str
+    .replace(/</g, "&lt")
+    .replace(/>/g, "&gt")
+    .replace(
+      /(#[a-z\d-]+)/g,
+      (match) => `<a href='/search?h=${match.slice(1)}'>${match}</a>`
+    );
 }
 
 export function parseVideoTimestampsToLinks(str) {
