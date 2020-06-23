@@ -9,6 +9,7 @@ import "react-image-crop/lib/ReactCrop.scss";
 import Typography from "@material-ui/core/Typography";
 import FormGroup from "@material-ui/core/FormGroup";
 import Grid from "@material-ui/core/Grid";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { withStyles, withTheme } from "@material-ui/core/styles";
 
 import CustomInput from "./CustomInput";
@@ -16,6 +17,7 @@ import CustomButton from "./CustomButton";
 
 class VideoEdit extends Component {
   state = {
+    loading: false,
     videoFile: null,
     videoSrc: null,
 
@@ -141,17 +143,27 @@ class VideoEdit extends Component {
 
   onSubmitHandler = (e) => {
     e.preventDefault();
+    this.setState({
+      loading: true,
+    });
+
     const data = new FormData();
     if (this.state.croppedThumb) data.append("thumb", this.state.croppedThumb);
     data.append("title", this.state.title);
     data.append("caption", this.state.caption);
 
-    axios.put(`/videos/${this.state._id}`, data).then((res) => {
-      if (res.data)
-        this.setState({
-          goToProfile: true,
-        });
-    });
+    axios
+      .put(`/videos/${this.state._id}`, data)
+      .then((res) => {
+        if (res.data)
+          this.setState({
+            goToProfile: true,
+          });
+      })
+      .catch((err) => {
+        alert("There was an error! Please try again");
+        window.location.reload();
+      });
   };
 
   uploadThumb = (e) => {
@@ -160,7 +172,7 @@ class VideoEdit extends Component {
 
   render() {
     const { classes, theme } = this.props;
-    const { _id, crop, thumbSrc, title, caption } = this.state;
+    const { loading, _id, crop, thumbSrc, title, caption } = this.state;
 
     if (this.state.goToProfile) return <Redirect to={`/video-player/${_id}`} />;
 
@@ -221,14 +233,15 @@ class VideoEdit extends Component {
                   onChange={this.onTextChange}
                 />
               </div>
-              <br />
+              {loading && (
+                <CircularProgress style={{ marginTop: 28, display: "block" }} />
+              )}
               <CustomButton
                 style={{
-                  backgroundColor: theme.palette.primary.main,
-                  color: theme.palette.light.main,
                   marginTop: 24,
                   width: 100,
                 }}
+                disabled={!title || !caption || loading}
                 text="Save"
                 type="submit"
               />

@@ -9,6 +9,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import MoreIcon from "@material-ui/icons/MoreVert";
@@ -45,6 +46,7 @@ const OwnerActions = ({
 }) => {
   const classes = useStyles();
   const theme = useTheme();
+  const [loading, setLoading] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
@@ -59,6 +61,8 @@ const OwnerActions = ({
   };
 
   const deleteMedia = () => {
+    setLoading(true);
+
     let path;
     let redirect = false;
     switch (type) {
@@ -101,12 +105,15 @@ const OwnerActions = ({
   };
 
   const editMedia = () => {
+    setLoading(true);
     editCallback()
       .then((res) => {
+        setLoading(false);
         setEditOpen(false);
         handleClose();
       })
       .catch((error) => {
+        setLoading(false);
         setEditOpen(false);
         handleClose();
       });
@@ -138,6 +145,9 @@ const OwnerActions = ({
         open={confirmOpen}
       >
         <DialogTitle>Confirm delete media</DialogTitle>
+        {loading && (
+          <CircularProgress style={{ margin: "auto", display: "block" }} />
+        )}
         <div className={classes.dialogActions}>
           <CustomButton
             style={{
@@ -146,6 +156,7 @@ const OwnerActions = ({
             }}
             text="DELETE"
             onClick={deleteMedia}
+            disabled={loading}
           />
           <CustomButton
             style={{
@@ -160,15 +171,11 @@ const OwnerActions = ({
       <Dialog className={classes.dialog} onClose={confirmClose} open={editOpen}>
         <DialogTitle>{editTitle}</DialogTitle>
         <DialogContent style={{ minWidth: 320 }}>{editForm}</DialogContent>
+        {loading && (
+          <CircularProgress style={{ margin: "12px auto", display: "block" }} />
+        )}
         <div className={classes.dialogActions}>
-          <CustomButton
-            style={{
-              backgroundColor: theme.palette.primary.main,
-              color: theme.palette.light.main,
-            }}
-            text="SAVE"
-            onClick={editMedia}
-          />
+          <CustomButton text="SAVE" onClick={editMedia} disabled={loading} />
           <CustomButton
             style={{
               backgroundColor: theme.palette.secondary.main,

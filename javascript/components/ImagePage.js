@@ -77,10 +77,19 @@ const ImagePage = ({
   const classes = useStyles();
 
   const update = () => {
+    if (!newTitle || !newCaption) {
+      setNewTitle(title);
+      setNewCaption(caption);
+      return Promise.resolve();
+    }
     return axios
       .put(`/images/${imageId}`, { title: newTitle, caption: newCaption })
       .then((res) => {
         updateImage(newTitle, newCaption);
+      })
+      .catch((err) => {
+        alert("There was an error! Please try again");
+        window.location.reload();
       });
   };
 

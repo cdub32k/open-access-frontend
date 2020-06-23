@@ -182,20 +182,20 @@ class VideoUploader extends Component {
                 })
                 .catch((err) => {
                   alert("There was an error! Please try again");
-                  //window.location.reload();
+                  window.location.reload();
                 });
             })
             .catch((err) => {
               axios.defaults.headers.common["Authorization"] = token;
 
               alert("There was an error! Please try again");
-              //window.location.reload();
+              window.location.reload();
             });
         }
       })
       .catch((err) => {
         alert("There was an error! Please try again");
-        //window.location.reload();
+        window.location.reload();
       });
   };
 

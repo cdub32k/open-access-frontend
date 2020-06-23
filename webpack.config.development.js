@@ -75,13 +75,6 @@ module.exports = (env) => ({
     filename: "[name].[hash].bundle.js",
     chunkFilename: "[name].[chunkhash].bundle.js",
   },
-  devServer: {
-    contentBase: path.join(__dirname, "."),
-    compress: true,
-    port: 9000,
-    hot: true,
-    historyApiFallback: true,
-  },
   optimization: {
     splitChunks: {
       chunks: "all",
