@@ -92,7 +92,7 @@ class ImageList extends Component {
         <div className={`${classes.contentList} content-list`}>
           {imageListHTML}
         </div>
-        {hasMore && (
+        {!loading && hasMore && (
           <div>
             <CustomButton text="Load more" onClick={this.loadMore} />
           </div>

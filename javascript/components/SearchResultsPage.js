@@ -94,7 +94,7 @@ const SearchResultsPage = ({
         </Tabs>
         <TabPanel selectedTab={tab} index={0}>
           <NewsFeedItems items={videos} type="video" loading={loading} />
-          {hasMoreVideos && (
+          {!loading && hasMoreVideos && (
             <CustomButton
               text="Load more"
               onClick={() => loadVideoSearchResults(s, h)}
@@ -103,7 +103,7 @@ const SearchResultsPage = ({
         </TabPanel>
         <TabPanel selectedTab={tab} index={1}>
           <NewsFeedItems items={images} type="image" loading={loading} />
-          {hasMoreImages && (
+          {!loading && hasMoreImages && (
             <CustomButton
               text="Load more"
               onClick={() => loadImageSearchResults(s, h)}
@@ -112,7 +112,7 @@ const SearchResultsPage = ({
         </TabPanel>
         <TabPanel selectedTab={tab} index={2}>
           <NewsFeedItems items={notes} type="note" loading={loading} />
-          {hasMoreNotes && (
+          {!loading && hasMoreNotes && (
             <CustomButton
               text="Load more"
               onClick={() => loadNoteSearchResults(s, h)}

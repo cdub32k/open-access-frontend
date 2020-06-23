@@ -86,15 +86,30 @@ const NewsFeed = ({
         </Tabs>
         <TabPanel selectedTab={tab} index={0}>
           <NewsFeedItems items={videos} type="video" loading={loading} />
-          <CustomButton text="Load more" onClick={() => loadNewsfeedVideos()} />
+          {!loading && (
+            <CustomButton
+              text="Load more"
+              onClick={() => loadNewsfeedVideos()}
+            />
+          )}
         </TabPanel>
         <TabPanel selectedTab={tab} index={1}>
           <NewsFeedItems items={images} type="image" loading={loading} />
-          <CustomButton text="Load more" onClick={() => loadNewsfeedImages()} />
+          {!loading && (
+            <CustomButton
+              text="Load more"
+              onClick={() => loadNewsfeedImages()}
+            />
+          )}
         </TabPanel>
         <TabPanel selectedTab={tab} index={2}>
           <NewsFeedItems items={notes} type="note" loading={loading} />
-          <CustomButton text="Load more" onClick={() => loadNewsfeedNotes()} />
+          {!loading && (
+            <CustomButton
+              text="Load more"
+              onClick={() => loadNewsfeedNotes()}
+            />
+          )}
         </TabPanel>
       </Grid>
     </Grid>

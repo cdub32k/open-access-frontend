@@ -87,7 +87,7 @@ class VideoList extends Component {
           {videoListHTML}
           <br />
         </div>
-        {hasMore && (
+        {!loading && hasMore && (
           <div>
             <CustomButton text="Load more" onClick={this.loadMore} />
           </div>

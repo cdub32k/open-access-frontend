@@ -11,13 +11,14 @@ const useStyles = makeStyles((theme) => ({
   container: {
     margin: "32px 0",
     padding: "0 32px",
+    width: 1248,
   },
   contentList: {
     display: "flex",
     justifyContent: "center",
     flexWrap: "wrap",
-    maxWidth: 1248,
     padding: 0,
+    width: 600,
   },
 }));
 
@@ -43,23 +44,25 @@ const UserCommentList = ({ loading, comments, hasMore, loadMore }) => {
 
   return (
     <div className={`${classes.container} user-comments-list content-list`}>
-      {comments.map((comment, i) => {
-        return (
-          <UserComment key={i} comment={comment}>
-            {comment.body}
-          </UserComment>
-        );
-      })}
-      {loading && <CircularProgress style={{ margin: "28px 0" }} />}
-      {hasMore && (
-        <div>
-          <CustomButton
-            text="Load more"
-            onClick={_loadMore}
-            style={{ marginLeft: 0 }}
-          />
-        </div>
-      )}
+      <div className={classes.contentList}>
+        {comments.map((comment, i) => {
+          return (
+            <UserComment key={i} comment={comment}>
+              {comment.body}
+            </UserComment>
+          );
+        })}
+        {loading && <CircularProgress style={{ margin: "28px 0" }} />}
+        {!loading && hasMore && (
+          <div>
+            <CustomButton
+              text="Load more"
+              onClick={_loadMore}
+              style={{ marginLeft: 0 }}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

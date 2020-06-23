@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import FormGroup from "@material-ui/core/FormGroup";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, withTheme } from "@material-ui/core/styles";
 
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
@@ -145,9 +145,8 @@ class Account extends Component {
 
   onSubmitHandler = (e) => {
     e.preventDefault();
-
-    this.props.updateAccountInfo({ ...this.state, profilePic: undefined });
     this.setState({ editInfo: false });
+    this.props.updateAccountInfo({ ...this.state, profilePic: undefined });
   };
 
   editInfo = () => {
@@ -170,6 +169,7 @@ class Account extends Component {
       displayName,
       bio,
       classes,
+      theme,
     } = this.props;
 
     const { imageSrc, crop, editInfo, uploading } = this.state;
@@ -177,7 +177,8 @@ class Account extends Component {
     return (
       <div className={classes.container}>
         <Typography variant="h3" color="primary">
-          Your Account
+          <Link to={`/profile/${username}`}>@{username}</Link>
+          <span style={{ color: theme.palette.dark.main }}>'s Account</span>
         </Typography>
         <br />
         <div>
@@ -311,6 +312,7 @@ class Account extends Component {
                   <CustomButton
                     style={{ marginTop: 32, marginLeft: 0 }}
                     type="submit"
+                    disabled={!editInfo}
                     text="Update Info"
                   />
                   <CustomButton
@@ -377,6 +379,7 @@ const styles = (theme) => ({
   ...theme.globalClasses,
 });
 
-export default withStyles(styles)(
-  connect(mapStateToProps, mapDispatchToProps)(Account)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withTheme(withStyles(styles)(Account)));

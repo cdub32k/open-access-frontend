@@ -78,7 +78,7 @@ const NoteList = ({ loading, notes, hasMore, loadMore }) => {
       <div className={`${classes.contentList} content-list`}>
         {noteListHTML}
       </div>
-      {hasMore && (
+      {!loading && hasMore && (
         <div>
           <CustomButton text="Load more" onClick={_loadMore} />
         </div>

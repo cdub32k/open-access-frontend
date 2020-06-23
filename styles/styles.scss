@@ -185,8 +185,9 @@ a:visited {
   .advocate-slides {
     max-width: calc(1020px - 680px);
   }
-  .user-comments-list {
-    width: 320px;
+  .user-comments-list,
+  .user-comments-list > div {
+    width: 320px !important;
   }
 }
 
