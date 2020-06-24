@@ -38,6 +38,10 @@ const useStyles = makeStyles((theme) => ({
 
 const VideoPage = ({
   loading,
+  commentsLoading,
+  newCommentLoading,
+  newCommentReplyId,
+  repliesLoading,
   error,
   user,
   title,
@@ -110,6 +114,10 @@ const VideoPage = ({
       </Grid>
       <Grid item xs={12} md={4}>
         <CommentsSection
+          loading={commentsLoading}
+          newLoading={newCommentLoading}
+          newReplyId={newCommentReplyId}
+          repliesLoading={repliesLoading}
           comments={comments}
           contentType="video"
           id={videoId}
@@ -122,6 +130,10 @@ const VideoPage = ({
 
 const mapStateToProps = (state) => ({
   loading: state.video.loading,
+  commentsLoading: state.video.commentsLoading,
+  newCommentLoading: state.video.newCommentLoading,
+  newCommentReplyId: state.video.newCommentReplyId,
+  repliesLoading: state.video.repliesLoading,
   error: state.video.error,
   user: state.video.user,
   title: state.video.title,

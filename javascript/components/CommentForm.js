@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 
 import { ActionCreators } from "../actions";
 
 import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "@material-ui/core/Typography";
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CommentForm = ({
+  loading,
   id,
   replyId,
   contentType,
@@ -57,31 +59,36 @@ const CommentForm = ({
   };
 
   return (
-    <form
-      onSubmit={postComment}
-      className={`${classes.container} ${className || ""}`}
-    >
-      <div style={{ position: "relative", width: "100%" }}>
-        <Typography className={classes.counter} variant="caption">
-          {body.length} / 800 chars
-        </Typography>
-        <CustomInput
-          value={body}
-          name="body"
-          onChange={(e) => setBody(e.target.value)}
-          multiline
-          className={classes.textField}
-          maxLength={800}
+    <div className={className}>
+      <form onSubmit={postComment} className={classes.container}>
+        <div style={{ position: "relative", width: "100%" }}>
+          <Typography className={classes.counter} variant="caption">
+            {body.length} / 800 chars
+          </Typography>
+          <CustomInput
+            value={body}
+            name="body"
+            onChange={(e) => setBody(e.target.value)}
+            multiline
+            className={classes.textField}
+            maxLength={800}
+          />
+        </div>
+        <CustomButton
+          disabled={!body.trim() || loading}
+          text={!replyId ? "comment" : "reply"}
+          onClick={postComment}
+          style={{ width: 118, margin: 0, marginLeft: 12 }}
+          size="small"
         />
-      </div>
-      <CustomButton
-        disabled={!body.trim()}
-        text={!replyId ? "comment" : "reply"}
-        onClick={postComment}
-        style={{ width: 118, margin: 0, marginLeft: 12 }}
-        size="small"
-      />
-    </form>
+      </form>
+      {loading && (
+        <CircularProgress
+          disableShrink
+          style={{ margin: "10px 14px", width: 20, height: 20 }}
+        />
+      )}
+    </div>
   );
 };
 

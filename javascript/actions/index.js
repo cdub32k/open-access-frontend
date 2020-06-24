@@ -137,6 +137,9 @@ export const ActionTypes = {
   LOAD_MORE_VIDEO_COMMENTS_SUCCESS: "LOAD_MORE_VIDEO_COMMENTS_SUCCESS",
   LOAD_MORE_IMAGE_COMMENTS_SUCCESS: "LOAD_MORE_IMAGE_COMMENTS_SUCCESS",
   LOAD_MORE_NOTE_COMMENTS_SUCCESS: "LOAD_MORE_NOTE_COMMENTS_SUCCESS",
+  LOAD_MORE_VIDEO_COMMENTS_ERROR: "LOAD_MORE_VIDEO_COMMENTS_ERROR",
+  LOAD_MORE_IMAGE_COMMENTS_ERROR: "LOAD_MORE_IMAGE_COMMENTS_ERROR",
+  LOAD_MORE_NOTE_COMMENTS_ERROR: "LOAD_MORE_NOTE_COMMENTS_ERROR",
   UPDATE_VIDEO_COMMENT: "UPDATE_VIDEO_COMMENT",
   UPDATE_IMAGE_COMMENT: "UPDATE_IMAGE_COMMENT",
   UPDATE_NOTE_COMMENT: "UPDATE_NOTE_COMMENT",
@@ -146,6 +149,9 @@ export const ActionTypes = {
   GET_VIDEO_COMMENT_REPLIES_SUCCESS: "GET_VIDEO_COMMENT_REPLIES_SUCCESS",
   GET_IMAGE_COMMENT_REPLIES_SUCCESS: "GET_IMAGE_COMMENT_REPLIES_SUCCESS",
   GET_NOTE_COMMENT_REPLIES_SUCCESS: "GET_NOTE_COMMENT_REPLIES_SUCCESS",
+  GET_VIDEO_COMMENT_REPLIES_ERROR: "GET_VIDEO_COMMENT_REPLIES_ERROR",
+  GET_IMAGE_COMMENT_REPLIES_ERROR: "GET_IMAGE_COMMENT_REPLIES_ERROR",
+  GET_NOTE_COMMENT_REPLIES_ERROR: "GET_NOTE_COMMENT_REPLIES_ERROR",
   UPDATE_IMAGE: "UPDATE_IMAGE",
   LIKE_VIDEO_COMMENT: "LIKE_VIDEO_COMMENT",
   LIKE_IMAGE_COMMENT: "LIKE_IMAGE_COMMENT",
@@ -727,6 +733,25 @@ export const ActionCreators = {
         };
     }
   },
+  loadMoreCommentsError: (type, error) => {
+    switch (type) {
+      case "video":
+        return {
+          type: ActionTypes.LOAD_MORE_VIDEO_COMMENTS_ERROR,
+          error,
+        };
+      case "image":
+        return {
+          type: ActionTypes.LOAD_MORE_IMAGE_COMMENTS_ERROR,
+          error,
+        };
+      case "note":
+        return {
+          type: ActionTypes.LOAD_MORE_NOTE_COMMENTS_ERROR,
+          error,
+        };
+    }
+  },
   updateComment: (type, _id, body) => {
     switch (type) {
       case "video":
@@ -781,6 +806,25 @@ export const ActionCreators = {
         return {
           type: ActionTypes.GET_NOTE_COMMENT_REPLIES_SUCCESS,
           payload: { _id, replies },
+        };
+    }
+  },
+  getCommentRepliesError: (type, _id, replies) => {
+    switch (type) {
+      case "video":
+        return {
+          type: ActionTypes.GET_VIDEO_COMMENT_REPLIES_ERROR,
+          error: action.error,
+        };
+      case "image":
+        return {
+          type: ActionTypes.GET_IMAGE_COMMENT_REPLIES_ERROR,
+          error: action.error,
+        };
+      case "note":
+        return {
+          type: ActionTypes.GET_NOTE_COMMENT_REPLIES_ERROR,
+          error: action.error,
         };
     }
   },

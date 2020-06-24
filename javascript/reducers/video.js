@@ -17,6 +17,8 @@ const initialState = {
   loading: true,
   comments: [],
   hasMoreComments: false,
+  commentsLoading: false,
+  newCommentLoading: false,
 };
 
 const subscribeToVideoItemUpdates = (videoId) => {
@@ -103,10 +105,22 @@ const videoReducer = (state = initialState, action) => {
       };
     case ActionTypes.DISLIKE_VIDEO_ERROR:
       return { ...state };
+
+    case ActionTypes.POST_VIDEO_COMMENT_START:
+      return {
+        ...state,
+        newCommentLoading: true,
+        newCommentReplyId: action.payload.replyId,
+      };
     case ActionTypes.POST_VIDEO_COMMENT_SUCCESS:
-      return { ...state };
+      return { ...state, newCommentLoading: false, newCommentReplyId: null };
     case ActionTypes.POST_VIDEO_COMMENT_ERROR:
-      return { ...state, error: action.error };
+      return {
+        ...state,
+        error: action.error,
+        newCommentLoading: false,
+        newCommentReplyId: null,
+      };
     case ActionTypes.CLEAR_VIDEO_DATA:
       return { ...initialState };
     case ActionTypes.SUBSCRIBE_VIDEO_ITEM_UPDATES:
@@ -157,6 +171,8 @@ const videoReducer = (state = initialState, action) => {
         commentCount: action.payload.commentCount,
         comments: fComments,
       };
+    case ActionTypes.LOAD_MORE_VIDEO_COMMENTS:
+      return { ...state, commentsLoading: true };
     case ActionTypes.LOAD_MORE_VIDEO_COMMENTS_SUCCESS:
       hasMoreComments = true;
       if (action.payload.items.length < 4) hasMoreComments = false;
@@ -164,17 +180,24 @@ const videoReducer = (state = initialState, action) => {
         ...state,
         comments: [...state.comments, ...action.payload.items],
         hasMoreComments,
+        commentsLoading: false,
       };
+    case ActionTypes.LOAD_MORE_VIDEO_COMMENTS_ERROR:
+      return { ...state, error: action.error, commentsLoading: false };
     case ActionTypes.UPDATE_VIDEO_COMMENT:
       let nComments = [...state.comments];
       let c = findComment(nComments, action.payload._id);
       c.body = action.payload.body;
       return { ...state, comments: nComments };
+    case ActionTypes.GET_VIDEO_COMMENT_REPLIES:
+      return { ...state, repliesLoading: action.payload._id };
     case ActionTypes.GET_VIDEO_COMMENT_REPLIES_SUCCESS:
       nComments = [...state.comments];
       let parent = findComment(nComments, action.payload._id);
       parent.replies = action.payload.replies;
-      return { ...state, comments: nComments };
+      return { ...state, comments: nComments, repliesLoading: false };
+    case ActionTypes.GET_VIDEO_COMMENT_REPLIES_ERROR:
+      return { ...state, error: action.error, repliesLoading: false };
     case ActionTypes.LIKE_VIDEO_COMMENT:
       nComments = [...state.comments];
       c = findComment(nComments, action.payload.commentId);

@@ -877,6 +877,7 @@ export default [
           else next(ActionCreators.dislikeVideoError());
         });
     } else if (action.type == ActionTypes.POST_VIDEO_COMMENT_START) {
+      next(action);
       axios
         .post("/api", {
           query: `
@@ -890,7 +891,10 @@ export default [
             replyId: action.payload.replyId,
           },
         })
-        .then((res) => {});
+        .then((res) => {
+          next(ActionCreators.postVideoCommentSuccess());
+        })
+        .catch((err) => next(ActionCreators.postVideoCommentError(err)));
     } else if (action.type == ActionTypes.LOAD_USER_VIDEO_PAGE_START) {
       next(action);
       const { username, page } = action.payload;
@@ -1061,6 +1065,7 @@ export default [
         })
         .catch((e) => next(ActionCreators.getImageInfoError(e)));
     } else if (action.type == ActionTypes.POST_IMAGE_COMMENT_START) {
+      next(action);
       axios
         .post("/api", {
           query: `
@@ -1074,7 +1079,8 @@ export default [
             replyId: action.payload.replyId,
           },
         })
-        .then((res) => {});
+        .then((res) => next(ActionCreators.postImageCommentSuccess()))
+        .catch((err) => next(ActionCreators.postImageCommentError(err)));
     } else if (action.type == ActionTypes.GET_NOTE_INFO_START) {
       next(ActionCreators.noteLoading());
 
@@ -1093,6 +1099,7 @@ export default [
         })
         .catch((e) => next(ActionCreators.getNoteInfoError(e)));
     } else if (action.type == ActionTypes.POST_NOTE_COMMENT_START) {
+      next(action);
       axios
         .post("/api", {
           query: `
@@ -1106,7 +1113,8 @@ export default [
             replyId: action.payload.replyId,
           },
         })
-        .then((res) => {});
+        .then((res) => next(ActionCreators.postNoteCommentSuccess()))
+        .catch((err) => next(ActionCreators.postNoteCommentError(err)));
     } else if (action.type == ActionTypes.LOAD_NEWSFEED_VIDEO_START) {
       next(action);
       let lastOldest =
@@ -1188,6 +1196,7 @@ export default [
         })
         .catch((error) => next(ActionCreators.loadUserNotePageError(error)));
     } else if (action.type == ActionTypes.LOAD_MORE_IMAGE_COMMENTS) {
+      next(action);
       axios
         .post("api", {
           query: LOAD_MORE_IMAGE_COMMENTS_QUERY,
@@ -1206,8 +1215,12 @@ export default [
                 imageData.image.comments
               )
             );
-        });
+        })
+        .catch((err) =>
+          next(ActionCreators.loadMoreCommentsError("image", err))
+        );
     } else if (action.type == ActionTypes.LOAD_MORE_VIDEO_COMMENTS) {
+      next(action);
       axios
         .post("api", {
           query: LOAD_MORE_VIDEO_COMMENTS_QUERY,
@@ -1225,8 +1238,12 @@ export default [
                 videoData.video.comments
               )
             );
-        });
+        })
+        .catch((err) =>
+          next(ActionCreators.loadMoreCommentsError("video", err))
+        );
     } else if (action.type == ActionTypes.LOAD_MORE_NOTE_COMMENTS) {
+      next(action);
       axios
         .post("api", {
           query: LOAD_MORE_NOTE_COMMENTS_QUERY,
@@ -1244,8 +1261,12 @@ export default [
                 noteData.note.comments
               )
             );
-        });
+        })
+        .catch((err) =>
+          next(ActionCreators.loadMoreCommentsError("note", err))
+        );
     } else if (action.type == ActionTypes.GET_VIDEO_COMMENT_REPLIES) {
+      next(action);
       axios
         .post("api", {
           query: LOAD_VIDEO_COMMENT_REPLIES_QUERY,
@@ -1262,8 +1283,12 @@ export default [
               replyData
             )
           );
-        });
+        })
+        .catch((err) =>
+          next(ActionCreators.getCommentRepliesError("video", err))
+        );
     } else if (action.type == ActionTypes.GET_IMAGE_COMMENT_REPLIES) {
+      next(action);
       axios
         .post("api", {
           query: LOAD_IMAGE_COMMENT_REPLIES_QUERY,
@@ -1280,8 +1305,12 @@ export default [
               replyData
             )
           );
-        });
+        })
+        .catch((err) =>
+          next(ActionCreators.getCommentRepliesError("image", err))
+        );
     } else if (action.type == ActionTypes.GET_NOTE_COMMENT_REPLIES) {
+      next(action);
       axios
         .post("api", {
           query: LOAD_NOTE_COMMENT_REPLIES_QUERY,
@@ -1298,7 +1327,10 @@ export default [
               replyData
             )
           );
-        });
+        })
+        .catch((err) =>
+          next(ActionCreators.getCommentRepliesError("note", err))
+        );
     } else if (action.type == ActionTypes.LIKE_VIDEO_COMMENT) {
       next(action);
       axios

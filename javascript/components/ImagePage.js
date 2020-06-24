@@ -39,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
 
 const ImagePage = ({
   loading,
+  commentsLoading,
+  newCommentLoading,
+  newCommentReplyId,
+  repliesLoading,
   error,
   user,
   title,
@@ -149,6 +153,10 @@ const ImagePage = ({
       </Grid>
       <Grid item xs={12} md={4}>
         <CommentsSection
+          loading={commentsLoading}
+          newLoading={newCommentLoading}
+          newReplyId={newCommentReplyId}
+          repliesLoading={repliesLoading}
           comments={comments}
           contentType="image"
           id={imageId}
@@ -161,6 +169,10 @@ const ImagePage = ({
 
 const mapStateToProps = (state) => ({
   loading: state.image.loading,
+  commentsLoading: state.image.commentsLoading,
+  newCommentLoading: state.image.newCommentLoading,
+  newCommentReplyId: state.image.newCommentReplyId,
+  repliesLoading: state.image.repliesLoading,
   error: state.image.error,
   user: state.image.user,
   title: state.image.title,

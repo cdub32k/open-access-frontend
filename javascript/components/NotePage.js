@@ -39,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
 
 const NotePage = ({
   loading,
+  commentsLoading,
+  newCommentLoading,
+  newCommentReplyId,
+  repliesLoading,
   error,
   user,
   caption,
@@ -95,6 +99,10 @@ const NotePage = ({
       </Grid>
       <Grid item xs={12} md={6}>
         <CommentsSection
+          loading={commentsLoading}
+          newLoading={newCommentLoading}
+          newReplyId={newCommentReplyId}
+          repliesLoading={repliesLoading}
           comments={comments}
           contentType="note"
           id={noteId}
@@ -107,6 +115,10 @@ const NotePage = ({
 
 const mapStateToProps = (state) => ({
   loading: state.note.loading,
+  commentsLoading: state.note.commentsLoading,
+  newCommentLoading: state.note.newCommentLoading,
+  newCommentReplyId: state.note.newCommentReplyId,
+  repliesLoading: state.note.repliesLoading,
   error: state.note.error,
   user: state.note.user,
   caption: state.note.caption,

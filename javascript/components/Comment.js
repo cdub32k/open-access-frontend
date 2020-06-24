@@ -12,6 +12,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import ThumbDownOutline from "@material-ui/icons/ThumbDownOutlined";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { date2rel, num2str } from "../utils/helpers";
@@ -91,6 +92,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 let Comment = ({
+  newLoading,
+  newReplyId,
+  repliesLoading,
   _id,
   mediaId,
   body,
@@ -224,6 +228,7 @@ let Comment = ({
             </a>
             {replyFormOpen && (
               <CommentForm
+                loading={newLoading && newReplyId == _id}
                 className={classes.replyForm}
                 contentType={type}
                 id={mediaId}
@@ -245,6 +250,13 @@ let Comment = ({
           >
             {!showReplies ? `show ${replyCount} ` : "hide "} replies
           </a>
+          {showReplies && repliesLoading == _id && (
+            <CircularProgress
+              disableShrink
+              style={{ display: "block", width: 20, height: 20 }}
+            />
+          )}
+
           <TransitionGroup component="section">
             {showReplies &&
               replies &&
@@ -259,6 +271,8 @@ let Comment = ({
                     key={reply._id}
                   >
                     <Comment
+                      newLoading={newLoading}
+                      newReplyId={newReplyId}
                       level={level + 1}
                       key={reply._id}
                       type={type}

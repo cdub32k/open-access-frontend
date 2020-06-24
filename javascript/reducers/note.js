@@ -16,6 +16,8 @@ const initialState = {
   user: {},
   loading: true,
   comments: [],
+  commentsLoading: false,
+  newCommentLoading: false,
 };
 
 const subscribeToNoteItemUpdates = (noteId) => {
@@ -97,10 +99,21 @@ const noteReducer = (state = initialState, action) => {
       };
     case ActionTypes.DISLIKE_NOTE_ERROR:
       return { ...state };
+    case ActionTypes.POST_NOTE_COMMENT_START:
+      return {
+        ...state,
+        newCommentLoading: true,
+        newCommentReplyId: action.payload.replyId,
+      };
     case ActionTypes.POST_NOTE_COMMENT_SUCCESS:
-      return { ...state };
+      return { ...state, newCommentLoading: false, newCommentReplyId: null };
     case ActionTypes.POST_NOTE_COMMENT_ERROR:
-      return { ...state, error: action.error };
+      return {
+        ...state,
+        error: action.error,
+        newCommentLoading: false,
+        newCommentReplyId: null,
+      };
     case ActionTypes.CLEAR_NOTE_DATA:
       return { ...initialState };
     case ActionTypes.SUBSCRIBE_NOTE_ITEM_UPDATES:
@@ -153,6 +166,8 @@ const noteReducer = (state = initialState, action) => {
         commentCount: action.payload.commentCount,
         comments: fComments,
       };
+    case ActionTypes.LOAD_MORE_NOTE_COMMENTS:
+      return { ...state, commentsLoading: true };
     case ActionTypes.LOAD_MORE_NOTE_COMMENTS_SUCCESS:
       hasMoreComments = true;
       if (action.payload.items.length < 4) hasMoreComments = false;
@@ -160,18 +175,25 @@ const noteReducer = (state = initialState, action) => {
         ...state,
         comments: [...state.comments, ...action.payload.items],
         hasMoreComments,
+        commentsLoading: false,
       };
+    case ActionTypes.LOAD_MORE_NOTE_COMMENTS_ERROR:
+      return { ...state, commentsLoading: false };
     case ActionTypes.UPDATE_NOTE_COMMENT:
       let nComments = [...state.comments];
       let c = findComment(nComments, action.payload._id);
       c.body = action.payload.body;
       return { ...state, comments: nComments };
+    case ActionTypes.GET_NOTE_COMMENT_REPLIES:
+      return { ...state, repliesLoading: action.payload._id };
     case ActionTypes.GET_NOTE_COMMENT_REPLIES_SUCCESS:
       nComments = [...state.comments];
       let parent = findComment(nComments, action.payload._id);
       parent.replies = action.payload.replies;
 
-      return { ...state, comments: nComments };
+      return { ...state, comments: nComments, repliesLoading: false };
+    case ActionTypes.GET_NOTE_COMMENT_REPLIES_ERROR:
+      return { ...state, error: action.error, repliesLoading: false };
     case ActionTypes.LIKE_NOTE_COMMENT:
       nComments = [...state.comments];
       c = findComment(nComments, action.payload.commentId);

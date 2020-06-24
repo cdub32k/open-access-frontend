@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { ActionCreators } from "../actions";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 
 import CommentForm from "./CommentForm";
@@ -22,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CommentsSection = ({
+  loading,
+  newLoading,
+  newReplyId,
+  repliesLoading,
   comments,
   contentType,
   id,
@@ -32,45 +37,57 @@ const CommentsSection = ({
 
   return (
     <div className={`${classes.container} comments-container`}>
-      <CommentForm contentType={contentType} id={id} />
-      <TransitionGroup
-        component="section"
-        className={`${classes.section} comments-section`}
-      >
-        {comments.map((comment, i) => (
-          <CSSTransition
-            timeout={500}
-            classNames="comment"
-            unmountOnExit
-            appear
-            enter
-            key={comment._id}
-          >
-            <Comment
-              level={1}
-              type={contentType}
-              mediaId={id}
-              _id={comment._id}
-              body={comment.body}
-              user={comment.user}
-              createdAt={comment.createdAt}
-              replyCount={comment.replyCount}
-              replies={comment.replies}
-              likeCount={comment.likeCount}
-              dislikeCount={comment.dislikeCount}
-              liked={comment.liked}
-              disliked={comment.disliked}
-              highlighted={comment.highlighted}
-            />
-          </CSSTransition>
-        ))}
-      </TransitionGroup>
-      {hasMoreComments && (
-        <CustomButton
-          text="Load More"
-          onClick={() => loadMoreComments(contentType, id)}
-        />
-      )}
+      <CommentForm
+        loading={newLoading && !newReplyId}
+        contentType={contentType}
+        id={id}
+      />
+      <div className={`${classes.section} comments-section`}>
+        <TransitionGroup component="section">
+          {comments.map((comment, i) => (
+            <CSSTransition
+              timeout={500}
+              classNames="comment"
+              unmountOnExit
+              appear
+              enter
+              key={comment._id}
+            >
+              <Comment
+                newLoading={newLoading}
+                newReplyId={newReplyId}
+                repliesLoading={repliesLoading}
+                level={1}
+                type={contentType}
+                mediaId={id}
+                _id={comment._id}
+                body={comment.body}
+                user={comment.user}
+                createdAt={comment.createdAt}
+                replyCount={comment.replyCount}
+                replies={comment.replies}
+                likeCount={comment.likeCount}
+                dislikeCount={comment.dislikeCount}
+                liked={comment.liked}
+                disliked={comment.disliked}
+                highlighted={comment.highlighted}
+              />
+            </CSSTransition>
+          ))}
+        </TransitionGroup>
+        {loading && (
+          <CircularProgress
+            disableShrink
+            style={{ margin: "0 12px", display: "block" }}
+          />
+        )}
+        {!loading && hasMoreComments && (
+          <CustomButton
+            text="Load More"
+            onClick={() => loadMoreComments(contentType, id)}
+          />
+        )}
+      </div>
     </div>
   );
 };
