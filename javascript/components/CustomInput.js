@@ -59,6 +59,7 @@ const CustomInput = ({
       fullWidth={true}
     >
       <TextField
+        autoComplete="off"
         className={multiline ? classes.multiline : classes.textField}
         InputProps={{
           className: multiline ? classes.textarea : classes.input,

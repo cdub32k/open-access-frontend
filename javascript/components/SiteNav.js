@@ -195,9 +195,11 @@ const SiteNav = ({
             break;
           case "reply":
             msg += "replied to your comment on a ";
+            break;
           case "mention":
             msg += "mentioned you in a ";
             if (notif.commentId) target = "comment on a " + target;
+            break;
           default:
             break;
         }

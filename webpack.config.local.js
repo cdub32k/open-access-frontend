@@ -73,7 +73,7 @@ module.exports = (env) => ({
   devServer: {
     contentBase: path.join(__dirname, "."),
     compress: true,
-    port: 9000,
+    port: 7510,
     hot: true,
     historyApiFallback: true,
   },

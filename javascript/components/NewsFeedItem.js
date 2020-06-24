@@ -69,9 +69,9 @@ const NewsFeedItem = ({
   switch (type) {
     case "video":
       link = `/video-player/${_id}`;
-      f = theme.palette.light.main;
-      bgL = theme.palette.alert.main;
-      bgR = theme.palette.alert.dark;
+      f = theme.palette.dark.main;
+      bgL = theme.palette.light.main;
+      bgR = theme.palette.alert.light;
       break;
     case "image":
       link = `/image/${_id}`;
@@ -140,17 +140,30 @@ const NewsFeedItem = ({
               background: `linear-gradient(45deg, ${bgL} 68%, ${bgR})`,
             }}
           >
-            <Typography style={{ color: f }} gutterBottom variant="h5">
-              {title || truncateCaptionPreview(caption)}
-            </Typography>
+            {title && (
+              <Typography style={{ color: f }} gutterBottom variant="h5">
+                {title}
+              </Typography>
+            )}
+            {!title && (
+              <Typography
+                style={{ color: f }}
+                gutterBottom
+                variant="h5"
+                dangerouslySetInnerHTML={{
+                  __html: truncateCaptionPreview(caption),
+                }}
+              ></Typography>
+            )}
             {type != "note" && (
               <Typography
                 style={{ color: f }}
                 variant="body1"
                 color="textSecondary"
-              >
-                {truncateCaptionPreview(caption)}
-              </Typography>
+                dangerouslySetInnerHTML={{
+                  __html: truncateCaptionPreview(caption),
+                }}
+              ></Typography>
             )}
           </CardContent>
         )}

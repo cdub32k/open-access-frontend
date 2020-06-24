@@ -53,6 +53,7 @@ module.exports = (env) => ({
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: "index.html",
+      favicon: "./javascript/images/favicon.ico",
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
