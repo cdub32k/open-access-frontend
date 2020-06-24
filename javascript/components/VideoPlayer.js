@@ -137,7 +137,7 @@ const VideoPlayer = ({
       <CardContent
         className={classes.caption}
         dangerouslySetInnerHTML={{
-          __html: convertHashtagsToLinks(caption),
+          __html: caption,
         }}
       ></CardContent>
       <ContentActions

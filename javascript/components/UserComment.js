@@ -59,7 +59,7 @@ const UserComment = ({ comment }) => {
         className={classes.body}
         variant="body1"
         dangerouslySetInnerHTML={{
-          __html: convertHashtagsToLinks(comment.body),
+          __html: comment.body,
         }}
       ></Typography>
       <Typography variant="body2">{date2rel(comment.createdAt)}</Typography>

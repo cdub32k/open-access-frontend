@@ -17,7 +17,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import ContentActions from "./ContentActions";
 
-import { num2str, date2rel, convertHashtagsToLinks } from "../utils/helpers";
+import { num2str, date2rel } from "../utils/helpers";
 
 const styles = (theme) => ({
   container: {
@@ -114,7 +114,7 @@ class Image_C extends PureComponent {
         <CardContent
           className={classes.caption}
           dangerouslySetInnerHTML={{
-            __html: convertHashtagsToLinks(caption),
+            __html: caption,
           }}
         ></CardContent>
         <ContentActions

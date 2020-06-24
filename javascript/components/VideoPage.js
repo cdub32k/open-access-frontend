@@ -11,7 +11,7 @@ import VideoPlayer from "./VideoPlayer";
 import PreviewVideoPlayer from "./PreviewVideoPlayer";
 import CommentsSection from "./CommentsSection";
 import MediaOwnerActions from "./MediaOwnerActions";
-import { getCommentId } from "../utils/helpers";
+import { getCommentId, getVideoTimestamp } from "../utils/helpers";
 import Error from "./Error";
 
 const useStyles = makeStyles((theme) => ({
@@ -67,6 +67,12 @@ const VideoPage = ({
     getVideoInfo(videoId, c);
     return () => clearVideoData();
   }, []);
+  useEffect(() => {
+    if (url) {
+      let ts = getVideoTimestamp(location.search);
+      if (ts) setTimeout(() => vidJump(videoId, ts.h, ts.m, ts.s), 0);
+    }
+  }, [url]);
 
   const classes = useStyles();
   return (

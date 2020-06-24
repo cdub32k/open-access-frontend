@@ -166,21 +166,33 @@ export function getHashtag(search) {
   return null;
 }
 
-export function convertHashtagsToLinks(str) {
-  return str
-    .replace(/</g, "&lt")
-    .replace(/>/g, "&gt")
-    .replace(
-      /(#[a-z\d-]+)/g,
-      (match) => `<a href='/search?h=${match.slice(1)}'>${match}</a>`
-    );
-}
+export function getVideoTimestamp(search) {
+  search = decodeURI(search.slice(1));
+  let ts = {};
+  if (search.indexOf("h=") > -1) {
+    let h = null;
+    search.split("&").forEach((kv) => {
+      if (kv.split("=")[0] == "h") h = kv.split("=")[1];
+    });
+    ts.h = h;
+  }
+  if (search.indexOf("m=") > -1) {
+    let m = null;
+    search.split("&").forEach((kv) => {
+      if (kv.split("=")[0] == "m") m = kv.split("=")[1];
+    });
+    ts.m = m;
+  }
+  if (search.indexOf("s=") > -1) {
+    let s = null;
+    search.split("&").forEach((kv) => {
+      if (kv.split("=")[0] == "s") s = kv.split("=")[1];
+    });
+    ts.s = s;
+  }
+  if (!ts.h && !ts.m & !ts.s) return null;
 
-export function parseVideoTimestampsToLinks(str) {
-  return str.replace(
-    /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/g,
-    (match, h, m, s) => `<a onclick="vidJump(${h},${m},${s})">${match}</a>`
-  );
+  return ts;
 }
 
 export function printCentsToCurreny(cents) {

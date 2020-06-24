@@ -17,6 +17,8 @@ const useStyles = makeStyles((theme) => ({
   contentList: {
     display: "flex",
     justifyContent: "center",
+    margin: "auto",
+    flexDirection: "column",
     flexWrap: "wrap",
     padding: 0,
     width: 600,

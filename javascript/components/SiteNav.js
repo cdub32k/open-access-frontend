@@ -182,6 +182,7 @@ const SiteNav = ({
       {notifications.map((notif, i) => {
         let contentUrl = "";
         let msg = `${notif.sender} `;
+        let target = `${notif.target}`;
         switch (notif.type) {
           case "like":
             msg += "liked your ";
@@ -194,6 +195,9 @@ const SiteNav = ({
             break;
           case "reply":
             msg += "replied to your comment on a ";
+          case "mention":
+            msg += "mentioned you in a ";
+            if (notif.commentId) target = "comment on a " + target;
           default:
             break;
         }
@@ -218,7 +222,7 @@ const SiteNav = ({
           <Link key={notif._id} to={contentUrl}>
             <MenuItem onClick={handleNotifsMenuClose}>
               {`${msg} `}
-              {`${notif.target} ${date2rel(notif.createdAt)}`}
+              {`${target} ${date2rel(notif.createdAt)}`}
             </MenuItem>
           </Link>
         );

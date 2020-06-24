@@ -16,7 +16,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import ContentActions from "./ContentActions";
 
-import { num2str, date2rel, convertHashtagsToLinks } from "../utils/helpers";
+import { num2str, date2rel } from "../utils/helpers";
 
 const styles = (theme) => ({
   container: {
@@ -95,7 +95,7 @@ class Note extends PureComponent {
                 wordBreak: "break-word",
               }}
               dangerouslySetInnerHTML={{
-                __html: convertHashtagsToLinks(caption),
+                __html: caption,
               }}
             ></div>
           </div>
