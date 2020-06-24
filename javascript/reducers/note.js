@@ -9,6 +9,7 @@ import {
   removeNull,
   findComment,
   findAndDeleteComment,
+  parseLinks,
 } from "../utils/helpers";
 
 const initialState = {
@@ -110,7 +111,6 @@ const noteReducer = (state = initialState, action) => {
     case ActionTypes.POST_NOTE_COMMENT_ERROR:
       return {
         ...state,
-        error: action.error,
         newCommentLoading: false,
         newCommentReplyId: null,
       };
@@ -182,7 +182,7 @@ const noteReducer = (state = initialState, action) => {
     case ActionTypes.UPDATE_NOTE_COMMENT:
       let nComments = [...state.comments];
       let c = findComment(nComments, action.payload._id);
-      c.body = action.payload.body;
+      c.body = parseLinks(action.payload.body);
       return { ...state, comments: nComments };
     case ActionTypes.GET_NOTE_COMMENT_REPLIES:
       return { ...state, repliesLoading: action.payload._id };
@@ -193,7 +193,7 @@ const noteReducer = (state = initialState, action) => {
 
       return { ...state, comments: nComments, repliesLoading: false };
     case ActionTypes.GET_NOTE_COMMENT_REPLIES_ERROR:
-      return { ...state, error: action.error, repliesLoading: false };
+      return { ...state, repliesLoading: false };
     case ActionTypes.LIKE_NOTE_COMMENT:
       nComments = [...state.comments];
       c = findComment(nComments, action.payload.commentId);

@@ -4,6 +4,7 @@ import { ActionCreators } from "../actions";
 import axios from "axios";
 
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Image_C from "./Image";
@@ -12,7 +13,7 @@ import CommentsSection from "./CommentsSection";
 import MediaOwnerActions from "./MediaOwnerActions";
 import CustomInput from "./CustomInput";
 import Error from "./Error";
-import { getCommentId } from "../utils/helpers";
+import { getCommentId, stripLinks } from "../utils/helpers";
 
 const useStyles = makeStyles((theme) => ({
   ownerActions: {
@@ -33,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       paddingRight: 0,
     },
+  },
+  counter: {
+    marginBottom: 6,
+    display: "block",
   },
   ...theme.globalClasses,
 }));
@@ -64,7 +69,7 @@ const ImagePage = ({
 }) => {
   if (error) return <Error />;
 
-  const [newTitle, setNewTitle] = useState(title);
+  const [newTitle, setNewTitle] = useState("");
   const [newCaption, setNewCaption] = useState(caption);
 
   const { imageId } = match.params;
@@ -123,10 +128,14 @@ const ImagePage = ({
                 _id={imageId}
                 type="image"
                 editTitle="Edit Image"
+                onEditOpen={() => setNewCaption(stripLinks(caption))}
                 editCallback={update}
                 editForm={
                   <Fragment>
                     <div className={classes.inputContainer}>
+                      <Typography className={classes.counter} variant="caption">
+                        {title.length} / 120 chars
+                      </Typography>
                       <CustomInput
                         name="title"
                         label="Title"
@@ -136,6 +145,9 @@ const ImagePage = ({
                       />
                     </div>
                     <div className={classes.inputContainer}>
+                      <Typography className={classes.counter} variant="caption">
+                        {caption.length} / 2000 chars
+                      </Typography>
                       <CustomInput
                         name="caption"
                         label="Caption"

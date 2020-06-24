@@ -14,6 +14,7 @@ import { withStyles, withTheme } from "@material-ui/core/styles";
 
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
+import { stripLinks } from "../utils/helpers";
 
 class VideoEdit extends Component {
   state = {
@@ -62,7 +63,7 @@ class VideoEdit extends Component {
         this.setState({
           _id: videoData._id,
           title: videoData.title,
-          caption: videoData.caption,
+          caption: stripLinks(videoData.caption),
         });
       })
       .catch((e) => console.error(e));
@@ -216,14 +217,21 @@ class VideoEdit extends Component {
             </Grid>
             <Grid item xs={12} sm={8} lg={6} style={{ marginTop: 48 }}>
               <div className={classes.inputContainer}>
+                <Typography className={classes.counter} variant="caption">
+                  {title.length} / 120 chars
+                </Typography>
                 <CustomInput
                   name="title"
                   label="Title"
                   value={title}
                   onChange={this.onTextChange}
+                  maxLength={120}
                 />
               </div>
               <div className={classes.inputContainer}>
+                <Typography className={classes.counter} variant="caption">
+                  {caption.length} / 2000 chars
+                </Typography>
                 <CustomInput
                   multiline={true}
                   rows={3}
@@ -231,6 +239,7 @@ class VideoEdit extends Component {
                   label="Caption"
                   value={caption}
                   onChange={this.onTextChange}
+                  maxLength={2000}
                 />
               </div>
               {loading && (
@@ -239,6 +248,7 @@ class VideoEdit extends Component {
               <CustomButton
                 style={{
                   marginTop: 24,
+                  marginLeft: 0,
                   width: 100,
                 }}
                 disabled={!title || !caption || loading}
@@ -274,6 +284,10 @@ const styles = (theme) => ({
   cancelBtn: {
     marginLeft: 12,
     backgroundColor: theme.palette.secondary.main,
+  },
+  counter: {
+    marginBottom: 6,
+    display: "block",
   },
   ...theme.globalClasses,
 });

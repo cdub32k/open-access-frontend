@@ -103,6 +103,42 @@ export function truncateTitlePreview(title) {
   else return title;
 }
 
+export function convertHashtagsToLinks(str) {
+  return str
+    .replace(/</g, "&lt")
+    .replace(/>/g, "&gt")
+    .replace(
+      /(#[a-z0-9_-]+)/g,
+      (match) => `<a href='/search?h=${match.slice(1)}'>${match}</a>`
+    );
+}
+
+export function convertVideoTimestampsToLinks(videoId, str) {
+  return str.replace(
+    /(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])/g,
+    (match, h, m, s) =>
+      `<a onclick="vidJump('${videoId}', ${h},${m},${s})">${match}</a>`
+  );
+}
+
+export function converAtMentionsToLinks(str) {
+  return str.replace(/@[a-z0-9_-]{3,16}/g, (match) => {
+    return `<a href='/profile/${match.slice(1)}'>${match}</a>`;
+  });
+}
+
+export function parseLinks(str) {
+  return converAtMentionsToLinks(convertHashtagsToLinks(str));
+}
+
+export function stripLinks(str) {
+  return str
+    .replace(/&lt/g, "<")
+    .replace(/&gt/g, ">")
+    .replace(/<a.*?[^=]>/g, "")
+    .replace(/<\/a>/g, "");
+}
+
 export function getCommentId(search) {
   search = decodeURI(search.slice(1));
   if (search.indexOf("c=") > -1) {

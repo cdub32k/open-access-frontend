@@ -108,9 +108,12 @@ const ContentPreview = ({
         )}
         {contentType == "note" && (
           <CardContent className={`${classes.thumb} content-thumb note-thumb`}>
-            <div style={{ fontSize: 14, color: theme.palette.dark.main }}>
-              {truncateCaptionPreview(caption)}
-            </div>
+            <div
+              style={{ fontSize: 14, color: theme.palette.dark.main }}
+              dangerouslySetInnerHTML={{
+                __html: truncateCaptionPreview(caption),
+              }}
+            ></div>
           </CardContent>
         )}
       </Link>
@@ -120,7 +123,12 @@ const ContentPreview = ({
           avatar={<Avatar src={user.profilePic} />}
           title={
             title && (
-              <div className={classes.title}>{truncateTitlePreview(title)}</div>
+              <div
+                className={classes.title}
+                dangerouslySetInnerHTML={{
+                  __html: truncateTitlePreview(title),
+                }}
+              ></div>
             )
           }
           subheader={

@@ -25,10 +25,13 @@ const useStyles = makeStyles((theme) => ({
     padding: 14,
     display: "flex",
     flexDirection: "column",
+    width: "100%",
+    maxWidth: 650,
+    margin: "auto",
   },
   dialogActions: {
     display: "flex",
-    justifyContent: "space-evenly",
+    justifyContent: "flex-start",
     padding: 10,
     marginBottom: 12,
   },
@@ -41,6 +44,7 @@ const OwnerActions = ({
   deleteComment,
   editTitle,
   editForm,
+  onEditOpen,
   editCallback,
   ...rest
 }) => {
@@ -134,7 +138,14 @@ const OwnerActions = ({
       </IconButton>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         {type != "note" && (
-          <MenuItem onClick={() => setEditOpen(true)}>edit</MenuItem>
+          <MenuItem
+            onClick={() => {
+              if (onEditOpen) onEditOpen();
+              setEditOpen(true);
+            }}
+          >
+            edit
+          </MenuItem>
         )}
         <MenuItem onClick={() => setConfirmOpen(true)}>delete</MenuItem>
       </Menu>
@@ -168,7 +179,13 @@ const OwnerActions = ({
           />
         </div>
       </Dialog>
-      <Dialog className={classes.dialog} onClose={confirmClose} open={editOpen}>
+      <Dialog
+        classes={{ scrollPaper: classes.dialog }}
+        onClose={confirmClose}
+        open={editOpen}
+        fullWidth={true}
+        maxWidth={"md"}
+      >
         <DialogTitle>{editTitle}</DialogTitle>
         <DialogContent style={{ minWidth: 320 }}>{editForm}</DialogContent>
         {loading && (

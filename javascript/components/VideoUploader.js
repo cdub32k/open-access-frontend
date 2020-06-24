@@ -342,7 +342,7 @@ const styles = (theme) => ({
     margin: "auto",
   },
   counter: {
-    marginBottom: 5,
+    marginBottom: 6,
     display: "block",
   },
   ...theme.globalClasses,

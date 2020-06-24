@@ -15,7 +15,7 @@ import ThumbDownOutline from "@material-ui/icons/ThumbDownOutlined";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { date2rel, num2str } from "../utils/helpers";
+import { date2rel, num2str, stripLinks } from "../utils/helpers";
 
 import CustomInput from "./CustomInput";
 import MediaOwnerActions from "./MediaOwnerActions";
@@ -89,6 +89,10 @@ const useStyles = makeStyles((theme) => ({
     margin: "6px 0",
     backgroundColor: theme.palette.secondary.main,
   },
+  counter: {
+    marginBottom: 6,
+    display: "block",
+  },
 }));
 
 let Comment = ({
@@ -117,7 +121,8 @@ let Comment = ({
   level,
 }) => {
   const classes = useStyles();
-  const [newBody, setNewBody] = useState(body);
+
+  const [newBody, setNewBody] = useState(stripLinks(body));
   const [replyFormOpen, setReplyFormOpen] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
   useEffect(() => {
@@ -198,13 +203,19 @@ let Comment = ({
             _id={_id}
             type={type + "Comment"}
             editTitle={"Edit Comment"}
+            onEditOpen={() => setNewBody(stripLinks(body))}
             editForm={
-              <CustomInput
-                name="body"
-                value={newBody}
-                multiline={true}
-                onChange={(e) => setNewBody(e.target.value)}
-              />
+              <div className={classes.inputContainer}>
+                <Typography className={classes.counter} variant="caption">
+                  {newBody.length} / 800 chars
+                </Typography>
+                <CustomInput
+                  name="body"
+                  value={newBody}
+                  multiline={true}
+                  onChange={(e) => setNewBody(e.target.value)}
+                />
+              </div>
             }
             editCallback={update}
           />

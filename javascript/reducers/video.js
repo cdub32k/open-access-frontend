@@ -9,6 +9,8 @@ import {
   removeNull,
   findComment,
   findAndDeleteComment,
+  parseLinks,
+  convertVideoTimestampsToLinks,
 } from "../utils/helpers";
 
 const initialState = {
@@ -117,7 +119,6 @@ const videoReducer = (state = initialState, action) => {
     case ActionTypes.POST_VIDEO_COMMENT_ERROR:
       return {
         ...state,
-        error: action.error,
         newCommentLoading: false,
         newCommentReplyId: null,
       };
@@ -183,11 +184,14 @@ const videoReducer = (state = initialState, action) => {
         commentsLoading: false,
       };
     case ActionTypes.LOAD_MORE_VIDEO_COMMENTS_ERROR:
-      return { ...state, error: action.error, commentsLoading: false };
+      return { ...state, commentsLoading: false };
     case ActionTypes.UPDATE_VIDEO_COMMENT:
       let nComments = [...state.comments];
       let c = findComment(nComments, action.payload._id);
-      c.body = action.payload.body;
+      c.body = convertVideoTimestampsToLinks(
+        action.payload._id,
+        parseLinks(action.payload.body)
+      );
       return { ...state, comments: nComments };
     case ActionTypes.GET_VIDEO_COMMENT_REPLIES:
       return { ...state, repliesLoading: action.payload._id };
@@ -197,7 +201,7 @@ const videoReducer = (state = initialState, action) => {
       parent.replies = action.payload.replies;
       return { ...state, comments: nComments, repliesLoading: false };
     case ActionTypes.GET_VIDEO_COMMENT_REPLIES_ERROR:
-      return { ...state, error: action.error, repliesLoading: false };
+      return { ...state, repliesLoading: false };
     case ActionTypes.LIKE_VIDEO_COMMENT:
       nComments = [...state.comments];
       c = findComment(nComments, action.payload.commentId);

@@ -9,6 +9,7 @@ import {
   removeNull,
   findComment,
   findAndDeleteComment,
+  parseLinks,
 } from "../utils/helpers";
 
 const initialState = {
@@ -110,7 +111,6 @@ const imageReducer = (state = initialState, action) => {
     case ActionTypes.POST_IMAGE_COMMENT_ERROR:
       return {
         ...state,
-        error: action.error,
         newCommentLoading: false,
         newCommentReplyId: null,
       };
@@ -178,11 +178,11 @@ const imageReducer = (state = initialState, action) => {
         commentsLoading: false,
       };
     case ActionTypes.LOAD_MORE_IMAGE_COMMENTS_ERROR:
-      return { ...state, error: action.error, commentsLoading: false };
+      return { ...state, commentsLoading: false };
     case ActionTypes.UPDATE_IMAGE_COMMENT:
       let nComments = [...state.comments];
       let c = findComment(nComments, action.payload._id);
-      c.body = action.payload.body;
+      c.body = parseLinks(action.payload.body);
       return { ...state, comments: nComments };
     case ActionTypes.GET_IMAGE_COMMENT_REPLIES:
       return { ...state, repliesLoading: action.payload._id };
@@ -192,8 +192,9 @@ const imageReducer = (state = initialState, action) => {
       parent.replies = action.payload.replies;
       return { ...state, comments: nComments, repliesLoading: false };
     case ActionTypes.GET_VIDEO_COMMENT_REPLIES_ERROR:
-      return { ...state, error: action.error, repliesLoading: false };
+      return { ...state, repliesLoading: false };
     case ActionTypes.UPDATE_IMAGE:
+      action.payload.caption = parseLinks(action.payload.caption);
       return { ...state, ...action.payload };
     case ActionTypes.LIKE_IMAGE_COMMENT:
       nComments = [...state.comments];
