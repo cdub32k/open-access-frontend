@@ -121,7 +121,6 @@ let Comment = ({
   level,
 }) => {
   const classes = useStyles();
-
   const [newBody, setNewBody] = useState(stripLinks(body));
   const [replyFormOpen, setReplyFormOpen] = useState(false);
   const [showReplies, setShowReplies] = useState(false);

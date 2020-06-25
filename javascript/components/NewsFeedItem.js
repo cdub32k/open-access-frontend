@@ -48,7 +48,6 @@ const NewsFeedItem = ({
     _id,
     user: { username, profilePic },
     uploadedAt,
-    type,
     title,
     caption,
     likeCount,
@@ -56,6 +55,7 @@ const NewsFeedItem = ({
     commentCount,
     thumbUrl,
   },
+  type,
   subscribeToUpdates,
 }) => {
   useEffect(() => {
@@ -101,12 +101,12 @@ const NewsFeedItem = ({
       elevation={elevation}
     >
       <CardContent className={classes.actions}>
-        <Link to={`/profile/${username}`} target="_blank">
+        <Link to={`/profile/${username}`}>
           <Avatar src={profilePic} className={classes.avatar} />
         </Link>
         <div>
           <Typography variant="body2" className={classes.userInfo}>
-            <Link to={`/profile/${username}`} target="_blank">
+            <Link to={`/profile/${username}`}>
               <b>{username}</b>
             </Link>{" "}
             posted a {type} {date2rel(uploadedAt)}

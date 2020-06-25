@@ -72,10 +72,13 @@ const useStyles = makeStyles((theme) => {
         },
       },
     },
+    notifsMenu: {
+      maxWidth: 420,
+    },
     notif: {
       whiteSpace: "break-spaces",
       lineHeight: 1.3,
-      padding: "8px 16px",
+      padding: "12px 16px",
     },
     notifUsername: {
       color: theme.palette.primary.main,
@@ -200,6 +203,7 @@ const SiteNav = ({
       transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isNotifsMenuOpen}
       onClose={handleNotifsMenuClose}
+      classes={{ paper: classes.notifsMenu }}
     >
       {notifications.length == 0 && (
         <MenuItem style={{ pointerEvents: "none" }}>

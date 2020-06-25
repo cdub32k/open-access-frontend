@@ -24,12 +24,14 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     height: 18,
+    animation: "pulse-dark 1.5s infinite",
     backgroundColor: "rgba(0, 0, 0, 0.1)",
     margin: "4px 0",
   },
   playerContainer: {
     paddingBottom: "56.25%",
     position: "relative",
+    animation: "pulse-dark 1.5s infinite",
     backgroundColor: "rgba(0, 0, 0, 0.1)",
   },
 }));

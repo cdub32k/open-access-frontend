@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Router, Switch, Route, Link } from "react-router-dom";
+import { createBrowserHistory } from "history";
+const history = createBrowserHistory();
 
 import * as jwt_decode from "jwt-decode";
 
@@ -27,6 +29,8 @@ initApp();
 
 import smoothscroll from "smoothscroll-polyfill";
 smoothscroll.polyfill();
+
+import { live } from "../utils/helpers";
 
 class DynamicImport extends Component {
   state = {
@@ -226,12 +230,19 @@ class App extends Component {
     super(props);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    document.addEventListener("click", function (e) {
+      if (e.target.getAttribute("nativelink") != null) {
+        e.preventDefault();
+        history.push(e.target.getAttribute("href"));
+      }
+    });
+  }
 
   render() {
     const { classes } = this.props;
     return (
-      <Router>
+      <Router history={history}>
         <div>
           <SiteNav />
           <div className="site-content">

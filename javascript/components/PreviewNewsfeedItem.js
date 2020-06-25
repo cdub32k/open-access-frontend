@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   root: {
     width: "96%",
     margin: "12px 0",
-    animation: "pulse-light 1s infinite",
+    animation: "pulse-light 1.5s infinite",
     backgroundColor: "rgba(0, 0, 0, 0.03)",
   },
   userInfo: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     height: 44,
     "& div": {
       backgroundColor: "rgba(0,0,0,0.08)",
-      animation: "pluse-dark 1s infinite",
+      animation: "pluse-dark 1.5s infinite",
       margin: "4px 0",
       height: 16,
     },
@@ -34,7 +34,7 @@ const useStyles = makeStyles({
   content: {
     height: 84,
     backgroundColor: "rgba(0,0,0,0.08)",
-    animation: "pluse-dark 1s infinite",
+    animation: "pluse-dark 1.5s infinite",
   },
   stats: {
     display: "flex",

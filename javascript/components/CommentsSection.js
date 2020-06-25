@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   section: {
     overflow: "auto",
-    maxHeight: 800,
+    maxHeight: 1080,
     paddingTop: 24,
   },
 }));

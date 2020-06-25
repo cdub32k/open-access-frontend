@@ -809,22 +809,22 @@ export const ActionCreators = {
         };
     }
   },
-  getCommentRepliesError: (type, _id, replies) => {
+  getCommentRepliesError: (type, error) => {
     switch (type) {
       case "video":
         return {
           type: ActionTypes.GET_VIDEO_COMMENT_REPLIES_ERROR,
-          error: action.error,
+          error,
         };
       case "image":
         return {
           type: ActionTypes.GET_IMAGE_COMMENT_REPLIES_ERROR,
-          error: action.error,
+          error,
         };
       case "note":
         return {
           type: ActionTypes.GET_NOTE_COMMENT_REPLIES_ERROR,
-          error: action.error,
+          error,
         };
     }
   },

@@ -30,8 +30,7 @@ const NewsFeedItems = ({ items, type, loading }) => {
   const listHtml = loading
     ? items
         .map((item) => {
-          item.type = type;
-          return <NewsFeedItem key={item._id} item={item} />;
+          return <NewsFeedItem key={item._id} item={item} type={type} />;
         })
         .concat(
           Array.from({ length: 4 }).map((preview, i) => {
@@ -39,8 +38,7 @@ const NewsFeedItems = ({ items, type, loading }) => {
           })
         )
     : items.map((item) => {
-        item.type = type;
-        return <NewsFeedItem key={item._id} item={item} />;
+        return <NewsFeedItem key={item._id} item={item} type={type} />;
       });
 
   return (

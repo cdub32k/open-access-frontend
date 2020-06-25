@@ -700,6 +700,12 @@ export default [
 
       const { username } = action.payload;
 
+      const cachedQ = apolloCache.readQuery({
+        query: parse(GET_USER_INFO_QUERY),
+        variables: { username },
+      });
+      if (cachedQ) return next(ActionCreators.getUserInfoSuccess(cachedQ.user));
+
       axios
         .post("api", {
           query: GET_USER_INFO_QUERY,
@@ -711,7 +717,13 @@ export default [
           const userData = res.data.data;
 
           if (!userData || res.data.errors || !userData.user)
-            next(ActionCreators.getUserInfoError("NOT FOUND"));
+            return next(ActionCreators.getUserInfoError("NOT FOUND"));
+
+          apolloCache.writeQuery({
+            query: parse(GET_USER_INFO_QUERY),
+            variables: { username },
+            data: { ...userData },
+          });
 
           next(ActionCreators.getUserInfoSuccess(userData.user));
         })
@@ -821,7 +833,7 @@ export default [
           const videoData = res.data.data;
 
           if (!videoData || res.data.errors || !videoData.video)
-            next(ActionCreators.getVideoInfoError("NOT FOUND"));
+            return next(ActionCreators.getVideoInfoError("NOT FOUND"));
 
           next(ActionCreators.getVideoInfoSuccess(videoData.video));
         })
@@ -892,17 +904,17 @@ export default [
       next(action);
       const { username, page } = action.payload;
 
-      // const cachedQ = apolloCache.readQuery({
-      //   query: parse(USER_VIDEO_PAGE_QUERY),
-      //   variables: { username, page },
-      // });
-      // if (cachedQ)
-      //   return next(
-      //     ActionCreators.loadUserVideoPageSuccess(
-      //       cachedQ.videoSearch.videos,
-      //       cachedQ.videoSearch.hasMore
-      //     )
-      //   );
+      const cachedQ = apolloCache.readQuery({
+        query: parse(USER_VIDEO_PAGE_QUERY),
+        variables: { username, page },
+      });
+      if (cachedQ)
+        return next(
+          ActionCreators.loadUserVideoPageSuccess(
+            cachedQ.videoSearch.videos,
+            cachedQ.videoSearch.hasMore
+          )
+        );
 
       axios
         .post("/api", {
@@ -912,11 +924,11 @@ export default [
         .then((res) => {
           const videoData = res.data.data;
 
-          // apolloCache.writeQuery({
-          //   query: parse(USER_VIDEO_PAGE_QUERY),
-          //   variables: { username, page },
-          //   data: { ...videoData },
-          // });
+          apolloCache.writeQuery({
+            query: parse(USER_VIDEO_PAGE_QUERY),
+            variables: { username, page },
+            data: { ...videoData },
+          });
 
           next(
             ActionCreators.loadUserVideoPageSuccess(
@@ -932,6 +944,18 @@ export default [
       next(action);
       const { username, page } = action.payload;
 
+      const cachedQ = apolloCache.readQuery({
+        query: parse(USER_COMMENTS_PAGE_QUERY),
+        variables: { username, page },
+      });
+      if (cachedQ)
+        return next(
+          ActionCreators.loadUserCommentsPageSuccess(
+            cachedQ.commentsSearch.comments,
+            cachedQ.commentsSearch.hasMore
+          )
+        );
+
       axios
         .post("/api", {
           query: USER_COMMENTS_PAGE_QUERY,
@@ -939,6 +963,12 @@ export default [
         })
         .then((res) => {
           const commentData = res.data.data;
+
+          apolloCache.writeQuery({
+            query: parse(USER_COMMENTS_PAGE_QUERY),
+            variables: { username, page },
+            data: { ...commentData },
+          });
 
           next(
             ActionCreators.loadUserCommentsPageSuccess(
@@ -954,6 +984,18 @@ export default [
       next(action);
       const { username, page } = action.payload;
 
+      const cachedQ = apolloCache.readQuery({
+        query: parse(USER_LIKES_PAGE_QUERY),
+        variables: { username, page },
+      });
+      if (cachedQ)
+        return next(
+          ActionCreators.loadUserLikesPageSuccess(
+            cachedQ.likesSearch.likes,
+            cachedQ.likesSearch.hasMore
+          )
+        );
+
       axios
         .post("/api", {
           query: USER_LIKES_PAGE_QUERY,
@@ -961,6 +1003,12 @@ export default [
         })
         .then((res) => {
           const likeData = res.data.data;
+
+          apolloCache.writeQuery({
+            query: parse(USER_LIKES_PAGE_QUERY),
+            variables: { username, page },
+            data: { ...likeData },
+          });
 
           next(
             ActionCreators.loadUserLikesPageSuccess(
@@ -976,6 +1024,18 @@ export default [
       next(action);
       const { username, page } = action.payload;
 
+      const cachedQ = apolloCache.readQuery({
+        query: parse(USER_DISLIKES_PAGE_QUERY),
+        variables: { username, page },
+      });
+      if (cachedQ)
+        return next(
+          ActionCreators.loadUserDislikesPageSuccess(
+            cachedQ.dislikesSearch.dislikes,
+            cachedQ.dislikesSearch.hasMore
+          )
+        );
+
       axios
         .post("/api", {
           query: USER_DISLIKES_PAGE_QUERY,
@@ -983,6 +1043,12 @@ export default [
         })
         .then((res) => {
           const dislikeData = res.data.data;
+
+          apolloCache.writeQuery({
+            query: parse(USER_DISLIKES_PAGE_QUERY),
+            variables: { username, page },
+            data: { ...dislikeData },
+          });
 
           next(
             ActionCreators.loadUserDislikesPageSuccess(
@@ -998,6 +1064,18 @@ export default [
       next(action);
       const { username, page } = action.payload;
 
+      const cachedQ = apolloCache.readQuery({
+        query: parse(USER_IMAGE_PAGE_QUERY),
+        variables: { username, page },
+      });
+      if (cachedQ)
+        return next(
+          ActionCreators.loadUserImagePageSuccess(
+            cachedQ.imageSearch.images,
+            cachedQ.imageSearch.hasMore
+          )
+        );
+
       axios
         .post("/api", {
           query: USER_IMAGE_PAGE_QUERY,
@@ -1005,6 +1083,12 @@ export default [
         })
         .then((res) => {
           const imageData = res.data.data;
+
+          apolloCache.writeQuery({
+            query: parse(USER_IMAGE_PAGE_QUERY),
+            variables: { username, page },
+            data: { ...imageData },
+          });
 
           next(
             ActionCreators.loadUserImagePageSuccess(
@@ -1020,6 +1104,18 @@ export default [
       next(action);
       const { username, page } = action.payload;
 
+      const cachedQ = apolloCache.readQuery({
+        query: parse(USER_NOTE_PAGE_QUERY),
+        variables: { username, page },
+      });
+      if (cachedQ)
+        return next(
+          ActionCreators.loadUserNotePageSuccess(
+            cachedQ.noteSearch.notes,
+            cachedQ.noteSearch.hasMore
+          )
+        );
+
       axios
         .post("/api", {
           query: USER_NOTE_PAGE_QUERY,
@@ -1027,6 +1123,12 @@ export default [
         })
         .then((res) => {
           const noteData = res.data.data;
+
+          apolloCache.writeQuery({
+            query: parse(USER_NOTE_PAGE_QUERY),
+            variables: { username, page },
+            data: { ...noteData },
+          });
 
           next(
             ActionCreators.loadUserNotePageSuccess(
@@ -1050,9 +1152,8 @@ export default [
         })
         .then((res) => {
           const imageData = res.data.data;
-
           if (!imageData || res.data.errors || !imageData.image)
-            next(ActionCreators.getImageInfoError("NOT FOUND"));
+            return next(ActionCreators.getImageInfoError("NOT FOUND"));
 
           next(ActionCreators.getImageInfoSuccess(imageData.image));
         })
@@ -1087,7 +1188,8 @@ export default [
         .then((res) => {
           const noteData = res.data.data;
           if (!noteData || res.data.errors || !noteData.note)
-            next(ActionCreators.getNoteInfoError("NOT FOUND"));
+            return next(ActionCreators.getNoteInfoError("NOT FOUND"));
+
           next(ActionCreators.getNoteInfoSuccess(noteData.note));
         })
         .catch((e) => next(ActionCreators.getNoteInfoError(e)));
@@ -1114,6 +1216,16 @@ export default [
         store.getState().feed.videos.length > 0
           ? store.getState().feed.videos.slice(-1)[0].uploadedAt
           : null;
+
+      const cachedQ = apolloCache.readQuery({
+        query: parse(GET_NEWSFEED_VIDEOS_QUERY),
+        variables: { lastOldest },
+      });
+      if (cachedQ)
+        return next(
+          ActionCreators.loadNewsfeedVideoSuccess(cachedQ.newsfeedVideos)
+        );
+
       axios
         .post("/api", {
           query: GET_NEWSFEED_VIDEOS_QUERY,
@@ -1123,6 +1235,12 @@ export default [
           const videoData = res.data.data;
 
           if (videoData.newsfeedVideos) {
+            apolloCache.writeQuery({
+              query: parse(GET_NEWSFEED_VIDEOS_QUERY),
+              variables: { lastOldest },
+              data: { ...videoData },
+            });
+
             next(
               ActionCreators.loadNewsfeedVideoSuccess(videoData.newsfeedVideos)
             );
@@ -1135,6 +1253,16 @@ export default [
         store.getState().feed.images.length > 0
           ? store.getState().feed.images.slice(-1)[0].uploadedAt
           : null;
+
+      const cachedQ = apolloCache.readQuery({
+        query: parse(GET_NEWSFEED_IMAGES_QUERY),
+        variables: { lastOldest },
+      });
+      if (cachedQ)
+        return next(
+          ActionCreators.loadNewsfeedImagesSuccess(cachedQ.newsfeedImages)
+        );
+
       axios
         .post("/api", {
           query: GET_NEWSFEED_IMAGES_QUERY,
@@ -1142,8 +1270,13 @@ export default [
         })
         .then((res) => {
           const imageData = res.data.data;
-
           if (imageData.newsfeedImages) {
+            apolloCache.writeQuery({
+              query: parse(GET_NEWSFEED_IMAGES_QUERY),
+              variables: { lastOldest },
+              data: { ...imageData },
+            });
+
             next(
               ActionCreators.loadNewsfeedImagesSuccess(imageData.newsfeedImages)
             );
@@ -1156,6 +1289,16 @@ export default [
         store.getState().feed.notes.length > 0
           ? store.getState().feed.notes.slice(-1)[0].uploadedAt
           : null;
+
+      const cachedQ = apolloCache.readQuery({
+        query: parse(GET_NEWSFEED_NOTES_QUERY),
+        variables: { lastOldest },
+      });
+      if (cachedQ)
+        return next(
+          ActionCreators.loadNewsfeedNotesSuccess(cachedQ.newsfeedNotes)
+        );
+
       axios
         .post("/api", {
           query: GET_NEWSFEED_NOTES_QUERY,
@@ -1165,6 +1308,12 @@ export default [
           const noteData = res.data.data;
 
           if (noteData.newsfeedNotes) {
+            apolloCache.writeQuery({
+              query: parse(GET_NEWSFEED_NOTES_QUERY),
+              variables: { lastOldest },
+              data: { ...noteData },
+            });
+
             next(
               ActionCreators.loadNewsfeedNotesSuccess(noteData.newsfeedNotes)
             );
@@ -1190,90 +1339,106 @@ export default [
         .catch((error) => next(ActionCreators.loadUserNotePageError(error)));
     } else if (action.type == ActionTypes.LOAD_MORE_IMAGE_COMMENTS) {
       next(action);
+      let lastOldest = store.getState().image.comments.slice(-1)[0].createdAt;
+      let imageId = action.payload.imageId;
+
       axios
         .post("api", {
           query: LOAD_MORE_IMAGE_COMMENTS_QUERY,
           variables: {
-            imageId: action.payload.imageId,
-            lastOldest: store.getState().image.comments.slice(-1)[0].createdAt,
+            imageId,
+            lastOldest,
           },
         })
         .then((res) => {
           const imageData = res.data.data;
 
-          if (imageData && imageData.image && imageData.image.comments)
+          if (imageData && imageData.image && imageData.image.comments) {
             next(
               ActionCreators.loadMoreCommentsSuccess(
                 "image",
                 imageData.image.comments
               )
             );
+          }
         })
         .catch((err) =>
           next(ActionCreators.loadMoreCommentsError("image", err))
         );
     } else if (action.type == ActionTypes.LOAD_MORE_VIDEO_COMMENTS) {
       next(action);
+      let lastOldest = store.getState().video.comments.slice(-1)[0].createdAt;
+      let videoId = action.payload.videoId;
+
       axios
         .post("api", {
           query: LOAD_MORE_VIDEO_COMMENTS_QUERY,
           variables: {
-            videoId: action.payload.videoId,
-            lastOldest: store.getState().video.comments.slice(-1)[0].createdAt,
+            videoId,
+            lastOldest,
           },
         })
         .then((res) => {
           const videoData = res.data.data;
-          if (videoData && videoData.video && videoData.video.comments)
+          if (videoData && videoData.video && videoData.video.comments) {
             next(
               ActionCreators.loadMoreCommentsSuccess(
                 "video",
                 videoData.video.comments
               )
             );
+          }
         })
         .catch((err) =>
           next(ActionCreators.loadMoreCommentsError("video", err))
         );
     } else if (action.type == ActionTypes.LOAD_MORE_NOTE_COMMENTS) {
       next(action);
+
+      let lastOldest = store.getState().note.comments.slice(-1)[0].createdAt;
+      let videoId = action.payload.noteId;
+
       axios
         .post("api", {
           query: LOAD_MORE_NOTE_COMMENTS_QUERY,
           variables: {
-            noteId: action.payload.noteId,
-            lastOldest: store.getState().note.comments.slice(-1)[0].createdAt,
+            noteId,
+            lastOldest,
           },
         })
         .then((res) => {
           const noteData = res.data.data;
-          if (noteData && noteData.note && noteData.note.comments)
+          if (noteData && noteData.note && noteData.note.comments) {
             next(
               ActionCreators.loadMoreCommentsSuccess(
                 "note",
                 noteData.note.comments
               )
             );
+          }
         })
         .catch((err) =>
           next(ActionCreators.loadMoreCommentsError("note", err))
         );
     } else if (action.type == ActionTypes.GET_VIDEO_COMMENT_REPLIES) {
       next(action);
+      let commentId = action.payload._id;
+
       axios
         .post("api", {
           query: LOAD_VIDEO_COMMENT_REPLIES_QUERY,
           variables: {
-            commentId: action.payload._id,
+            commentId,
           },
         })
         .then((res) => {
-          const replyData = res.data.data.videoCommentReplies;
+          const replyData = res.data.data;
+
           next(
             ActionCreators.getCommentRepliesSuccess(
               "video",
-              action.payload._id,
-              replyData
+              commentId,
+              replyData.videoCommentReplies
             )
           );
         })
@@ -1282,20 +1447,24 @@ export default [
         );
     } else if (action.type == ActionTypes.GET_IMAGE_COMMENT_REPLIES) {
       next(action);
+
+      let commentId = action.payload._id;
+
       axios
         .post("api", {
           query: LOAD_IMAGE_COMMENT_REPLIES_QUERY,
           variables: {
-            commentId: action.payload._id,
+            commentId,
           },
         })
         .then((res) => {
-          const replyData = res.data.data.imageCommentReplies;
+          const replyData = res.data.data;
+
           next(
             ActionCreators.getCommentRepliesSuccess(
               "image",
-              action.payload._id,
-              replyData
+              commentId,
+              replyData.imageCommentReplies
             )
           );
         })
@@ -1304,20 +1473,24 @@ export default [
         );
     } else if (action.type == ActionTypes.GET_NOTE_COMMENT_REPLIES) {
       next(action);
+
+      let commentId = action.payload._id;
+
       axios
         .post("api", {
           query: LOAD_NOTE_COMMENT_REPLIES_QUERY,
           variables: {
-            commentId: action.payload._id,
+            commentId,
           },
         })
         .then((res) => {
-          const replyData = res.data.data.noteCommentReplies;
+          const replyData = res.data.data;
+
           next(
             ActionCreators.getCommentRepliesSuccess(
               "note",
-              action.payload._id,
-              replyData
+              commentId,
+              replyData.noteCommentReplies
             )
           );
         })
@@ -1445,6 +1618,19 @@ export default [
         store.getState().feed.videos.length > 0
           ? store.getState().feed.videos.slice(-1)[0].uploadedAt
           : null;
+
+      const cachedQ = apolloCache.readQuery({
+        query: parse(VIDEO_SEARCH_RESULTS_PAGE_QUERY),
+        variables: { page, query, hashtag, lastOldest },
+      });
+      if (cachedQ)
+        return next(
+          ActionCreators.loadVideoSearchResultsSuccess(
+            cachedQ.videoSearch.videos,
+            cachedQ.videoSearch.hasMore
+          )
+        );
+
       axios
         .post("/api", {
           query: VIDEO_SEARCH_RESULTS_PAGE_QUERY,
@@ -1452,6 +1638,12 @@ export default [
         })
         .then((res) => {
           const videoData = res.data.data;
+
+          apolloCache.writeQuery({
+            query: parse(VIDEO_SEARCH_RESULTS_PAGE_QUERY),
+            variables: { page, query, hashtag, lastOldest },
+            data: { ...videoData },
+          });
 
           next(
             ActionCreators.loadVideoSearchResultsSuccess(
@@ -1468,6 +1660,19 @@ export default [
         store.getState().feed.images.length > 0
           ? store.getState().feed.images.slice(-1)[0].uploadedAt
           : null;
+
+      const cachedQ = apolloCache.readQuery({
+        query: parse(IMAGE_SEARCH_RESULTS_PAGE_QUERY),
+        variables: { page, query, hashtag, lastOldest },
+      });
+      if (cachedQ)
+        return next(
+          ActionCreators.loadImageSearchResultsSuccess(
+            cachedQ.imageSearch.images,
+            cachedQ.imageSearch.hasMore
+          )
+        );
+
       axios
         .post("/api", {
           query: IMAGE_SEARCH_RESULTS_PAGE_QUERY,
@@ -1475,6 +1680,12 @@ export default [
         })
         .then((res) => {
           const imageData = res.data.data;
+
+          apolloCache.writeQuery({
+            query: parse(IMAGE_SEARCH_RESULTS_PAGE_QUERY),
+            variables: { page, query, hashtag, lastOldest },
+            data: { ...imageData },
+          });
 
           next(
             ActionCreators.loadImageSearchResultsSuccess(
@@ -1491,6 +1702,19 @@ export default [
         store.getState().feed.notes.length > 0
           ? store.getState().feed.notes.slice(-1)[0].uploadedAt
           : null;
+
+      const cachedQ = apolloCache.readQuery({
+        query: parse(NOTE_SEARCH_RESULTS_PAGE_QUERY),
+        variables: { page, query, hashtag, lastOldest },
+      });
+      if (cachedQ)
+        return next(
+          ActionCreators.loadNoteSearchResultsSuccess(
+            cachedQ.noteSearch.notes,
+            cachedQ.noteSearch.hasMore
+          )
+        );
+
       axios
         .post("/api", {
           query: NOTE_SEARCH_RESULTS_PAGE_QUERY,
@@ -1498,6 +1722,12 @@ export default [
         })
         .then((res) => {
           const noteData = res.data.data;
+
+          apolloCache.writeQuery({
+            query: parse(NOTE_SEARCH_RESULTS_PAGE_QUERY),
+            variables: { page, query, hashtag, lastOldest },
+            data: { ...noteData },
+          });
 
           next(
             ActionCreators.loadNoteSearchResultsSuccess(
@@ -1509,12 +1739,24 @@ export default [
         .catch((error) => ActionCreators.loadNoteSearchResultsError(error));
     } else if (action.type == ActionTypes.GET_ALL_USERNAMES) {
       next(action);
+
+      const cachedQ = apolloCache.readQuery({
+        query: parse(GET_ALL_USERNAMES_QUERY),
+      });
+      if (cachedQ)
+        return next(ActionCreators.getAllUsernamesSuccess(cachedQ.users));
+
       axios
         .post("/api", {
           query: GET_ALL_USERNAMES_QUERY,
         })
         .then((res) => {
           const userData = res.data.data;
+
+          apolloCache.writeQuery({
+            query: parse(GET_ALL_USERNAMES_QUERY),
+            data: { ...userData },
+          });
 
           next(ActionCreators.getAllUsernamesSuccess(userData.users));
         })

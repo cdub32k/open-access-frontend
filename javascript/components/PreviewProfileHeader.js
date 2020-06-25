@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     width: 300,
     height: 300,
     border: `4px solid ${theme.palette.secondary.main}`,
-    animation: "pulse-light 1s infinite",
+    animation: "pulse-light 1.5s infinite",
     backgroundColor: "rgba(0, 0, 0, 0.03)",
     cursor: "pointer",
   },
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   text: {
     height: 12,
     width: "75%",
-    animation: "pulse-dark 1s infinite",
+    animation: "pulse-dark 1.5s infinite",
     backgroundColor: "rgba(0, 0, 0, 0.08)",
     margin: "2px 0",
   },
