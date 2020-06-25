@@ -32,6 +32,7 @@ smoothscroll.polyfill();
 
 import { live } from "../utils/helpers";
 
+import CircularProgress from "@material-ui/core/CircularProgress";
 class DynamicImport extends Component {
   state = {
     component: null,
@@ -52,11 +53,14 @@ class DynamicImport extends Component {
 import AuthRedirect from "./AuthRedirect";
 import UnAuthRedirect from "./UnAuthRedirect";
 import ScrollTopButton from "./ScrollTopButton";
+const CompLoader = () => (
+  <CircularProgress disableShrink style={{ position: "fixed", top: "25%" }} />
+);
 //import Account from "./Account";
 const Account = (props) => (
   <DynamicImport load={() => import("./Account")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -65,7 +69,7 @@ const Account = (props) => (
 const Payment = (props) => (
   <DynamicImport load={() => import("./Payment")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -74,7 +78,7 @@ const Payment = (props) => (
 const Login = (props) => (
   <DynamicImport load={() => import("./Login")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -83,7 +87,7 @@ const Login = (props) => (
 const Logout = (props) => (
   <DynamicImport load={() => import("./Logout")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -92,7 +96,7 @@ const Logout = (props) => (
 const SignUp = (props) => (
   <DynamicImport load={() => import("./SignUp")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -103,7 +107,7 @@ import SiteNav from "./SiteNav";
 const Profile = (props) => (
   <DynamicImport load={() => import("./Profile")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -112,7 +116,7 @@ const Profile = (props) => (
 const NotePage = (props) => (
   <DynamicImport load={() => import("./NotePage")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -121,7 +125,7 @@ const NotePage = (props) => (
 const NoteUploader = (props) => (
   <DynamicImport load={() => import("./NoteUploader")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -130,7 +134,7 @@ const NoteUploader = (props) => (
 const VideoPage = (props) => (
   <DynamicImport load={() => import("./VideoPage")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -139,7 +143,7 @@ const VideoPage = (props) => (
 const VideoUploader = (props) => (
   <DynamicImport load={() => import("./VideoUploader")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -148,7 +152,7 @@ const VideoUploader = (props) => (
 const VideoEdit = (props) => (
   <DynamicImport load={() => import("./VideoEdit")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -157,7 +161,7 @@ const VideoEdit = (props) => (
 const ImagePage = (props) => (
   <DynamicImport load={() => import("./ImagePage")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -166,7 +170,7 @@ const ImagePage = (props) => (
 const ImageUploader = (props) => (
   <DynamicImport load={() => import("./ImageUploader")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -175,7 +179,7 @@ const ImageUploader = (props) => (
 const NewsFeed = (props) => (
   <DynamicImport load={() => import("./NewsFeed")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -184,7 +188,7 @@ const NewsFeed = (props) => (
 const SearchResultsPage = (props) => (
   <DynamicImport load={() => import("./SearchResultsPage")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -193,7 +197,7 @@ const SearchResultsPage = (props) => (
 const UsersList = (props) => (
   <DynamicImport load={() => import("./UsersList")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -202,7 +206,7 @@ const UsersList = (props) => (
 const Home = (props) => (
   <DynamicImport load={() => import("./Home")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -211,7 +215,7 @@ const Home = (props) => (
 const PasswordReset = (props) => (
   <DynamicImport load={() => import("./PasswordReset")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
@@ -220,7 +224,7 @@ const PasswordReset = (props) => (
 const NotFound = (props) => (
   <DynamicImport load={() => import("./404")}>
     {(Component) =>
-      Component == null ? <p>Loading...</p> : <Component {...props} />
+      Component == null ? <CompLoader /> : <Component {...props} />
     }
   </DynamicImport>
 );
