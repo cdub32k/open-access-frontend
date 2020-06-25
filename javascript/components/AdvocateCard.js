@@ -43,12 +43,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AdvocateCard = (props) => {
+const AdvocateCard = ({ profilePic }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.slide} {...props}>
-      <Avatar className={classes.avatar} src="/img/default-profile.png" />
+    <div className={classes.slide}>
+      <Avatar className={classes.avatar} src={profilePic} />
       <div className={classes.content}>
         <Typography className={classes.name} variant="h6">
           Loren Robinson

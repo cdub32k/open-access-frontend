@@ -18,23 +18,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ScrollTopButton(props) {
-  const { children, window } = props;
   const classes = useStyles();
 
   const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
     disableHysteresis: true,
     threshold: 400,
   });
 
   const handleClick = (event) => {
-    const anchor = (event.target.ownerDocument || document).querySelector(
-      "html"
-    );
-
-    if (anchor) {
-      anchor.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (

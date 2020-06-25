@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme) => {
       height: 116,
       justifyContent: "center",
       margin: "auto",
+      [theme.breakpoints.down("xs")]: {
+        height: "auto",
+      },
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -51,6 +54,22 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       [theme.breakpoints.up("md")]: {
         display: "none",
+      },
+    },
+    toolbar: {
+      "& > .auth-actions": {
+        marginLeft: "auto",
+      },
+      [theme.breakpoints.down("xs")]: {
+        flexDirection: "column",
+        alignItems: "flex-start",
+        "& > .auth-actions": {
+          marginTop: 12,
+          marginLeft: 0,
+          "& > a:first-child": {
+            paddingLeft: 0,
+          },
+        },
       },
     },
     notif: {
@@ -244,7 +263,10 @@ const SiteNav = ({
   );
   return (
     <AppBar position="static" elevation={0} className={classes.container}>
-      <Toolbar>
+      <Toolbar
+        className={!loggedIn ? classes.toolbar : ""}
+        style={{ paddingTop: 12 }}
+      >
         {loggedIn && (
           <Fragment>
             <Box display={{ xs: "none", md: "block" }}>
@@ -263,7 +285,7 @@ const SiteNav = ({
         {renderMenu}
         {renderNotifsMenu}
         {!loggedIn && (
-          <span style={{ marginLeft: "auto" }}>
+          <span className="auth-actions">
             <Button color="primary" component={Link} to="/login">
               Sign in
             </Button>

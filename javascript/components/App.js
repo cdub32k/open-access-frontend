@@ -25,6 +25,9 @@ const initApp = () => {
 };
 initApp();
 
+import smoothscroll from "smoothscroll-polyfill";
+smoothscroll.polyfill();
+
 class DynamicImport extends Component {
   state = {
     component: null,
