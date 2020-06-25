@@ -181,12 +181,13 @@ export function parseHashtags(str) {
   else return [];
 }
 export function removeHashtags(str) {
-  let tags = str
+  let terms = str
+    .replace(/[.,\/!$%\^&\*;:{}=\-_`~()]/g, "")
     .replace(/(#[a-z\d-]+)/g, "__removed_981_hashtag__")
     .split("__removed_981_hashtag__")
     .map((term) => term.trim())
     .filter((term) => term);
-  if (tags.length) return tags;
+  if (terms.length) return terms;
   else return [];
 }
 

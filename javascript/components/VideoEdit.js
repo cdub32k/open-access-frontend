@@ -178,7 +178,7 @@ class VideoEdit extends Component {
     if (this.state.goToProfile) return <Redirect to={`/video-player/${_id}`} />;
 
     return (
-      <div style={{ width: "100%" }}>
+      <div style={{ width: "100%", padding: 12 }}>
         <form className={classes.form} onSubmit={this.onSubmitHandler}>
           <Grid container>
             <Grid item xs={12}>
@@ -215,7 +215,7 @@ class VideoEdit extends Component {
                 </div>
               )}
             </Grid>
-            <Grid item xs={12} sm={8} lg={6} style={{ marginTop: 48 }}>
+            <Grid item xs={12} style={{ marginTop: 48 }}>
               <div className={classes.inputContainer}>
                 <Typography className={classes.counter} variant="caption">
                   {title.length} / 120 chars
@@ -277,7 +277,7 @@ class VideoEdit extends Component {
 const styles = (theme) => ({
   form: {
     display: "flex",
-    maxWidth: 1450,
+    maxWidth: 820,
     justifyContent: "space-between",
     margin: "auto",
   },

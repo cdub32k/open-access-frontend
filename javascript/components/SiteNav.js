@@ -53,6 +53,14 @@ const useStyles = makeStyles((theme) => {
         display: "none",
       },
     },
+    notif: {
+      whiteSpace: "break-spaces",
+      lineHeight: 1.3,
+      padding: "8px 16px",
+    },
+    notifUsername: {
+      color: theme.palette.primary.main,
+    },
     ...theme.globalClasses,
   };
 });
@@ -181,7 +189,7 @@ const SiteNav = ({
       )}
       {notifications.map((notif, i) => {
         let contentUrl = "";
-        let msg = `${notif.sender} `;
+        let msg = "";
         let target = `${notif.target}`;
         switch (notif.type) {
           case "like":
@@ -222,9 +230,12 @@ const SiteNav = ({
 
         return (
           <Link key={notif._id} to={contentUrl}>
-            <MenuItem onClick={handleNotifsMenuClose}>
-              {`${msg} `}
-              {`${target} ${date2rel(notif.createdAt)}`}
+            <MenuItem className={classes.notif} onClick={handleNotifsMenuClose}>
+              <span>
+                <span className={classes.notifUsername}>@{notif.sender}</span>
+                {` ${msg}`}
+                {`${target} ${date2rel(notif.createdAt)}`}
+              </span>
             </MenuItem>
           </Link>
         );

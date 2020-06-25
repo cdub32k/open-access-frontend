@@ -203,7 +203,7 @@ class Account extends Component {
                     type="file"
                     name="image"
                     onChange={this.imageHandler}
-                    accept="image/*"
+                    accept="image/gif,image/x-icon,image/jpeg,image/png"
                   />
                   <CustomButton
                     style={{ margin: "12px 0" }}

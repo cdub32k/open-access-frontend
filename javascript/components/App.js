@@ -331,7 +331,11 @@ class App extends Component {
               <Route
                 path="/search"
                 render={(props) => (
-                  <UnAuthRedirect {...props} component={SearchResultsPage} />
+                  <UnAuthRedirect
+                    {...props}
+                    key={props.location.search}
+                    component={SearchResultsPage}
+                  />
                 )}
               />
               <Route

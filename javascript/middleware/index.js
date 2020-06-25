@@ -327,14 +327,12 @@ const VIDEO_SEARCH_RESULTS_PAGE_QUERY = `
           profilePic
         }
         title
-        viewCount
+        caption
         likeCount
         dislikeCount
         commentCount
         thumbUrl
         uploadedAt
-        liked
-        disliked
       }
       hasMore
     }
@@ -349,14 +347,11 @@ const IMAGE_SEARCH_RESULTS_PAGE_QUERY = `
           username
           profilePic
         }
-        title
+        thumbUrl
         likeCount
         dislikeCount
         commentCount
-        thumbUrl
         uploadedAt
-        liked
-        disliked
       }
       hasMore
     }
@@ -376,8 +371,6 @@ const NOTE_SEARCH_RESULTS_PAGE_QUERY = `
         dislikeCount
         commentCount
         uploadedAt
-        liked
-        disliked
       }
       hasMore
     }

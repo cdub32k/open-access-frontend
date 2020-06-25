@@ -124,7 +124,7 @@ const NewsFeedItem = ({
           </div>
         </div>
       </CardContent>
-      <Link to={link} target="_blank">
+      <Link to={link}>
         {type != "note" && (
           <CardMedia
             className={classes.media}
