@@ -24,12 +24,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserCommentList = ({ loading, comments, hasMore, loadMore }) => {
+const UserCommentList = ({
+  loading,
+  doneLoading,
+  comments,
+  hasMore,
+  loadMore,
+}) => {
   const classes = useStyles();
   const [page, setPage] = useState(0);
 
   useEffect(() => {
     if (hasMore && comments.length == 0) loadMore(0);
+    else doneLoading();
   }, []);
 
   const _loadMore = () => {

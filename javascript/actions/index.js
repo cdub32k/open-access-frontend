@@ -12,6 +12,8 @@ export const ActionTypes = {
   GET_USER_INFO_START: "GET_USER_INFO_START",
   GET_USER_INFO_SUCCESS: "GET_USER_INFO_SUCCESS",
   GET_USER_INFO_ERROR: "GET_USER_INFO_ERROR",
+  VIEWED_USER_LOADING: "VIEWED_USER_LOADING",
+  VIEWED_USER_DONE_LOADING: "VIEWED_USER_DONE_LOADING",
   CLEAR_USER_DATA: "CLEAR_USER_DATA",
   CLEAR_FEED_DATA: "CLEAR_FEED_DATA",
   VIDEO_LOADING: "VIDEO_LOADING",
@@ -212,6 +214,12 @@ export const ActionCreators = {
   },
   getUserInfoError: (error) => {
     return { type: ActionTypes.GET_USER_INFO_ERROR, error };
+  },
+  viewedUserLoading: () => {
+    return { type: ActionTypes.VIEWED_USER_LOADING };
+  },
+  viewedUserDoneLoading: () => {
+    return { type: ActionTypes.VIEWED_USER_DONE_LOADING };
   },
   makePaymentStart: () => {
     return { type: ActionTypes.MAKE_PAYMENT_START };

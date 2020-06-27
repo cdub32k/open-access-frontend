@@ -124,7 +124,7 @@ const Payment = ({
         )}
         {active && !activeUntil && (
           <div>
-            <Typography variant="h5">Thank you loyal subscriber</Typography>
+            <Typography variant="h5">Thank you loyal subscriber!</Typography>
             <CustomButton
               text="Cancel Subscription"
               style={{ marginLeft: 0 }}

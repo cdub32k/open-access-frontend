@@ -176,18 +176,20 @@ class Account extends Component {
 
     return (
       <div className={classes.container}>
-        <Typography variant="h3" color="primary">
+        <Typography
+          variant="h4"
+          color="primary"
+          style={{ width: "100%", maxWidth: 820, padding: "0 12px" }}
+        >
           <Link to={`/profile/${username}`}>@{username}</Link>
           <span style={{ color: theme.palette.dark.main }}>'s Account</span>
         </Typography>
         <br />
-        <div>
+        <div style={{ width: "100%", maxWidth: 820, padding: "0 12px" }}>
           <form
             onSubmit={this.uploadProfilePic}
             style={{
-              marginBottom: 32,
-              display: "flex",
-              justifyContent: "center",
+              marginBottom: 60,
             }}
           >
             <FormGroup>
@@ -326,7 +328,9 @@ class Account extends Component {
           </Grid>
           {!editInfo && (
             <Grid className={classes.section} item xs={12} md={6}>
-              <Link to={"/payment"}>Payment Info</Link>
+              <Link to={"/payment"}>
+                <b>Payment Info</b>
+              </Link>
             </Grid>
           )}
         </Grid>
@@ -357,13 +361,13 @@ const styles = (theme) => ({
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "flex-start",
   },
   sectionsContainer: {
-    maxWidth: 800,
+    maxWidth: 820,
   },
   section: {
-    padding: "0 24px",
+    padding: "0 12px",
     marginBottom: 54,
     maxWidth: 400,
   },

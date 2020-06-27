@@ -31,6 +31,10 @@ class VideoList extends Component {
     this.loadMore = this.loadMore.bind(this);
   }
 
+  componentDidMount() {
+    this.props.doneLoading();
+  }
+
   loadMore = () => {
     this.props.loadMore(this.state.videoPage + 1);
     this.setState({

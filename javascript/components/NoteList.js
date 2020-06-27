@@ -21,12 +21,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NoteList = ({ loading, notes, hasMore, loadMore }) => {
+const NoteList = ({ loading, doneLoading, notes, hasMore, loadMore }) => {
   const classes = useStyles();
   const [page, setPage] = useState(0);
 
   useEffect(() => {
     if (hasMore && notes.length == 0) loadMore(0);
+    else doneLoading();
   }, []);
 
   const _loadMore = () => {

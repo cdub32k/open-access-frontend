@@ -41,32 +41,32 @@ const HomeHero = (props) => {
       <HeroCard
         Icon={LocalOfferIcon}
         title="No Ads"
-        body="Eut occaecat do incididunt ea et. Incididunt dolor eu in aute magna aliqua voluptate ad. Culpa sint culpa labore culpa aute culpa eu ad consequat reprehenderit Lorem cillum."
+        body="This site is 100% user-supported and will never accept a dime from advertisers or sponsors. We answer to no one except our users, and our only goal is to create a happy community. And of course you will not have to deal with unwanted interuptions."
       />
       <HeroCard
         Icon={PublicIcon}
         title="Unique Culture"
-        body="Lorem conseaborum lnt officia laborum non in mollit commodo. Quis nisi incididunt non tempor fugiat fugiat irure ipsum adipisicing ad."
-      />
-      <HeroCard
-        Icon={RecordVoiceOverIcon}
-        title="Free Speech"
-        body="Nostrud nostrud duis irure cagna. Dolor mollit exercitation lnostrud duis irure consectetur cillumabore quis laboris consequat enim fugiat eu ad."
-      />
-      <HeroCard
-        Icon={MonetizationOnIcon}
-        title="Monthly Payment"
-        body="Cupidatat dolore tempor elit do nooident minim. Laborum id officia ut sit nostrud. Fugiat pariatur cillum sint eiusmod ipsum commodo sint eu eiusmod laborum Lorem minim."
+        body="What sets us apart is our community, which every member cherishes and loves. There is one common newsfeed and individual profiles. You can post videos, images, and text messages, and there are are comments, hashtags, and @ mentions."
       />
       <HeroCard
         Icon={SentimentSatisfiedAltIcon}
         title="Limited Membership"
-        body="Nisi dolot non ad sit occaecat ea id. Exceptat sint labore Lorem ad deserunt. Pariatur do ea aute minim incididunt labore sit incididunt Lorem laborum irure."
+        body="This is not a viral network but more of a tight-nit group. Membership is capped at 5,000 active users and we will remain this way until the end of time. There is no concept of friends, followers, or premium members, as everyone is treated as equals here."
       />
       <HeroCard
         Icon={BusinessCenterIcon}
         title="Caring Small Business"
-        body="Incididunt cupidatat commodo au in incididunt adipisicing. Esse excepteur ipsum voluptate nostrud cillum et. Labore anim nulla sint officia labore velit proident reprehenderit officia aliquip non duis."
+        body="The social media companies you already know are working at such a large scale, your concerns and questions are almost always left unaddressed. Here at Open Access, we respond to our users' feedback. Email <b>openaccess@usa.com</b>"
+      />
+      <HeroCard
+        Icon={RecordVoiceOverIcon}
+        title="Free Speech, User Privacy"
+        body="No censorship of any kind. Of course we will report any criminal activity, but aside from that everyone can feel free to speak their mind openly. Also, we track no user analytics and the data you upload to the site can be permanently deleted any time."
+      />
+      <HeroCard
+        Icon={MonetizationOnIcon}
+        title="Monthly Payment"
+        body="Being part of this community is not cheap. At $25 per month, membership fees will go towards storage and server costs, data bandwidth, software development, customer service, and website moderation. Payments are monthly, cancel any time. No free trial."
       />
     </Grid>
   );

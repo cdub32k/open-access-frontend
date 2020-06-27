@@ -39,6 +39,7 @@ class Profile extends Component {
   }
 
   changeTab(e, newValue) {
+    this.props.viewedUserLoading();
     this.setState({
       selectedTab: newValue,
     });
@@ -70,6 +71,7 @@ class Profile extends Component {
       dislikes,
       dislikeCount,
       mineUsername,
+      viewedUserDoneLoading,
     } = this.props;
 
     if (error) return <Error />;
@@ -105,6 +107,7 @@ class Profile extends Component {
             loadMore={(page) => loadUserVideoPage(username, page)}
             videos={videos}
             loading={loading}
+            doneLoading={viewedUserDoneLoading}
           />
         </TabPanel>
         <TabPanel selectedTab={selectedTab} index={1}>
@@ -118,6 +121,7 @@ class Profile extends Component {
             loadMore={(page) => loadUserImagePage(username, page)}
             images={images}
             loading={loading}
+            doneLoading={viewedUserDoneLoading}
           />
         </TabPanel>
         <TabPanel selectedTab={selectedTab} index={2}>
@@ -131,6 +135,7 @@ class Profile extends Component {
             loadMore={(page) => loadUserNotePage(username, page)}
             notes={notes}
             loading={loading}
+            doneLoading={viewedUserDoneLoading}
           />
         </TabPanel>
         <TabPanel selectedTab={selectedTab} index={3}>
@@ -139,6 +144,7 @@ class Profile extends Component {
             loadMore={(page) => loadUserCommentsPage(username, page)}
             comments={comments}
             loading={loading}
+            doneLoading={viewedUserDoneLoading}
           />
         </TabPanel>
         <TabPanel selectedTab={selectedTab} index={4}>
@@ -147,6 +153,7 @@ class Profile extends Component {
             loadMore={(page) => loadUserLikesPage(username, page)}
             likes={likes}
             loading={loading}
+            doneLoading={viewedUserDoneLoading}
           />
         </TabPanel>
         <TabPanel selectedTab={selectedTab} index={5}>
@@ -155,6 +162,7 @@ class Profile extends Component {
             loadMore={(page) => loadUserDislikesPage(username, page)}
             likes={dislikes}
             loading={loading}
+            doneLoading={viewedUserDoneLoading}
           />
         </TabPanel>
       </div>
@@ -188,6 +196,8 @@ const mapDispatchToProps = (dispatch) => ({
   clearUserData: () => {
     dispatch(ActionCreators.clearUserData());
   },
+  viewedUserLoading: () => dispatch(ActionCreators.viewedUserLoading()),
+  viewedUserDoneLoading: () => dispatch(ActionCreators.viewedUserDoneLoading()),
   loadUserVideoPage: (username, page) =>
     dispatch(ActionCreators.loadUserVideoPageStart(username, page)),
   loadUserImagePage: (username, page) =>

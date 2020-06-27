@@ -28,12 +28,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserLikeList = ({ loading, likes, hasMore, loadMore }) => {
+const UserLikeList = ({ loading, doneLoading, likes, hasMore, loadMore }) => {
   const classes = useStyles();
   const [page, setPage] = useState(0);
 
   useEffect(() => {
     if (hasMore && likes.length == 0) loadMore(0);
+    else doneLoading();
   }, []);
 
   const _loadMore = () => {

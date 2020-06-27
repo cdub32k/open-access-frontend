@@ -123,6 +123,10 @@ const userReducer = (state = initialState, action) => {
       return { ...initialState };
     case ActionTypes.USER_INFO_LOADING:
       return { ...state, loading: true };
+    case ActionTypes.VIEWED_USER_LOADING:
+      return { ...state, viewed: { ...state.viewed, loading: true } };
+    case ActionTypes.VIEWED_USER_NOT_LOADING:
+      return { ...state, viewed: { ...state.viewed, loading: false } };
     case ActionTypes.GET_USER_INFO_SUCCESS:
       return {
         ...state,

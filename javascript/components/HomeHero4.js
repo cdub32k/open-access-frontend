@@ -22,7 +22,7 @@ import { validateEmail } from "../utils/helpers";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    padding: "200px 0px 200px 50px",
+    padding: "150px 0px 200px 50px",
   },
   caption: {
     color: theme.palette.primary.main,
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.dark.main,
     marginRight: 12,
     fontSize: 44,
-    marginTop: 40,
+    marginTop: 20,
     cursor: "pointer",
   },
   heroImg: {
@@ -52,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.light.main,
     borderRadius: 5,
     fontSize: 18,
+  },
+  black: {
+    color: theme.palette.dark.main,
   },
 }));
 
@@ -141,6 +144,10 @@ const HomeHero4 = ({ subscribe }) => {
             )}
           </Grid>
           <Grid item xs={12}>
+            <Typography className={classes.caption} variant="caption">
+              <span className={classes.black}>Contact us:</span>{" "}
+              <b>openaccess@usa.com</b>
+            </Typography>
             <Grid container>
               <IconButton className={classes.icon}>
                 <TwitterIcon fontSize="large" />

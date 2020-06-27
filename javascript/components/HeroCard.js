@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   container: {
     maxWidth: 350,
-    height: 290,
+    height: 300,
     padding: 20,
     margin: 10,
     display: "flex",
@@ -43,9 +43,13 @@ const HeroCard = ({ Icon, title, body }) => {
       <Typography variant="h4" className={classes.title}>
         {title}
       </Typography>
-      <Typography variant="body1" className={classes.body}>
-        {body}
-      </Typography>
+      <Typography
+        variant="body1"
+        className={classes.body}
+        dangerouslySetInnerHTML={{
+          __html: body,
+        }}
+      ></Typography>
     </Grid>
   );
 };
