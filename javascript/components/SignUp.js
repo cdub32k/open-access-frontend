@@ -233,12 +233,7 @@ const SignUp = ({ error, signupStart, ...rest }) => {
               </Grid>
             </Grid>
             {loading && <CircularProgress style={{ marginTop: 28 }} />}
-            <Grid
-              container
-              alignItems="center"
-              justifyContent="center"
-              className={classes.btn}
-            >
+            <Grid container justify="center" className={classes.btn}>
               <Grid item xs={12} sm={3}>
                 <CustomButton
                   text="Sign up"

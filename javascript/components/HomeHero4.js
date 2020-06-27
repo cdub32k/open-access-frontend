@@ -112,7 +112,7 @@ const HomeHero4 = ({ subscribe }) => {
             <Typography variant="h3">Want To Join?</Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="subtitle2">
+            <Typography variant="subtitle2" style={{ maxWidth: 600 }}>
               We are taking reservations and will open the site after we receive
               1,000 emails from people who want to join.
             </Typography>
