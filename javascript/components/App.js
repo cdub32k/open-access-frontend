@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Router, Switch, Route, Link } from "react-router-dom";
+import { Router, Switch, Route, Link, withRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
 const history = createBrowserHistory();
 
@@ -54,7 +54,7 @@ import AuthRedirect from "./AuthRedirect";
 import UnAuthRedirect from "./UnAuthRedirect";
 import ScrollTopButton from "./ScrollTopButton";
 const CompLoader = () => (
-  <CircularProgress disableShrink style={{ position: "fixed", top: "25%" }} />
+  <CircularProgress disableShrink style={{ position: "fixed", top: "40%" }} />
 );
 //import Account from "./Account";
 const Account = (props) => (
@@ -74,9 +74,9 @@ const Payment = (props) => (
   </DynamicImport>
 );
 
-//import Login from "./Login";
-const Login = (props) => (
-  <DynamicImport load={() => import("./Login")}>
+//import SignIn from "./SignIn";
+const SignIn = (props) => (
+  <DynamicImport load={() => import("./SignIn")}>
     {(Component) =>
       Component == null ? <CompLoader /> : <Component {...props} />
     }
@@ -229,6 +229,20 @@ const NotFound = (props) => (
   </DynamicImport>
 );
 
+class ScrollToTop extends Component {
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  render() {
+    return this.props.children;
+  }
+}
+
+ScrollToTop = withRouter(ScrollToTop);
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -250,131 +264,135 @@ class App extends Component {
         <div>
           <SiteNav />
           <div className="site-content">
-            <Switch>
-              <Route
-                path="/login"
-                render={(props) => (
-                  <AuthRedirect {...props} component={Login} />
-                )}
-              />
-              <Route path="/logout" component={Logout} />
-              <Route
-                path="/sign-up"
-                render={(props) => (
-                  <AuthRedirect {...props} component={SignUp} />
-                )}
-              />
-              <Route
-                path="/my-account"
-                render={(props) => (
-                  <UnAuthRedirect {...props} component={Account} />
-                )}
-              />
-              <Route
-                path="/payment"
-                render={(props) => (
-                  <UnAuthRedirect {...props} component={Payment} />
-                )}
-              />
-              <Route
-                path="/note/:noteId"
-                render={(props) => (
-                  <UnAuthRedirect
-                    key={`${props.match.params.noteId} ${props.location.search}`}
-                    {...props}
-                    component={NotePage}
-                  />
-                )}
-              />
-              <Route
-                path="/note-upload"
-                render={(props) => (
-                  <UnAuthRedirect {...props} component={NoteUploader} />
-                )}
-              />
-              <Route
-                path="/image/:imageId"
-                render={(props) => (
-                  <UnAuthRedirect
-                    key={`${props.match.params.imageId} ${props.location.search}`}
-                    {...props}
-                    component={ImagePage}
-                  />
-                )}
-              />
-              <Route
-                path="/image-upload"
-                render={(props) => (
-                  <UnAuthRedirect {...props} component={ImageUploader} />
-                )}
-              />
-              <Route
-                path="/video-player/:videoId"
-                render={(props) => (
-                  <UnAuthRedirect
-                    key={`${props.match.params.videoId} ${props.location.search}`}
-                    {...props}
-                    component={VideoPage}
-                  />
-                )}
-              />
-              <Route
-                path="/video-upload"
-                render={(props) => (
-                  <UnAuthRedirect {...props} component={VideoUploader} />
-                )}
-              />
-              <Route
-                path="/video/edit/:videoId"
-                render={(props) => (
-                  <UnAuthRedirect {...props} component={VideoEdit} />
-                )}
-              />
-              <Route
-                path="/profile/:username"
-                render={(props) => (
-                  <UnAuthRedirect
-                    key={props.match.params.username}
-                    {...props}
-                    component={Profile}
-                  />
-                )}
-              />
-              <Route
-                path="/feed"
-                render={(props) => (
-                  <UnAuthRedirect {...props} component={NewsFeed} />
-                )}
-              />
-              <Route
-                path="/search"
-                render={(props) => (
-                  <UnAuthRedirect
-                    {...props}
-                    key={props.location.search}
-                    component={SearchResultsPage}
-                  />
-                )}
-              />
-              <Route
-                path="/users"
-                render={(props) => (
-                  <UnAuthRedirect {...props} component={UsersList} />
-                )}
-              />
-              <Route
-                path="/password-reset/:tempKey?"
-                render={(props) => (
-                  <AuthRedirect {...props} component={PasswordReset} />
-                )}
-              />
-              <Route
-                exact
-                path="/"
-                render={(props) => <AuthRedirect {...props} component={Home} />}
-              />
-              <Route path="*" component={NotFound} />
-            </Switch>
+            <ScrollToTop>
+              <Switch>
+                <Route
+                  path="/sign-in"
+                  render={(props) => (
+                    <AuthRedirect {...props} component={SignIn} />
+                  )}
+                />
+                <Route path="/logout" component={Logout} />
+                <Route
+                  path="/sign-up"
+                  render={(props) => (
+                    <AuthRedirect {...props} component={SignUp} />
+                  )}
+                />
+                <Route
+                  path="/my-account"
+                  render={(props) => (
+                    <UnAuthRedirect {...props} component={Account} />
+                  )}
+                />
+                <Route
+                  path="/payment"
+                  render={(props) => (
+                    <UnAuthRedirect {...props} component={Payment} />
+                  )}
+                />
+                <Route
+                  path="/note/:noteId"
+                  render={(props) => (
+                    <UnAuthRedirect
+                      key={`${props.match.params.noteId} ${props.location.search}`}
+                      {...props}
+                      component={NotePage}
+                    />
+                  )}
+                />
+                <Route
+                  path="/note-upload"
+                  render={(props) => (
+                    <UnAuthRedirect {...props} component={NoteUploader} />
+                  )}
+                />
+                <Route
+                  path="/image/:imageId"
+                  render={(props) => (
+                    <UnAuthRedirect
+                      key={`${props.match.params.imageId} ${props.location.search}`}
+                      {...props}
+                      component={ImagePage}
+                    />
+                  )}
+                />
+                <Route
+                  path="/image-upload"
+                  render={(props) => (
+                    <UnAuthRedirect {...props} component={ImageUploader} />
+                  )}
+                />
+                <Route
+                  path="/video-player/:videoId"
+                  render={(props) => (
+                    <UnAuthRedirect
+                      key={`${props.match.params.videoId} ${props.location.search}`}
+                      {...props}
+                      component={VideoPage}
+                    />
+                  )}
+                />
+                <Route
+                  path="/video-upload"
+                  render={(props) => (
+                    <UnAuthRedirect {...props} component={VideoUploader} />
+                  )}
+                />
+                <Route
+                  path="/video/edit/:videoId"
+                  render={(props) => (
+                    <UnAuthRedirect {...props} component={VideoEdit} />
+                  )}
+                />
+                <Route
+                  path="/profile/:username"
+                  render={(props) => (
+                    <UnAuthRedirect
+                      key={props.match.params.username}
+                      {...props}
+                      component={Profile}
+                    />
+                  )}
+                />
+                <Route
+                  path="/feed"
+                  render={(props) => (
+                    <UnAuthRedirect {...props} component={NewsFeed} />
+                  )}
+                />
+                <Route
+                  path="/search"
+                  render={(props) => (
+                    <UnAuthRedirect
+                      {...props}
+                      key={props.location.search}
+                      component={SearchResultsPage}
+                    />
+                  )}
+                />
+                <Route
+                  path="/users"
+                  render={(props) => (
+                    <UnAuthRedirect {...props} component={UsersList} />
+                  )}
+                />
+                <Route
+                  path="/password-reset/:tempKey?"
+                  render={(props) => (
+                    <AuthRedirect {...props} component={PasswordReset} />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/"
+                  render={(props) => (
+                    <AuthRedirect {...props} component={Home} />
+                  )}
+                />
+                <Route path="*" component={NotFound} />
+              </Switch>
+            </ScrollToTop>
           </div>
           <ScrollTopButton />
         </div>

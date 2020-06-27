@@ -9,7 +9,6 @@ import Carousel from "./Carousel";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    padding: "0 100px",
     marginBottom: 150,
     justifyContent: "center",
   },

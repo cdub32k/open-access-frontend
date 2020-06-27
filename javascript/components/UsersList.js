@@ -9,6 +9,12 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    width: "100%",
+    maxWidth: 820,
+    minHeight: 1200,
+    padding: 12,
+  },
   link: {
     display: "flex",
     alignItems: "center",
@@ -25,6 +31,12 @@ const useStyles = makeStyles((theme) => ({
     height: 98,
     marginRight: 16,
   },
+  previewText: {
+    height: 32,
+    width: 200,
+    animation: "pulse-dark 1.5s infinite",
+    backgroundColor: "rgba(0, 0, 0, 0.1)",
+  },
 }));
 
 const UserList = ({ getAllUsernames, users, loading }) => {
@@ -35,11 +47,24 @@ const UserList = ({ getAllUsernames, users, loading }) => {
   }, []);
 
   return (
-    <div>
+    <div className={classes.container}>
       <Typography className={classes.header} variant="h4">
         Users
       </Typography>
-      {loading && <CircularProgress style={{ margin: "28px 0" }} />}
+      {loading &&
+        Array.from({ length: 12 }).map((preview, i) => {
+          return (
+            <div className={classes.userContainer} key={i}>
+              <span className={classes.link}>
+                <Avatar src={null} className={classes.avatar} />
+                <Typography
+                  variant="subtitle1"
+                  className={classes.previewText}
+                ></Typography>
+              </span>
+            </div>
+          );
+        })}
       {users.map((user) => {
         return (
           <div className={classes.userContainer} key={user.username}>

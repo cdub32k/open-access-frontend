@@ -39,7 +39,7 @@ const HomeHero = (props) => {
           </Grid>
           <Grid item xs={12} className={classes.blurb}>
             <Typography variant="subtitle2">
-              The ultimate community for those that want to express themselves
+              The ultimate community for those who want to express themselves
               freely
             </Typography>
           </Grid>

@@ -69,7 +69,7 @@ const theme = createMuiTheme({
     },
     subtitle2: {
       color: dark,
-      fontSize: 12,
+      fontSize: 14,
       whiteSpace: "pre-wrap",
     },
     body1: { color: dark, fontSize: 13, lineHeight: 2, whiteSpace: "pre-wrap" },

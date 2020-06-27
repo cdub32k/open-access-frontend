@@ -10,7 +10,7 @@ const AuthRedirect = ({
   match,
   ...rest
 }) => {
-  if (!loggedIn) return <Redirect to="/login" />;
+  if (!loggedIn) return <Redirect to="/sign-in" />;
   else if (!loading && !active && match.path !== "/payment")
     return <Redirect to="/payment" />;
   else return <Component match={match} {...rest} />;

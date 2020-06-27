@@ -30,8 +30,9 @@ import { validateEmail, validateUsername } from "../utils/helpers";
 const useStyles = makeStyles((theme) => ({
   container: {
     position: "relative",
-    paddingTop: theme.spacing(2),
     maxWidth: 400,
+    display: "block",
+    padding: 12,
   },
   section: {
     margin: `${theme.spacing(2)}px 0 0 0`,
@@ -50,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
     top: 50,
     left: "50%",
     transform: "translateX(-50%)",
+  },
+  star: {
+    color: theme.palette.alert.main,
   },
   ...theme.globalClasses,
 }));
@@ -229,8 +233,13 @@ const SignUp = ({ error, signupStart, ...rest }) => {
               </Grid>
             </Grid>
             {loading && <CircularProgress style={{ marginTop: 28 }} />}
-            <Grid container justify="center" className={classes.btn}>
-              <Grid item xs={12}>
+            <Grid
+              container
+              alignItems="center"
+              justifyContent="center"
+              className={classes.btn}
+            >
+              <Grid item xs={12} sm={3}>
                 <CustomButton
                   text="Sign up"
                   disabled={
@@ -246,6 +255,12 @@ const SignUp = ({ error, signupStart, ...rest }) => {
                   style={{ marginLeft: 0 }}
                   onClick={onSubmit}
                 />
+              </Grid>
+              <Grid item xs={12} sm={9}>
+                <Typography variant="caption" style={{ fontWeight: "bold" }}>
+                  <span className={classes.star}>*</span>You will be charged $25
+                  immediately for your first month of membership
+                </Typography>
               </Grid>
             </Grid>
           </FormGroup>

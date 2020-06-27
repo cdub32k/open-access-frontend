@@ -60,12 +60,12 @@ const HomeHero = (props) => {
       />
       <HeroCard
         Icon={SentimentSatisfiedAltIcon}
-        title="Caring"
+        title="Limited Membership"
         body="Nisi dolot non ad sit occaecat ea id. Exceptat sint labore Lorem ad deserunt. Pariatur do ea aute minim incididunt labore sit incididunt Lorem laborum irure."
       />
       <HeroCard
         Icon={BusinessCenterIcon}
-        title="Small Business"
+        title="Caring Small Business"
         body="Incididunt cupidatat commodo au in incididunt adipisicing. Esse excepteur ipsum voluptate nostrud cillum et. Labore anim nulla sint officia labore velit proident reprehenderit officia aliquip non duis."
       />
     </Grid>

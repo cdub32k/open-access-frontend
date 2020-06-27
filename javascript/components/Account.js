@@ -336,7 +336,7 @@ class Account extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.user.loading,
+  loading: state.user.ai_loading,
   profilePic: state.user.profilePic,
   username: state.user.username,
   email: state.user.email,
@@ -368,9 +368,10 @@ const styles = (theme) => ({
     maxWidth: 400,
   },
   large: {
-    width: 200,
-    height: 200,
+    width: 300,
+    height: 300,
     border: `4px solid ${theme.palette.secondary.main}`,
+    borderRadius: 0,
     marginBottom: 12,
   },
   userField: {

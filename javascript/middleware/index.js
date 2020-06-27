@@ -637,7 +637,7 @@ export default [
         .catch((err) => next(ActionCreators.markNotificationsReadError(err)));
     } else if (action.type == ActionTypes.LOGIN_START) {
       axios
-        .post("auth/login", action.payload.credentials)
+        .post("auth/sign-in", action.payload.credentials)
         .then((res) => {
           if (res.data.auth) {
             next(

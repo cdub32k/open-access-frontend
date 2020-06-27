@@ -49,26 +49,39 @@ const useStyles = makeStyles((theme) => ({
   },
   snack: {
     backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.dark.main,
+    color: theme.palette.light.main,
     borderRadius: 5,
-    fontSize: 24,
+    fontSize: 18,
   },
 }));
 
 const HomeHero4 = ({ subscribe }) => {
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
+  const [validEmail, setValidEmail] = useState(false);
   const [snack, setSnack] = useState(false);
   const [error, setError] = useState(false);
 
+  const _validateEmail = (e) => {
+    setValidEmail(validateEmail(e));
+  };
+
   const sendEmail = () => {
+    setLoading(true);
     if (validateEmail(email)) {
       axios
         .post("/newsletter", { email })
         .then((res) => {
           if (res.data) {
+            setLoading(false);
+            setEmail("");
             setSnack(true);
           } else {
+            setLoading(false);
+            setEmail("");
+            setError("Error! Email not received, please try again.");
+            setTimeout(() => setError(false), 5000);
           }
         })
         .catch((err) => {});
@@ -96,18 +109,29 @@ const HomeHero4 = ({ subscribe }) => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h3">Subscribe to our newsletter</Typography>
+            <Typography variant="h3">Want To Join?</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="subtitle2">
+              We are taking reservations and will open the site after we receive
+              1,000 emails from people who want to join.
+            </Typography>
           </Grid>
           <Grid className={classes.input} item xs={12}>
             <CustomInput
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                _validateEmail(e.target.value);
+                setEmail(e.target.value);
+              }}
+              value={email}
               size="medium"
               placeholder="Enter Your Email"
             />
             <CustomButton
               onClick={sendEmail}
               size="large"
-              text="Subscribe"
+              text="SEND"
+              disabled={loading || !validEmail}
               style={{ display: "block", marginLeft: 0 }}
             />
             {error && (
@@ -146,7 +170,7 @@ const HomeHero4 = ({ subscribe }) => {
           },
         }}
         anchorOrigin={{
-          vertical: "bottom",
+          vertical: "top",
           horizontal: "right",
         }}
         open={snack}
@@ -164,7 +188,7 @@ const HomeHero4 = ({ subscribe }) => {
             </IconButton>
           </React.Fragment>
         }
-        message="Subscribed!"
+        message="Email Received!"
       />
     </Grid>
   );

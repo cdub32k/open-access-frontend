@@ -14,8 +14,9 @@ import CustomButton from "./CustomButton";
 const useStyles = makeStyles((theme) => ({
   container: {
     position: "relative",
-    paddingTop: theme.spacing(2),
     maxWidth: 400,
+    display: "block",
+    padding: 12,
   },
   error: {
     position: "absolute",

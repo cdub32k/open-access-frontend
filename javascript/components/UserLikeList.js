@@ -50,7 +50,7 @@ const UserLikeList = ({ loading, likes, hasMore, loadMore }) => {
 
   return (
     <div className={`${classes.container} user-comments-list`}>
-      <div class={classes.contentList}>
+      <div className={classes.contentList}>
         {likes.map((like, i) => {
           let link;
           if (like.video) {
