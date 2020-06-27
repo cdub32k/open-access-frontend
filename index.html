@@ -54,8 +54,16 @@
 
         setTimeout(function () {
           var v = document.querySelector("video");
-          v.currentTime = convert2Seconds(h, m, s);
           v.play();
+          if (v.readyState >= 3) v.currentTime = convert2Seconds(h, m, s);
+          else
+            v.addEventListener(
+              "loadedmetadata",
+              function () {
+                this.currentTime = convert2Seconds(h, m, s);
+              },
+              false
+            );
         }, 0);
       }
     </script>
