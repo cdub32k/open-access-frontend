@@ -237,8 +237,8 @@ const feedReducer = (state = initialState, action) => {
         ...state,
         images: [action.payload.image, ...state.images],
       };
-    case ActionTypes.NEWSFEED_IMAGE_ITEM_UPDATE:
-      existing = state.images.findIndex(
+    case ActionTypes.NEWSFEED_IMAGE_ITEM_UPDATE: {
+      let existing = state.images.findIndex(
         (i) => i._id == action.payload.image._id
       );
       let i = removeNull(action.payload.image);
@@ -251,13 +251,16 @@ const feedReducer = (state = initialState, action) => {
         };
       }
       return state;
+    }
     case ActionTypes.NEWSFEED_NOTE_UPDATE:
       return {
         ...state,
         notes: [action.payload.note, ...state.notes],
       };
-    case ActionTypes.NEWSFEED_NOTE_ITEM_UPDATE:
-      existing = state.notes.findIndex((n) => n._id == action.payload.note._id);
+    case ActionTypes.NEWSFEED_NOTE_ITEM_UPDATE: {
+      let existing = state.notes.findIndex(
+        (n) => n._id == action.payload.note._id
+      );
       let n = removeNull(action.payload.note);
       if (existing > -1) {
         let nts = [...state.notes];
@@ -268,6 +271,7 @@ const feedReducer = (state = initialState, action) => {
         };
       }
       return state;
+    }
     case ActionTypes.LOAD_VIDEO_SEARCH_RESULTS_START:
       //let searchSub = subscribeToNewsfeedVideoUpdates();
 

@@ -174,8 +174,8 @@ const videoReducer = (state = initialState, action) => {
       };
     case ActionTypes.LOAD_MORE_VIDEO_COMMENTS:
       return { ...state, commentsLoading: true };
-    case ActionTypes.LOAD_MORE_VIDEO_COMMENTS_SUCCESS:
-      hasMoreComments = true;
+    case ActionTypes.LOAD_MORE_VIDEO_COMMENTS_SUCCESS: {
+      let hasMoreComments = true;
       if (action.payload.items.length < 4) hasMoreComments = false;
       return {
         ...state,
@@ -183,6 +183,7 @@ const videoReducer = (state = initialState, action) => {
         hasMoreComments,
         commentsLoading: false,
       };
+    }
     case ActionTypes.LOAD_MORE_VIDEO_COMMENTS_ERROR:
       return { ...state, commentsLoading: false };
     case ActionTypes.UPDATE_VIDEO_COMMENT:
@@ -195,25 +196,28 @@ const videoReducer = (state = initialState, action) => {
       return { ...state, comments: nComments };
     case ActionTypes.GET_VIDEO_COMMENT_REPLIES:
       return { ...state, repliesLoading: action.payload._id };
-    case ActionTypes.GET_VIDEO_COMMENT_REPLIES_SUCCESS:
-      nComments = [...state.comments];
+    case ActionTypes.GET_VIDEO_COMMENT_REPLIES_SUCCESS: {
+      let nComments = [...state.comments];
       let parent = findComment(nComments, action.payload._id);
       parent.replies = action.payload.replies;
       return { ...state, comments: nComments, repliesLoading: false };
+    }
     case ActionTypes.GET_VIDEO_COMMENT_REPLIES_ERROR:
       return { ...state, repliesLoading: false };
-    case ActionTypes.LIKE_VIDEO_COMMENT:
-      nComments = [...state.comments];
-      c = findComment(nComments, action.payload.commentId);
+    case ActionTypes.LIKE_VIDEO_COMMENT: {
+      let nComments = [...state.comments];
+      let c = findComment(nComments, action.payload.commentId);
       c.liked = !c.liked;
       c.likeCount += c.liked ? 1 : -1;
       return { ...state, comments: nComments };
-    case ActionTypes.DISLIKE_VIDEO_COMMENT:
-      nComments = [...state.comments];
-      c = findComment(nComments, action.payload.commentId);
+    }
+    case ActionTypes.DISLIKE_VIDEO_COMMENT: {
+      let nComments = [...state.comments];
+      let c = findComment(nComments, action.payload.commentId);
       c.disliked = !c.disliked;
       c.dislikeCount += c.disliked ? 1 : -1;
       return { ...state, comments: nComments };
+    }
     default:
       return state;
   }
