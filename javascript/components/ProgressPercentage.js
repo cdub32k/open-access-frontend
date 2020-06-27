@@ -18,10 +18,14 @@ export default function CircularProgressWithLabel({
         display: "flex",
         justifyContent: "flex-start",
         alignItems: "center",
+        marginTop: 24,
       }}
     >
       <CircularProgress
-        style={{ width: 50, height: 50 }}
+        style={{
+          width: progress == 100 ? 40 : 50,
+          height: progress == 100 ? 40 : 50,
+        }}
         value={progress}
         variant={variant}
       />

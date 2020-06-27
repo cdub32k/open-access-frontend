@@ -1,3 +1,4 @@
+import "core-js/stable";
 import React, { Component } from "react";
 import { render } from "react-dom";
 

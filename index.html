@@ -23,6 +23,15 @@
       }
     </style>
     <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        if (window.document.documentMode) {
+          document.body.innerHTML =
+            "<h1 style='color:red'>BROWSER NOT SUPPORTED</h1>";
+          alert(
+            "Internet Explorer is not supported by this website. Please use Chrome, Firefox, Safari, or Microsoft Edge."
+          );
+        }
+      });
       function convert2Seconds(h, m, s) {
         let total = 0;
         if (h) total += h * 60 * 60;

@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = (env) => ({
-  entry: ["babel-polyfill", "./javascript/index.js"],
+  entry: ["./javascript/index.js"],
   module: {
     rules: [
       {

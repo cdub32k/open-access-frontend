@@ -38,9 +38,10 @@ const useStyles = makeStyles((theme) => ({
     margin: `${theme.spacing(2)}px 0 0 0`,
   },
   btn: {
-    marginTop: 18,
+    marginTop: 48,
   },
   error: {
+    margin: "14px 0",
     fontSize: 14,
     color: theme.palette.alert.main,
     fontWeight: 700,
@@ -213,9 +214,10 @@ const SignUp = ({ error, signupStart, ...rest }) => {
                 <div className={classes.error}>{passwordError}</div>
               )}
             </div>
-            <Grid container justify="center">
+            <Grid container justify="center" style={{ marginTop: 36 }}>
               <Grid item xs={12}>
                 <CardSection />
+                {cardError && <div className={classes.error}>{cardError}</div>}
                 <FormGroup row>
                   <FormControlLabel
                     control={
@@ -226,17 +228,26 @@ const SignUp = ({ error, signupStart, ...rest }) => {
                         color="primary"
                       />
                     }
-                    label="Renew every month"
+                    label={
+                      <span>
+                        <span className={classes.star}>*</span>Renew every month
+                      </span>
+                    }
                   />
+                  <Typography variant="caption" style={{ fontWeight: "bold" }}>
+                    <span className={classes.star}>*</span>Check this box if you
+                    would like to have your membership automatically renewed
+                    each month. If you leave this box unchecked, you can still
+                    renew manually and re-enter you CC information if you decide
+                    to stay with us.
+                  </Typography>
                 </FormGroup>
-                {cardError && <div className={classes.error}>{cardError}</div>}
               </Grid>
             </Grid>
-            {loading && <CircularProgress style={{ marginTop: 28 }} />}
             <Grid container justify="center" className={classes.btn}>
-              <Grid item xs={12} sm={3}>
+              <Grid item xs={12}>
                 <CustomButton
-                  text="Sign up"
+                  text={loading ? "Signing up..." : "Sign up"}
                   disabled={
                     !email ||
                     !username ||
@@ -250,8 +261,13 @@ const SignUp = ({ error, signupStart, ...rest }) => {
                   style={{ marginLeft: 0 }}
                   onClick={onSubmit}
                 />
+                {loading && (
+                  <CircularProgress
+                    style={{ verticalAlign: "middle", marginLeft: 8 }}
+                  />
+                )}
               </Grid>
-              <Grid item xs={12} sm={9}>
+              <Grid item xs={12}>
                 <Typography variant="caption" style={{ fontWeight: "bold" }}>
                   <span className={classes.star}>*</span>You will be charged $25
                   immediately for your first month of membership

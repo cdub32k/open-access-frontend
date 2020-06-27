@@ -296,7 +296,10 @@ class VideoUploader extends Component {
                   onChange={this.onTextChange}
                 />
               </div>
-              <div className={classes.inputContainer}>
+              <div
+                className={classes.inputContainer}
+                style={{ marginBottom: 32 }}
+              >
                 <Typography className={classes.counter} variant="caption">
                   {caption.length} / 2000 chars
                 </Typography>
@@ -309,23 +312,22 @@ class VideoUploader extends Component {
                   onChange={this.onTextChange}
                 />
               </div>
-              {uploading && (
-                <ProgressPercentage
-                  progress={uploadPercentage}
-                  completeMessage="We received your upload. Publishing to newsfeed..."
-                  style={{ marginTop: 28 }}
-                />
-              )}
 
               <CustomButton
                 disabled={!thumbSrc || !videoSrc || !title || !caption}
-                style={{ marginTop: 28, marginLeft: 0 }}
+                style={{ marginLeft: 0 }}
                 disabled={
                   uploading || !videoFile || !croppedThumb || !title || !caption
                 }
-                text="Upload"
+                text={uploading ? "Uploading..." : "Upload"}
                 type="submit"
               />
+              {uploading && (
+                <ProgressPercentage
+                  progress={100}
+                  completeMessage="We received your upload. Publishing to newsfeed..."
+                />
+              )}
             </Grid>
           </Grid>
         </form>

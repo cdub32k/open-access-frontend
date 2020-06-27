@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = (env) => ({
-  entry: ["babel-polyfill", "./javascript/index.js"],
+  entry: ["./javascript/index.js"],
   module: {
     rules: [
       {
@@ -73,7 +73,7 @@ module.exports = (env) => ({
   devServer: {
     contentBase: path.join(__dirname, "."),
     compress: true,
-    port: 7510,
+    port: 9910,
     hot: true,
     historyApiFallback: true,
   },

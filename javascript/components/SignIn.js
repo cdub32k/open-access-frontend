@@ -94,15 +94,19 @@ const Login = ({ error, loginStart }) => {
                 />
               </Grid>
             </Grid>
-            {loading && <CircularProgress style={{ marginTop: 28 }} />}
             <Grid container justify="center" className={classes.btn}>
               <Grid item xs={12}>
                 <CustomButton
-                  text="Sign in"
+                  text={loading ? "Signing in..." : "Sign in"}
                   style={{ marginLeft: 0 }}
                   disabled={!username || !password || loading}
                   onClick={onSubmit}
                 />
+                {loading && (
+                  <CircularProgress
+                    style={{ verticalAlign: "middle", marginLeft: 8 }}
+                  />
+                )}
               </Grid>
             </Grid>
           </FormGroup>

@@ -226,6 +226,13 @@ class ImageUploader extends Component {
                   onChange={this.onTextChange}
                 />
               </div>
+              <CustomButton
+                disabled={!imageSrc || !title || !caption}
+                style={{ marginTop: 28, marginLeft: 0 }}
+                disabled={uploading || !croppedImage || !title || !caption}
+                text={uploading ? "Uploading..." : "Upload"}
+                type="submit"
+              />
               {uploading && (
                 <ProgressPercentage
                   progress={uploadPercentage}
@@ -233,13 +240,6 @@ class ImageUploader extends Component {
                   style={{ marginTop: 28 }}
                 />
               )}
-              <CustomButton
-                disabled={!imageSrc || !title || !caption}
-                style={{ marginTop: 28, marginLeft: 0 }}
-                disabled={uploading || !croppedImage || !title || !caption}
-                text="Upload"
-                type="submit"
-              />
             </Grid>
           </Grid>
         </form>
