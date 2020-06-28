@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
     bottom: theme.spacing(4),
     right: theme.spacing(4),
+    zIndex: 10,
   },
   upArrow: {
     color: theme.palette.light.main,
