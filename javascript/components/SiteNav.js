@@ -72,6 +72,9 @@ const useStyles = makeStyles((theme) => {
         },
       },
     },
+    menuItem: {
+      fontSize: 16,
+    },
     notifsMenu: {
       maxWidth: 420,
     },
@@ -141,13 +144,24 @@ const SiteNav = ({
         onClick={handleMenuClose}
         component={Link}
         to={`/profile/${username}`}
+        className={classes.menuItem}
       >
         My Profile
       </MenuItem>
-      <MenuItem onClick={handleMenuClose} component={Link} to="/my-account">
+      <MenuItem
+        onClick={handleMenuClose}
+        component={Link}
+        to="/my-account"
+        className={classes.menuItem}
+      >
         My Account
       </MenuItem>
-      <MenuItem onClick={handleMenuClose} component={Link} to="/logout">
+      <MenuItem
+        onClick={handleMenuClose}
+        component={Link}
+        to="/logout"
+        className={classes.menuItem}
+      >
         Logout
       </MenuItem>
     </Menu>
@@ -172,25 +186,33 @@ const SiteNav = ({
             <NotificationsIcon className={classes.icon} />
           </Badge>
         </IconButton>
-        <Typography variant="body1">Notifications</Typography>
+        <Typography variant="body1" style={{ fontSize: 16 }}>
+          Notifications
+        </Typography>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton color="inherit">
           <AccountCircle className={classes.icon} />
         </IconButton>
-        <Typography variant="body1">Account</Typography>
+        <Typography variant="body1" style={{ fontSize: 16 }}>
+          Account
+        </Typography>
       </MenuItem>
       <MenuItem onClick={handleMobileMenuClose} component={Link} to="/users">
         <IconButton color="inherit">
           <PeopleIcon className={classes.icon} />
         </IconButton>
-        <Typography variant="body1">Users</Typography>
+        <Typography variant="body1" style={{ fontSize: 16 }}>
+          Users
+        </Typography>
       </MenuItem>
       <MenuItem onClick={handleMobileMenuClose} component={Link} to="/feed">
         <IconButton color="inherit">
           <NewReleasesIcon className={classes.icon} />
         </IconButton>
-        <Typography variant="body1">Newsfeed</Typography>
+        <Typography variant="body1" style={{ fontSize: 16 }}>
+          Newsfeed
+        </Typography>
       </MenuItem>
     </Menu>
   );

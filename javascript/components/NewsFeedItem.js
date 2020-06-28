@@ -2,7 +2,7 @@ import React, { useState, useEffect, memo } from "react";
 import { connect } from "react-redux";
 import { ActionCreators } from "../actions";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
@@ -40,6 +40,11 @@ const useStyles = makeStyles({
     width: 49,
     height: 49,
     marginRight: 8,
+  },
+  noteText: {
+    "& a": {
+      zIndex: 2,
+    },
   },
 });
 
@@ -81,9 +86,9 @@ const NewsFeedItem = ({
       break;
     case "note":
       link = `/note/${_id}`;
-      f = theme.palette.light.main;
-      bgL = theme.palette.primary.main;
-      bgR = theme.palette.primary.dark;
+      f = theme.palette.dark.main;
+      bgL = theme.palette.light.main;
+      bgR = theme.palette.primary.light;
       break;
     default:
       break;
@@ -92,6 +97,11 @@ const NewsFeedItem = ({
   const [elevation, setElevation] = useState(4);
   const onMouseOver = () => setElevation(12);
   const onMouseOut = () => setElevation(4);
+
+  const history = useHistory();
+  const goToNote = (e, link) => {
+    if (e.target.dataset.nativelink == null) history.push(link);
+  };
 
   return (
     <Card
@@ -109,7 +119,11 @@ const NewsFeedItem = ({
             <Link to={`/profile/${username}`}>
               <b>{username}</b>
             </Link>{" "}
-            posted a {type} {date2rel(uploadedAt)}
+            posted{" "}
+            <Link to={link}>
+              <b>a {type}</b>
+            </Link>{" "}
+            {date2rel(uploadedAt)}
           </Typography>
           <div className={classes.stats}>
             <Typography variant="body2">
@@ -124,50 +138,61 @@ const NewsFeedItem = ({
           </div>
         </div>
       </CardContent>
-      <Link to={link}>
-        {type != "note" && (
+      {type != "note" && (
+        <Link to={link}>
           <CardMedia
             className={classes.media}
             style={{ paddingBottom: type == "image" ? "100%" : "56.25%" }}
             image={thumbUrl}
             title={title}
           />
-        )}
-        {type != "image" && (
-          <CardContent
-            className={classes.content}
-            style={{
-              background: `linear-gradient(45deg, ${bgL} 68%, ${bgR})`,
-            }}
-          >
-            {title && (
-              <Typography style={{ color: f }} gutterBottom variant="h5">
-                {title}
-              </Typography>
-            )}
-            {!title && (
+        </Link>
+      )}
+      {type != "image" && (
+        <CardContent
+          className={classes.content}
+          style={{
+            background: `linear-gradient(45deg, ${bgL} 80%, ${bgR})`,
+            padding: 0,
+          }}
+        >
+          {title && (
+            <Typography
+              style={{ color: f, padding: 12, marginBottom: 0 }}
+              gutterBottom
+              variant="h5"
+            >
+              {title}
+            </Typography>
+          )}
+          {!title && (
+            <div
+              onClick={(e) => goToNote(e, link)}
+              style={{ cursor: "pointer" }}
+            >
               <Typography
-                style={{ color: f }}
+                className={classes.noteText}
+                style={{ color: f, padding: 16, marginBottom: 0 }}
                 gutterBottom
                 variant="h5"
                 dangerouslySetInnerHTML={{
                   __html: truncateCaptionPreview(caption),
                 }}
               ></Typography>
-            )}
-            {type != "note" && (
-              <Typography
-                style={{ color: f }}
-                variant="body1"
-                color="textSecondary"
-                dangerouslySetInnerHTML={{
-                  __html: truncateCaptionPreview(caption),
-                }}
-              ></Typography>
-            )}
-          </CardContent>
-        )}
-      </Link>
+            </div>
+          )}
+          {type != "note" && (
+            <Typography
+              style={{ color: f, padding: 12, paddingTop: 0, lineHeight: 1 }}
+              variant="body1"
+              color="textSecondary"
+              dangerouslySetInnerHTML={{
+                __html: truncateCaptionPreview(caption),
+              }}
+            ></Typography>
+          )}
+        </CardContent>
+      )}
     </Card>
   );
 };

@@ -266,8 +266,9 @@ class App extends Component {
 
   componentDidMount() {
     document.addEventListener("click", function (e) {
-      if (e.target.getAttribute("nativelink") != null) {
+      if (e.target.dataset.nativelink != null) {
         e.preventDefault();
+        e.stopPropagation();
         history.push(e.target.getAttribute("href"));
       }
     });

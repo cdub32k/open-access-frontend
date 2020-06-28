@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
     maxWidth: 820,
+    padding: 12,
   },
 }));
 

@@ -39,6 +39,9 @@ const NewsFeed = ({
   videos,
   images,
   notes,
+  hasMoreVideos,
+  hasMoreImages,
+  hasMoreNotes,
   clearFeedData,
 }) => {
   const [tab, setTab] = useState(0);
@@ -86,7 +89,7 @@ const NewsFeed = ({
         </Tabs>
         <TabPanel selectedTab={tab} index={0}>
           <NewsFeedItems items={videos} type="video" loading={loading} />
-          {!loading && (
+          {!loading && hasMoreVideos && (
             <CustomButton
               text="Load more"
               onClick={() => loadNewsfeedVideos()}
@@ -95,7 +98,7 @@ const NewsFeed = ({
         </TabPanel>
         <TabPanel selectedTab={tab} index={1}>
           <NewsFeedItems items={images} type="image" loading={loading} />
-          {!loading && (
+          {!loading && hasMoreImages && (
             <CustomButton
               text="Load more"
               onClick={() => loadNewsfeedImages()}
@@ -104,7 +107,7 @@ const NewsFeed = ({
         </TabPanel>
         <TabPanel selectedTab={tab} index={2}>
           <NewsFeedItems items={notes} type="note" loading={loading} />
-          {!loading && (
+          {!loading && hasMoreNotes && (
             <CustomButton
               text="Load more"
               onClick={() => loadNewsfeedNotes()}
@@ -121,6 +124,9 @@ const mapStateToProps = (state) => ({
   videos: state.feed.videos,
   images: state.feed.images,
   notes: state.feed.notes,
+  hasMoreVideos: state.feed.hasMoreVideos,
+  hasMoreImages: state.feed.hasMoreImages,
+  hasMoreNotes: state.feed.hasMoreNotes,
   newsfeedVideoSubscriptions: state.feed.videoSubscriptions,
   newsfeedImageSubscriptions: state.feed.imageSubscriptions,
   newsfeedNoteSubscriptions: state.feed.noteSubscriptions,

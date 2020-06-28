@@ -73,7 +73,7 @@ const theme = createMuiTheme({
       whiteSpace: "pre-wrap",
     },
     body1: { color: dark, fontSize: 13, lineHeight: 2, whiteSpace: "pre-wrap" },
-    body2: { color: dark, fontSize: 10, whiteSpace: "pre-wrap" },
+    body2: { color: dark, fontSize: 12, whiteSpace: "pre-wrap" },
     button: { color: dark, whiteSpace: "pre-wrap" },
     caption: { color: dark, fontSize: 12, whiteSpace: "pre-wrap" },
     overline: { color: dark, whiteSpace: "pre-wrap" },

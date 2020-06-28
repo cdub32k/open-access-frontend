@@ -89,12 +89,36 @@ class Profile extends Component {
           variant="scrollable"
           scrollButtons="on"
         >
-          <Tab label={`Videos (${num2str(videoCount)})`} wrapped={true} />
-          <Tab label={`Images (${num2str(imageCount)})`} wrapped={true} />
-          <Tab label={`Notes (${num2str(noteCount)})`} wrapped={true} />
-          <Tab label={`Comments (${num2str(commentCount)})`} wrapped={true} />
-          <Tab label={`Likes (${num2str(likeCount)})`} wrapped={true} />
-          <Tab label={`Dislikes (${num2str(dislikeCount)})`} wrapped={true} />
+          <Tab
+            className={classes.tabHeader}
+            label={`Videos (${num2str(videoCount)})`}
+            wrapped={true}
+          />
+          <Tab
+            className={classes.tabHeader}
+            label={`Images (${num2str(imageCount)})`}
+            wrapped={true}
+          />
+          <Tab
+            className={classes.tabHeader}
+            label={`Notes (${num2str(noteCount)})`}
+            wrapped={true}
+          />
+          <Tab
+            className={classes.tabHeader}
+            label={`Comments (${num2str(commentCount)})`}
+            wrapped={true}
+          />
+          <Tab
+            className={classes.tabHeader}
+            label={`Likes (${num2str(likeCount)})`}
+            wrapped={true}
+          />
+          <Tab
+            className={classes.tabHeader}
+            label={`Dislikes (${num2str(dislikeCount)})`}
+            wrapped={true}
+          />
         </Tabs>
         <TabPanel selectedTab={selectedTab} index={0}>
           {mineUsername == username && (
@@ -220,6 +244,9 @@ const styles = {
   },
   tabHeaders: {
     marginBottom: 24,
+  },
+  tabHeader: {
+    fontSize: 16,
   },
 };
 
