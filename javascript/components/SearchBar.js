@@ -64,7 +64,10 @@ const SearchBar = (props) => {
   return (
     <form
       className={`${classes.container} search-bar`}
-      onSubmit={() => setRedirect(true)}
+      onSubmit={(e) => {
+        e.preventDefault();
+        setRedirect(true);
+      }}
     >
       <CustomInput
         value={query}
