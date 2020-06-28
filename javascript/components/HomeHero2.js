@@ -41,7 +41,7 @@ const HomeHero = (props) => {
       <HeroCard
         Icon={LocalOfferIcon}
         title="No Ads"
-        body="This site is 100% user-supported and will never accept a dime from advertisers or sponsors. We answer to no one except our users, and our only goal is to create a happy community. And of course you will not have to deal with unwanted interuptions."
+        body="Open Access is 100% user-supported and will never accept a dime from advertisers or sponsors. We answer to no one except our users, and our only goal is to create a happy community. You won't have to deal with unwanted interuptions of any kind."
       />
       <HeroCard
         Icon={PublicIcon}
@@ -51,12 +51,12 @@ const HomeHero = (props) => {
       <HeroCard
         Icon={SentimentSatisfiedAltIcon}
         title="Limited Membership"
-        body="This is not a viral network but more of a tight-nit group. Membership is capped at 5,000 active users and we will remain this way until the end of time. There is no concept of friends, followers, or premium members, as everyone is treated as equals here."
+        body="This is not a viral network but more of a tight-nit group. Membership is capped at 5,000 active users and it will remain this way until the end of time. There is no concept of friends, followers, or premium members, as everyone is treated as equals here."
       />
       <HeroCard
         Icon={BusinessCenterIcon}
         title="Caring Small Business"
-        body="The social media companies you already know are working at such a large scale, your concerns and questions are almost always left unaddressed. Here at Open Access, we respond to our users' feedback. Email <b>openaccess@usa.com</b>"
+        body="The social media companies you already know are working at such a large scale, your concerns and questions are almost always left unaddressed. Here at Open Access, take to our users' feedback to heart and response promptly. Email <b>openaccess@usa.com</b>"
       />
       <HeroCard
         Icon={RecordVoiceOverIcon}
@@ -66,7 +66,7 @@ const HomeHero = (props) => {
       <HeroCard
         Icon={MonetizationOnIcon}
         title="Monthly Payment"
-        body="Being part of this community is not cheap. At $25 per month, membership fees will go towards storage and server costs, data bandwidth, software development, customer service, and website moderation. Payments are monthly, cancel any time. No free trial."
+        body="Membership is not free for our users. At $25 per month, membership fees will go towards storage and server costs, data bandwidth, feature development, customer service, and website moderation. Payments are monthly, and you can cancel any time. No free trial."
       />
     </Grid>
   );

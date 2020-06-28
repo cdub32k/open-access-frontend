@@ -219,6 +219,22 @@ const PasswordReset = (props) => (
     }
   </DynamicImport>
 );
+//import Terms from "./Terms";
+const Terms = (props) => (
+  <DynamicImport load={() => import("./Terms")}>
+    {(Component) =>
+      Component == null ? <CompLoader /> : <Component {...props} />
+    }
+  </DynamicImport>
+);
+//import PrivacyPolicy from "./PrivacyPolicy";
+const PrivacyPolicy = (props) => (
+  <DynamicImport load={() => import("./PrivacyPolicy")}>
+    {(Component) =>
+      Component == null ? <CompLoader /> : <Component {...props} />
+    }
+  </DynamicImport>
+);
 
 //import NotFound from "./NotFound";
 const NotFound = (props) => (
@@ -383,6 +399,8 @@ class App extends Component {
                     <AuthRedirect {...props} component={PasswordReset} />
                   )}
                 />
+                <Route exact path="/terms" component={Terms} />
+                <Route exact path="/pp" component={PrivacyPolicy} />
                 <Route
                   exact
                   path="/"
