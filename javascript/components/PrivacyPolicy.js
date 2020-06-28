@@ -27,18 +27,18 @@ const PrivacyPolicy = () => {
         THAT IS OF NO INTEREST TO US AND WE DO NOT LOG IT. WHEN YOU DELETE YOUR
         ACCOUNT, ALL ASSOCIATED DATA IS DELETED PERMANENTLY AND CANNOT BE
         RETRIEVED.
-        <Typography variant="h6">COOKIES:</Typography>
-        <Typography variant="body1" style={{ marginBottom: 18 }}></Typography>
-        THIS SITE USES LOCAL STORAGE AND HTTP HEADERS TO AUTHENTICATE YOU AS A
-        USER. DATA IS NOT STORED IN COOKIES, BUT STORED IN LOCAL BROSWER STORAGE
-        UNDER THE KEYS open-access-api-token AND open-access-api-refresh-token.
-        <Typography variant="h6">EMAIL ADDRESS:</Typography>
-        <Typography variant="body1">
-          YOU DO NOT NEED TO VERIFY YOU EMAIL ADDRESS TO USE THIS NETWORK. YOU
-          CAN RECEIVE PAYMENT RECEIPTS AND PASSWORD RESET FORMS VIA EMAIL, BUT
-          IF THIS IS NOT SOMETHING YOU'RE INTERESTED IN THEN ENTER A FAKE ONE.
-          IT WILL NOT BE PUBLICLY VISIBLE ANYWAYS
-        </Typography>
+      </Typography>
+      <Typography variant="h6">COOKIES:</Typography>
+      <Typography variant="body1" style={{ marginBottom: 18 }}></Typography>
+      THIS SITE USES LOCAL STORAGE AND HTTP HEADERS TO AUTHENTICATE YOU AS A
+      USER. DATA IS NOT STORED IN COOKIES, BUT STORED IN LOCAL BROSWER STORAGE
+      UNDER THE KEYS open-access-api-token AND open-access-api-refresh-token.
+      <Typography variant="h6">EMAIL ADDRESS:</Typography>
+      <Typography variant="body1">
+        YOU DO NOT NEED TO VERIFY YOU EMAIL ADDRESS TO USE THIS NETWORK. YOU CAN
+        RECEIVE PAYMENT RECEIPTS AND PASSWORD RESET FORMS VIA EMAIL, BUT IF THIS
+        IS NOT SOMETHING YOU'RE INTERESTED IN THEN ENTER A FAKE ONE. IT WILL NOT
+        BE PUBLICLY VISIBLE ANYWAYS
       </Typography>
     </div>
   );

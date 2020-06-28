@@ -23,19 +23,22 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   textarea: {
+    fontSize: 16,
     color: theme.palette.dark.main,
     maxWidth: 600,
   },
   input: {
+    fontSize: 16,
     color: theme.palette.dark.main,
     height: 40,
     width: "100%",
     "& input": {
-      padding: 13,
+      padding: 14,
     },
   },
   inputLabel: {
     height: 40,
+    fontSize: 16,
     transform: "translate(14px, 14px) scale(1);",
     "&:focused": {
       transform: "translate(14px, 0px) scale(.8);",
