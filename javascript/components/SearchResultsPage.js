@@ -40,6 +40,9 @@ const SearchResultsPage = ({
   videos,
   images,
   notes,
+  videoCount,
+  imageCount,
+  noteCount,
   hasMoreVideos,
   hasMoreNotes,
   hasMoreImages,
@@ -88,9 +91,9 @@ const SearchResultsPage = ({
           centered={true}
           className={classes.tabHeaders}
         >
-          <Tab label="Videos" />
-          <Tab label="Images" />
-          <Tab label="Notes" />
+          <Tab label={`Videos (${videoCount >= 100 ? "99+" : videoCount})`} />
+          <Tab label={`Images (${imageCount >= 100 ? "99+" : imageCount})`} />
+          <Tab label={`Notes (${noteCount >= 100 ? "99+" : noteCount})`} />
         </Tabs>
         <TabPanel selectedTab={tab} index={0}>
           <NewsFeedItems items={videos} type="video" loading={loading} />
@@ -129,6 +132,9 @@ const mapStateToProps = (state) => ({
   videos: state.feed.videos,
   images: state.feed.images,
   notes: state.feed.notes,
+  videoCount: state.feed.videoCount,
+  imageCount: state.feed.imageCount,
+  noteCount: state.feed.noteCount,
   newsfeedVideoSubscriptions: state.feed.videoSubscriptions,
   newsfeedImageSubscriptions: state.feed.imageSubscriptions,
   newsfeedNoteSubscriptions: state.feed.noteSubscriptions,

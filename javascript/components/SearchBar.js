@@ -66,7 +66,7 @@ const SearchBar = (props) => {
       className={`${classes.container} search-bar`}
       onSubmit={(e) => {
         e.preventDefault();
-        setRedirect(true);
+        if (query.length > 2) setRedirect(true);
       }}
     >
       <CustomInput
@@ -77,7 +77,7 @@ const SearchBar = (props) => {
       />
       <CustomButton
         Icon={SearchIcon}
-        disabled={!query}
+        disabled={!query || query.length < 3}
         onClick={() => setRedirect(true)}
         className={classes.button}
       />

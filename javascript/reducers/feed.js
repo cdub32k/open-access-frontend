@@ -17,6 +17,10 @@ const initialState = {
   images: [],
   videos: [],
 
+  videoCount: "-",
+  imageCount: "-",
+  noteCount: "-",
+
   videoSubscriptions: {},
   imageSubscriptions: {},
   noteSubscriptions: {},
@@ -306,6 +310,22 @@ const feedReducer = (state = initialState, action) => {
         videoSubscriptions: { ...state.videoSubscriptions, main: vidSub2 },
       };
     case ActionTypes.LOAD_VIDEO_SEARCH_RESULTS_SUCCESS:
+      const {
+        videos,
+        hasMore,
+        videoCount,
+        imageCount,
+        noteCount,
+      } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        videos: [...state.videos, ...videos],
+        hasMoreVideos: hasMore,
+        videoCount: videoCount != undefined ? videoCount : state.videoCount,
+        imageCount: imageCount != undefined ? imageCount : state.imageCount,
+        noteCount: noteCount != undefined ? noteCount : state.noteCount,
+      };
     case ActionTypes.LOAD_NEWSFEED_VIDEO_SUCCESS:
       return {
         ...state,

@@ -317,6 +317,30 @@ const USER_COMMENTS_PAGE_QUERY = `
   }
 `;
 
+const VIDEO_SEARCH_RESULTS_PAGE_WITH_COUNTS_QUERY = `
+  query VideoSearchResultsPage($page: Int, $query: String, $hashtag: String, $lastOldest: Date){
+    videoSearch(query: $query, hashtag: $hashtag, page: $page, lastOldest: $lastOldest) {
+      videos {
+        _id
+        user {
+          username
+          profilePic
+        }
+        title
+        caption
+        likeCount
+        dislikeCount
+        commentCount
+        thumbUrl
+        uploadedAt
+      }
+      hasMore
+      videoCount
+      imageCount
+      noteCount
+    }
+  }
+`;
 const VIDEO_SEARCH_RESULTS_PAGE_QUERY = `
   query VideoSearchResultsPage($page: Int, $query: String, $hashtag: String, $lastOldest: Date){
     videoSearch(query: $query, hashtag: $hashtag, page: $page, lastOldest: $lastOldest) {
@@ -1619,28 +1643,34 @@ export default [
           ? store.getState().feed.videos.slice(-1)[0].uploadedAt
           : null;
 
+      let q = lastOldest
+        ? VIDEO_SEARCH_RESULTS_PAGE_QUERY
+        : VIDEO_SEARCH_RESULTS_PAGE_WITH_COUNTS_QUERY;
       const cachedQ = apolloCache.readQuery({
-        query: parse(VIDEO_SEARCH_RESULTS_PAGE_QUERY),
+        query: parse(q),
         variables: { page, query, hashtag, lastOldest },
       });
       if (cachedQ)
         return next(
           ActionCreators.loadVideoSearchResultsSuccess(
             cachedQ.videoSearch.videos,
-            cachedQ.videoSearch.hasMore
+            cachedQ.videoSearch.hasMore,
+            cachedQ.videoSearch.videoCount,
+            cachedQ.videoSearch.imageCount,
+            cachedQ.videoSearch.noteCount
           )
         );
 
       axios
         .post("/api", {
-          query: VIDEO_SEARCH_RESULTS_PAGE_QUERY,
+          query: q,
           variables: { page, query, hashtag, lastOldest },
         })
         .then((res) => {
           const videoData = res.data.data;
 
           apolloCache.writeQuery({
-            query: parse(VIDEO_SEARCH_RESULTS_PAGE_QUERY),
+            query: parse(q),
             variables: { page, query, hashtag, lastOldest },
             data: { ...videoData },
           });
@@ -1648,7 +1678,10 @@ export default [
           next(
             ActionCreators.loadVideoSearchResultsSuccess(
               videoData.videoSearch.videos,
-              videoData.videoSearch.hasMore
+              videoData.videoSearch.hasMore,
+              videoData.videoSearch.videoCount,
+              videoData.videoSearch.imageCount,
+              videoData.videoSearch.noteCount
             )
           );
         })

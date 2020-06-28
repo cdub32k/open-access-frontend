@@ -570,10 +570,16 @@ export const ActionCreators = {
       payload: { query, hashtag },
     };
   },
-  loadVideoSearchResultsSuccess: (videos, hasMore) => {
+  loadVideoSearchResultsSuccess: (
+    videos,
+    hasMore,
+    videoCount,
+    imageCount,
+    noteCount
+  ) => {
     return {
       type: ActionTypes.LOAD_VIDEO_SEARCH_RESULTS_SUCCESS,
-      payload: { videos, hasMore },
+      payload: { videos, hasMore, videoCount, imageCount, noteCount },
     };
   },
   loadVideoSearchResultsError: (error) => {
