@@ -41,11 +41,6 @@ const useStyles = makeStyles({
     height: 49,
     marginRight: 8,
   },
-  noteText: {
-    "& a": {
-      zIndex: 2,
-    },
-  },
 });
 
 const NewsFeedItem = ({
@@ -171,7 +166,6 @@ const NewsFeedItem = ({
               style={{ cursor: "pointer" }}
             >
               <Typography
-                className={classes.noteText}
                 style={{ color: f, padding: 16, marginBottom: 0 }}
                 gutterBottom
                 variant="h5"
