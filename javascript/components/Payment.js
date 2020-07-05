@@ -72,6 +72,7 @@ const Payment = ({
   subscriptions,
   active,
   activeUntil,
+  nextBillDate,
   location,
 }) => {
   const classes = useStyles();
@@ -125,6 +126,9 @@ const Payment = ({
         {active && !activeUntil && (
           <div>
             <Typography variant="h5">Thank you loyal subscriber!</Typography>
+            <Typography variant="body1">
+              Your next charge will be on <b>{date2str(nextBillDate)}</b>
+            </Typography>
             <CustomButton
               text="Cancel Subscription"
               style={{ marginLeft: 0 }}
@@ -165,7 +169,7 @@ const Payment = ({
             return (
               <li key={i}>
                 <div className={classes.sub}>
-                  {printCentsToCurreny(sub.amount)}/mo. on{" "}
+                  {printCentsToCurreny(sub.amount)}/mo. started on{" "}
                   {date2str(sub.createdAt)} (confrimation #
                   <b>{sub._id.substring(sub._id.length - 8).toUpperCase()}</b>)
                   {!sub.terminated && (
@@ -247,6 +251,7 @@ const mapStateToProps = (state) => ({
   loading: state.user.loading,
   active: state.user.active,
   activeUntil: state.user.activeUntil,
+  nextBillDate: state.user.nextBillDate,
   charges: state.user.payment.charges,
   subscriptions: state.user.payment.subscriptions,
 });

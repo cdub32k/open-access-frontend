@@ -11,6 +11,10 @@ const useStyles = makeStyles((theme) => ({
     bottom: theme.spacing(4),
     right: theme.spacing(4),
     zIndex: 10,
+    [theme.breakpoints.down("sm")]: {
+      bottom: theme.spacing(1),
+      right: theme.spacing(1),
+    },
   },
   upArrow: {
     color: theme.palette.light.main,

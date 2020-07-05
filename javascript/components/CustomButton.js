@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 80,
     color: theme.palette.text.light,
   },
+  disabled: {
+    backgroundColor: theme.palette.dark.light,
+  },
   icon: {
     display: "inline",
   },
@@ -36,7 +39,10 @@ const CustomButton = ({ onClick, text, Icon, className, ...rest }) => {
     );
   return (
     <Button
-      className={`${classes.button} ${className}`}
+      classes={{
+        root: `${classes.button} ${className}`,
+        disabled: `${classes.disabled}`,
+      }}
       onClick={onClick}
       variant="contained"
       color="primary"

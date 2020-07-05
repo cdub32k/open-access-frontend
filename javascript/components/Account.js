@@ -10,6 +10,10 @@ import Typography from "@material-ui/core/Typography";
 import FormGroup from "@material-ui/core/FormGroup";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
 import { withStyles, withTheme } from "@material-ui/core/styles";
 
 import CustomInput from "./CustomInput";
@@ -32,6 +36,9 @@ class Account extends Component {
         aspect: 1 / 1,
       },
       editInfo: false,
+      confirmOpen: false,
+      confirmDeleteText: "",
+      deleting: false,
     };
 
     this.imageInput = createRef();
@@ -159,6 +166,24 @@ class Account extends Component {
     });
   };
 
+  confirmClose = () => {
+    this.setState({
+      confirmOpen: false,
+    });
+  };
+
+  deleteAccount = () => {
+    this.setState({ deleting: true });
+    axios
+      .delete("/users")
+      .then(() => {
+        this.props.logoutAfterDelete();
+      })
+      .catch((err) => {
+        alert("Error! Account could not be deleted");
+      });
+  };
+
   render() {
     const {
       loading,
@@ -172,7 +197,15 @@ class Account extends Component {
       theme,
     } = this.props;
 
-    const { imageSrc, crop, editInfo, uploading } = this.state;
+    const {
+      imageSrc,
+      crop,
+      editInfo,
+      uploading,
+      confirmOpen,
+      confirmDeleteText,
+      deleting,
+    } = this.state;
 
     return (
       <div className={classes.container}>
@@ -334,6 +367,65 @@ class Account extends Component {
             </Grid>
           )}
         </Grid>
+        <Grid
+          className={classes.sectionsContainer}
+          style={{ marginTop: 96 }}
+          container
+        >
+          <Grid className={classes.section} item xs={12} md={6}>
+            <CustomButton
+              style={{
+                backgroundColor: theme.palette.alert.main,
+                marginLeft: 0,
+              }}
+              onClick={() => this.setState({ confirmOpen: true })}
+              text="DELETE ACCOUNT"
+            />
+          </Grid>
+          <Dialog
+            className={classes.dialog}
+            onClose={this.confirmClose}
+            open={confirmOpen}
+          >
+            <DialogTitle>Delete your account??</DialogTitle>
+            {deleting && (
+              <CircularProgress style={{ margin: "auto", display: "block" }} />
+            )}
+            <DialogContent>
+              <DialogContentText>
+                This will permamently delete all your associated data from this
+                network. Videos, images, notes, and comments will be removed.
+                Your likes and dislikes will still contribute to the total
+                counts, but nobody will be able to see the +1 was from you.
+              </DialogContentText>
+              <DialogContentText>
+                Type your full username into the field below, and confirm the
+                deletion of your account:
+              </DialogContentText>
+              <CustomInput
+                name="confirmDeleteText"
+                value={confirmDeleteText}
+                onChange={this.onTextChange}
+              />
+            </DialogContent>
+            <div className={classes.dialogActions}>
+              <CustomButton
+                className={classes.deleteBtn}
+                text="DELETE"
+                onClick={this.deleteAccount}
+                disabled={deleting || confirmDeleteText != username}
+              />
+              <CustomButton
+                style={{
+                  backgroundColor: theme.palette.secondary.main,
+                  color: theme.palette.light.main,
+                }}
+                text="cancel"
+                onClick={this.confirmClose}
+              />
+            </div>
+          </Dialog>
+        </Grid>
       </div>
     );
   }
@@ -354,11 +446,13 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreators.getUserAccountInfoStart(username)),
   updateAccountInfo: (userInfo) =>
     dispatch(ActionCreators.updateAccountInfoStart(userInfo)),
+  logoutAfterDelete: () => dispatch(ActionCreators.logout()),
 });
 
 const styles = (theme) => ({
   container: {
     width: "100%",
+    maxWidth: 820,
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
@@ -380,6 +474,25 @@ const styles = (theme) => ({
   },
   userField: {
     marginBottom: 18,
+  },
+  dialog: {
+    padding: 14,
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+    maxWidth: 650,
+    margin: "auto",
+  },
+  dialogActions: {
+    display: "flex",
+    justifyContent: "flex-start",
+    padding: 10,
+    marginTop: 18,
+    marginBottom: 12,
+  },
+  deleteBtn: {
+    backgroundColor: theme.palette.alert.main,
+    color: theme.palette.light.main,
   },
   ...theme.globalClasses,
 });

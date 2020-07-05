@@ -284,31 +284,36 @@ class App extends Component {
             <ScrollToTop>
               <Switch>
                 <Route
+                  exact
                   path="/sign-in"
                   render={(props) => (
                     <AuthRedirect {...props} component={SignIn} />
                   )}
                 />
-                <Route path="/logout" component={Logout} />
+                <Route exact path="/logout" component={Logout} />
                 <Route
+                  exact
                   path="/sign-up"
                   render={(props) => (
                     <AuthRedirect {...props} component={SignUp} />
                   )}
                 />
                 <Route
+                  exact
                   path="/my-account"
                   render={(props) => (
                     <UnAuthRedirect {...props} component={Account} />
                   )}
                 />
                 <Route
+                  exact
                   path="/payment"
                   render={(props) => (
                     <UnAuthRedirect {...props} component={Payment} />
                   )}
                 />
                 <Route
+                  exact
                   path="/note/:noteId"
                   render={(props) => (
                     <UnAuthRedirect
@@ -319,12 +324,14 @@ class App extends Component {
                   )}
                 />
                 <Route
+                  exact
                   path="/note-upload"
                   render={(props) => (
                     <UnAuthRedirect {...props} component={NoteUploader} />
                   )}
                 />
                 <Route
+                  exact
                   path="/image/:imageId"
                   render={(props) => (
                     <UnAuthRedirect
@@ -335,12 +342,14 @@ class App extends Component {
                   )}
                 />
                 <Route
+                  exact
                   path="/image-upload"
                   render={(props) => (
                     <UnAuthRedirect {...props} component={ImageUploader} />
                   )}
                 />
                 <Route
+                  exact
                   path="/video-player/:videoId"
                   render={(props) => (
                     <UnAuthRedirect
@@ -351,18 +360,21 @@ class App extends Component {
                   )}
                 />
                 <Route
+                  exact
                   path="/video-upload"
                   render={(props) => (
                     <UnAuthRedirect {...props} component={VideoUploader} />
                   )}
                 />
                 <Route
+                  exact
                   path="/video/edit/:videoId"
                   render={(props) => (
                     <UnAuthRedirect {...props} component={VideoEdit} />
                   )}
                 />
                 <Route
+                  exact
                   path="/profile/:username"
                   render={(props) => (
                     <UnAuthRedirect
@@ -373,12 +385,14 @@ class App extends Component {
                   )}
                 />
                 <Route
+                  exact
                   path="/feed"
                   render={(props) => (
                     <UnAuthRedirect {...props} component={NewsFeed} />
                   )}
                 />
                 <Route
+                  exact
                   path="/search"
                   render={(props) => (
                     <UnAuthRedirect
@@ -395,6 +409,7 @@ class App extends Component {
                   )}
                 />
                 <Route
+                  exact
                   path="/password-reset/:tempKey?"
                   render={(props) => (
                     <AuthRedirect {...props} component={PasswordReset} />

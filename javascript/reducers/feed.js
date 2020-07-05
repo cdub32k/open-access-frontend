@@ -1,4 +1,3 @@
-import * as jwt_decode from "jwt-decode";
 import { ActionTypes } from "../actions";
 import axios from "axios";
 

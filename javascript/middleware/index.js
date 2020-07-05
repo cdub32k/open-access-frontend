@@ -78,7 +78,7 @@ const GET_USER_PAYMENT_INFO_QUERY = `
     user(username: $username) {
       active
       activeUntil
-      
+      nextBillDate
       charges {
         amount
         createdAt
