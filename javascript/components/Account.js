@@ -178,8 +178,10 @@ class Account extends Component {
       .delete("/users")
       .then(() => {
         this.props.logoutAfterDelete();
+        this.props.history.push("/");
       })
       .catch((err) => {
+        this.setState({ deleting: false });
         alert("Error! Account could not be deleted");
       });
   };
@@ -362,22 +364,20 @@ class Account extends Component {
           {!editInfo && (
             <Grid className={classes.section} item xs={12} md={6}>
               <Link to={"/payment"}>
-                <b>Payment Info</b>
+                <b style={{ fontSize: 18 }}>Payment Info</b>
               </Link>
             </Grid>
           )}
         </Grid>
         <Grid
           className={classes.sectionsContainer}
-          style={{ marginTop: 96 }}
+          style={{ marginTop: 48 }}
           container
         >
-          <Grid className={classes.section} item xs={12} md={6}>
+          <Grid className={classes.section} item xs={12}>
+            <hr style={{ marginBottom: 96 }} />
             <CustomButton
-              style={{
-                backgroundColor: theme.palette.alert.main,
-                marginLeft: 0,
-              }}
+              className={classes.deleteBtn}
               onClick={() => this.setState({ confirmOpen: true })}
               text="DELETE ACCOUNT"
             />
@@ -402,11 +402,14 @@ class Account extends Component {
                 Type your full username into the field below, and confirm the
                 deletion of your account:
               </DialogContentText>
-              <CustomInput
-                name="confirmDeleteText"
-                value={confirmDeleteText}
-                onChange={this.onTextChange}
-              />
+              <span style={{ display: "flex", alignItems: "center" }}>
+                <span style={{ marginRight: 4 }}>@</span>
+                <CustomInput
+                  name="confirmDeleteText"
+                  value={confirmDeleteText}
+                  onChange={this.onTextChange}
+                />
+              </span>
             </DialogContent>
             <div className={classes.dialogActions}>
               <CustomButton
@@ -416,11 +419,8 @@ class Account extends Component {
                 disabled={deleting || confirmDeleteText != username}
               />
               <CustomButton
-                style={{
-                  backgroundColor: theme.palette.secondary.main,
-                  color: theme.palette.light.main,
-                }}
-                text="cancel"
+                className={classes.returnBtn}
+                text="RETURN"
                 onClick={this.confirmClose}
               />
             </div>
@@ -463,7 +463,6 @@ const styles = (theme) => ({
   section: {
     padding: "0 12px",
     marginBottom: 54,
-    maxWidth: 400,
   },
   large: {
     width: 300,
@@ -474,6 +473,7 @@ const styles = (theme) => ({
   },
   userField: {
     marginBottom: 18,
+    fontSize: 16,
   },
   dialog: {
     padding: 14,
@@ -485,16 +485,14 @@ const styles = (theme) => ({
   },
   dialogActions: {
     display: "flex",
-    justifyContent: "flex-start",
+    justifyContent: "space-evenly",
     padding: 10,
     marginTop: 18,
     marginBottom: 12,
   },
-  deleteBtn: {
-    backgroundColor: theme.palette.alert.main,
-    color: theme.palette.light.main,
-  },
-  ...theme.globalClasses,
+  inputContainer: theme.globalClasses.inputContainer,
+  returnBtn: theme.globalClasses.returnBtn,
+  deleteBtn: theme.globalClasses.deleteBtn,
 });
 
 export default connect(

@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import CheckoutForm from "./CheckoutForm";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -19,6 +20,7 @@ const stripePromise = loadStripe(STRIPE_PK);
 
 import axios from "axios";
 
+import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
 
 import { date2str, printCentsToCurreny, getPaymentId } from "../utils/helpers";
@@ -63,9 +65,17 @@ const useStyles = makeStyles((theme) => ({
   newPayment: {
     margin: "48px 0",
   },
+  section: {
+    marginTop: 48,
+    marginBottom: 12,
+  },
+  inputContainer: theme.globalClasses.inputContainer,
+  returnBtn: theme.globalClasses.returnBtn,
+  deleteBtn: theme.globalClasses.deleteBtn,
 }));
 
 const Payment = ({
+  username,
   loading,
   loadPaymentInfo,
   charges,
@@ -73,12 +83,16 @@ const Payment = ({
   active,
   activeUntil,
   nextBillDate,
+  logoutAfterDelete,
+  history,
   location,
 }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [paymentId, setPaymentId] = useState(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confirmOpen2, setConfirmOpen2] = useState(false);
+  const [confirmDeleteText, setConfirmDeleteText] = useState("");
   const [deleting, setDeleting] = useState(false);
 
   const cancelSubscription = () => {
@@ -92,6 +106,20 @@ const Payment = ({
     });
   };
 
+  const deleteAccount = () => {
+    setDeleting(true);
+    axios
+      .delete("/users")
+      .then(() => {
+        logoutAfterDelete();
+        history.push("/");
+      })
+      .catch((err) => {
+        setDeleting(false);
+        alert("Error! Account could not be deleted");
+      });
+  };
+
   useEffect(() => {
     loadPaymentInfo();
     let p = getPaymentId(location.search);
@@ -100,6 +128,9 @@ const Payment = ({
 
   const confirmClose = () => {
     setConfirmOpen(false);
+  };
+  const confirmClose2 = () => {
+    setConfirmOpen2(false);
   };
 
   return (
@@ -150,7 +181,7 @@ const Payment = ({
           </Elements>
         </Grid>
       )}
-      <Grid style={{ marginTop: 48, marginBottom: 12 }} item xs={12}>
+      <Grid className={classes.section} item xs={12}>
         <Typography className={classes.header} variant="h3">
           Payment History
         </Typography>
@@ -214,6 +245,60 @@ const Payment = ({
           })}
         </ul>
       </Grid>
+      {!active && (
+        <Grid item className={classes.section} xs={12}>
+          <hr style={{ marginBottom: 48 }} />
+          <CustomButton
+            className={classes.deleteBtn}
+            style={{ marginTop: 18 }}
+            onClick={() => setConfirmOpen2(true)}
+            text="DELETE ACCOUNT"
+          />
+          <Dialog
+            className={classes.dialog}
+            onClose={confirmClose2}
+            open={confirmOpen2}
+          >
+            <DialogTitle>Delete your account??</DialogTitle>
+            {deleting && (
+              <CircularProgress style={{ margin: "auto", display: "block" }} />
+            )}
+            <DialogContent>
+              <DialogContentText>
+                This will permamently delete all your associated data from this
+                network. Videos, images, notes, and comments will be removed.
+                Your likes and dislikes will still contribute to the total
+                counts, but nobody will be able to see the +1 was from you.
+              </DialogContentText>
+              <DialogContentText>
+                Type your full username into the field below, and confirm the
+                deletion of your account:
+              </DialogContentText>
+              <span style={{ display: "flex", alignItems: "center" }}>
+                <span style={{ marginRight: 4 }}>@</span>
+                <CustomInput
+                  name="confirmDeleteText"
+                  value={confirmDeleteText}
+                  onChange={(e) => setConfirmDeleteText(e.target.value)}
+                />
+              </span>
+            </DialogContent>
+            <div className={classes.dialogActions}>
+              <CustomButton
+                className={classes.deleteBtn}
+                text="DELETE"
+                onClick={deleteAccount}
+                disabled={deleting || confirmDeleteText != username}
+              />
+              <CustomButton
+                className={classes.returnBtn}
+                text="RETURN"
+                onClick={confirmClose2}
+              />
+            </div>
+          </Dialog>
+        </Grid>
+      )}
       <Dialog
         className={classes.dialog}
         onClose={confirmClose}
@@ -222,18 +307,12 @@ const Payment = ({
         <DialogTitle>Confirm cancel subscription</DialogTitle>
         <div className={classes.dialogActions}>
           <CustomButton
-            style={{
-              backgroundColor: theme.palette.alert.main,
-              color: theme.palette.light.main,
-            }}
+            className={classes.deleteBtn}
             text="UNSUBSCRIBE"
             onClick={cancelSubscription}
           />
           <CustomButton
-            style={{
-              backgroundColor: theme.palette.secondary.main,
-              color: theme.palette.light.main,
-            }}
+            className={classes.returnBtn}
             text="RETURN"
             onClick={confirmClose}
           />
@@ -245,9 +324,11 @@ const Payment = ({
 
 const mapDispatchToProps = (dispatch) => ({
   loadPaymentInfo: () => dispatch(ActionCreators.loadUserPaymentInfoStart()),
+  logoutAfterDelete: () => dispatch(ActionCreators.logout()),
 });
 
 const mapStateToProps = (state) => ({
+  username: state.user.username,
   loading: state.user.loading,
   active: state.user.active,
   activeUntil: state.user.activeUntil,

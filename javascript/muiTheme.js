@@ -1,9 +1,17 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
 const primary = "#7FB069";
+const primaryLight = "#a1c591";
+const primaryDark = "#61904c";
 const secondary = "#E6AA68";
+const secondaryLight = "#efc89d";
+const secondaryDark = "#dd8c33";
 const background = "#FFFBBD";
+const backgroundLight = "#fffffa";
+const backgroundDark = "#fff780";
 const alert = "#CA3C25";
+const alertLight = "#df624e";
+const alertDark = "#962d1c";
 const dark = "#1D1A05";
 const darkLight = "#51490e";
 const light = "#FFF";
@@ -15,27 +23,27 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       main: primary,
-      light: "#a1c591",
-      dark: "#61904c",
+      light: primaryLight,
+      dark: primaryDark,
     },
     secondary: {
       main: secondary,
-      light: "#efc89d",
-      dark: "#dd8c33",
+      light: secondaryLight,
+      dark: secondaryDark,
     },
     background: {
       main: background,
-      light: "#fffffa",
-      dark: "#fff780",
+      light: backgroundLight,
+      dark: backgroundDark,
     },
     alert: {
       main: alert,
-      light: "#df624e",
-      dark: "#962d1c",
+      light: alertLight,
+      dark: alertDark,
     },
     dark: {
       main: dark,
-      light: "#51490e",
+      light: darkLight,
     },
     light: {
       main: light,
@@ -101,6 +109,21 @@ const theme = createMuiTheme({
     badge: {
       backgroundColor: alert,
       color: "white",
+    },
+    deleteBtn: {
+      marginLeft: 0,
+      backgroundColor: alert,
+      color: light,
+      "&:hover": {
+        backgroundColor: alertDark,
+      },
+    },
+    returnBtn: {
+      backgroundColor: secondary,
+      color: light,
+      "&:hover": {
+        backgroundColor: secondaryDark,
+      },
     },
   },
 });

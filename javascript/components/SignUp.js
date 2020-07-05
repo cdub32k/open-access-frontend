@@ -77,11 +77,11 @@ const SignUp = ({ error, signupStart, ...rest }) => {
   const checkEmail = (email) => {
     if (validateEmail(email)) {
       setEmailError("");
-      axios.post("/auth/check-email", { email }).then((res) => {
-        if (res.data) {
-          setEmailError("Email address in use");
-        }
-      });
+      // axios.post("/auth/check-email", { email }).then((res) => {
+      //   if (res.data) {
+      //     setEmailError("Email address in use");
+      //   }
+      // });
     } else {
       setEmailError("Invalid email address");
     }

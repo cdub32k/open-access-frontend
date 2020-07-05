@@ -77,9 +77,9 @@
         }
 
         var p = document.querySelector(".react-player__preview");
+        var v;
         if (p) {
           p.click();
-          var v;
           function getV() {
             v = document.querySelector("video");
             if (v) {
@@ -95,6 +95,7 @@
           }
           var vTries = setInterval(getV, 200);
         } else {
+          v = document.querySelector("video");
           v.currentTime = convert2Seconds(h, m, s);
           v.play().catch((e) => {});
         }

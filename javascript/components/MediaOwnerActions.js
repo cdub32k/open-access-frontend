@@ -31,10 +31,12 @@ const useStyles = makeStyles((theme) => ({
   },
   dialogActions: {
     display: "flex",
-    justifyContent: "flex-start",
+    justifyContent: "space-evenly",
     padding: 10,
     marginBottom: 12,
   },
+  returnBtn: theme.globalClasses.returnBtn,
+  deleteBtn: theme.globalClasses.deleteBtn,
 }));
 
 const OwnerActions = ({
@@ -161,19 +163,13 @@ const OwnerActions = ({
         )}
         <div className={classes.dialogActions}>
           <CustomButton
-            style={{
-              backgroundColor: theme.palette.alert.main,
-              color: theme.palette.light.main,
-            }}
+            className={classes.deleteBtn}
             text="DELETE"
             onClick={deleteMedia}
             disabled={loading}
           />
           <CustomButton
-            style={{
-              backgroundColor: theme.palette.secondary.main,
-              color: theme.palette.light.main,
-            }}
+            className={classes.returnBtn}
             text="cancel"
             onClick={confirmClose}
           />
@@ -194,10 +190,7 @@ const OwnerActions = ({
         <div className={classes.dialogActions}>
           <CustomButton text="SAVE" onClick={editMedia} disabled={loading} />
           <CustomButton
-            style={{
-              backgroundColor: theme.palette.secondary.main,
-              color: theme.palette.light.main,
-            }}
+            className={classes.returnBtn}
             text="cancel"
             onClick={confirmClose}
           />

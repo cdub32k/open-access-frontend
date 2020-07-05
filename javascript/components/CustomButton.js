@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
     margin: 12,
     maxWidth: 225,
-    minWidth: 80,
+    minWidth: 92,
     color: theme.palette.text.light,
   },
   disabled: {
