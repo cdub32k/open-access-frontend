@@ -344,7 +344,9 @@ const styles = (theme) => ({
     margin: "auto",
   },
   counter: {
-    marginBottom: 6,
+    marginBottom: 0,
+    textAlign: "right",
+    maxWidth: 600,
     display: "block",
   },
   ...theme.globalClasses,

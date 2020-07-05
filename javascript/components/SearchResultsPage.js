@@ -63,18 +63,25 @@ const SearchResultsPage = ({
   useEffect(() => {
     if (videos.length == 0) loadVideoSearchResults(s, h);
     return () => {
-      Object.values(newsfeedVideoSubscriptions).forEach((sub) =>
-        sub.unsubscribe()
-      );
-      Object.values(newsfeedImageSubscriptions).forEach((sub) =>
-        sub.unsubscribe()
-      );
-      Object.values(newsfeedNoteSubscriptions).forEach((sub) =>
-        sub.unsubscribe()
-      );
       clearFeedData();
     };
   }, []);
+
+  useEffect(() => {
+    Object.values(newsfeedVideoSubscriptions).forEach((sub) =>
+      sub.unsubscribe()
+    );
+    Object.values(newsfeedImageSubscriptions).forEach((sub) =>
+      sub.unsubscribe()
+    );
+    Object.values(newsfeedNoteSubscriptions).forEach((sub) =>
+      sub.unsubscribe()
+    );
+  }, [
+    newsfeedVideoSubscriptions,
+    newsfeedImageSubscriptions,
+    newsfeedNoteSubscriptions,
+  ]);
 
   return (
     <Grid container className={classes.container}>

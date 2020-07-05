@@ -13,7 +13,7 @@ const alert = "#CA3C25";
 const alertLight = "#df624e";
 const alertDark = "#962d1c";
 const dark = "#1D1A05";
-const darkLight = "#51490e";
+const darkLight = "#787878";
 const light = "#FFF";
 const lightDark = "#fffbbd";
 
@@ -102,6 +102,7 @@ const theme = createMuiTheme({
   globalClasses: {
     inputContainer: {
       margin: `${defaultTheme.spacing(2)}px 0 0 0`,
+      position: "relative",
     },
     icon: {
       fill: dark,

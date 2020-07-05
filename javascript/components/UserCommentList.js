@@ -55,11 +55,7 @@ const UserCommentList = ({
     <div className={`${classes.container} user-comments-list content-list`}>
       <div className={classes.contentList}>
         {comments.map((comment, i) => {
-          return (
-            <UserComment key={i} comment={comment}>
-              {comment.body}
-            </UserComment>
-          );
+          return <UserComment key={i} comment={comment} />;
         })}
         {loading && <CircularProgress style={{ margin: "28px 0" }} />}
         {!loading && hasMore && (

@@ -56,6 +56,12 @@ const NewsFeed = ({
   useEffect(() => {
     if (videos.length == 0) loadNewsfeedVideos();
     return () => {
+      clearFeedData();
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
       Object.values(newsfeedVideoSubscriptions).forEach((sub) =>
         sub.unsubscribe()
       );
@@ -65,9 +71,12 @@ const NewsFeed = ({
       Object.values(newsfeedNoteSubscriptions).forEach((sub) =>
         sub.unsubscribe()
       );
-      clearFeedData();
     };
-  }, []);
+  }, [
+    newsfeedVideoSubscriptions,
+    newsfeedImageSubscriptions,
+    newsfeedNoteSubscriptions,
+  ]);
 
   return (
     <Grid container className={classes.container}>

@@ -317,6 +317,7 @@ class Account extends Component {
                     name="displayName"
                     value={this.state.displayName}
                     onChange={this.onTextChange}
+                    maxLength={20}
                   />
                 </div>
                 <div className={classes.inputContainer}>
@@ -325,6 +326,7 @@ class Account extends Component {
                     name="email"
                     value={this.state.email}
                     onChange={this.onTextChange}
+                    maxLength={60}
                   />
                 </div>
                 <div className={classes.inputContainer}>
@@ -333,16 +335,23 @@ class Account extends Component {
                     name="phoneNumber"
                     value={this.state.phoneNumber}
                     onChange={this.onTextChange}
+                    maxLength={10}
                   />
                 </div>
-                <div className={classes.inputContainer}>
+                <div
+                  className={classes.inputContainer}
+                  style={{ marginTop: 48 }}
+                >
+                  <Typography className={classes.counter} variant="caption">
+                    {this.state.bio.length} / 800 chars
+                  </Typography>
                   <CustomInput
                     label="Bio"
                     value={this.state.bio}
                     name="bio"
                     multiline={true}
                     onChange={this.onTextChange}
-                    inputProps={{ maxLength: 420 }}
+                    maxLength={800}
                   />
                 </div>
                 <div className={classes.inputContainer}>
@@ -489,6 +498,14 @@ const styles = (theme) => ({
     padding: 10,
     marginTop: 18,
     marginBottom: 12,
+  },
+  counter: {
+    display: "inline-block",
+    position: "absolute",
+    top: -18,
+    textAlign: "right",
+    width: "100%",
+    maxWidth: 600,
   },
   inputContainer: theme.globalClasses.inputContainer,
   returnBtn: theme.globalClasses.returnBtn,

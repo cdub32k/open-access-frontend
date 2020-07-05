@@ -178,7 +178,7 @@ const HomeHero4 = ({ subscribe }) => {
         }}
         anchorOrigin={{
           vertical: "top",
-          horizontal: "right",
+          horizontal: "center",
         }}
         open={snack}
         autoHideDuration={6000}

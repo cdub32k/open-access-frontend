@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
   playerContainer: {
     paddingBottom: "56.25%",
     position: "relative",
+    backgroundColor: theme.palette.dark.light,
   },
   player: {
     position: "absolute",
@@ -92,10 +93,13 @@ const VideoPlayer = ({
 }) => {
   useEffect(() => {
     subscribeToUpdates(_id);
+  }, []);
+
+  useEffect(() => {
     return () => {
       subscription && subscription.unsubscribe();
     };
-  }, []);
+  }, [subscription]);
 
   const classes = useStyles();
 

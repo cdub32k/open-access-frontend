@@ -74,6 +74,7 @@ const useStyles = makeStyles((theme) => {
     },
     menuItem: {
       fontSize: 16,
+      fontWeight: "bold",
     },
     notifsMenu: {
       maxWidth: 420,

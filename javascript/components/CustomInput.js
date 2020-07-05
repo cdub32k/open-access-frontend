@@ -39,10 +39,8 @@ const useStyles = makeStyles((theme) => ({
   inputLabel: {
     height: 40,
     fontSize: 16,
-    transform: "translate(14px, 14px) scale(1);",
-    "&:focused": {
-      transform: "translate(14px, 0px) scale(.8);",
-    },
+    color: theme.palette.dark.light,
+    transform: "translate(14px, 14px) scale(1)",
   },
 }));
 

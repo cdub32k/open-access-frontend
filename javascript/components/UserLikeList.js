@@ -6,13 +6,12 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 
 import CustomButton from "./CustomButton";
-import { date2rel } from "../utils/helpers";
+import { date2rel, truncateTitlePreview } from "../utils/helpers";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     margin: "32px 0",
     padding: "0 32px",
-    width: 1248,
   },
   contentList: {
     display: "flex",
@@ -60,7 +59,7 @@ const UserLikeList = ({ loading, doneLoading, likes, hasMore, loadMore }) => {
                 a video{" "}
                 <b>
                   <Link to={`/video-player/${like.video._id}`}>
-                    {like.video.title}
+                    {truncateTitlePreview(like.video.title)}
                   </Link>
                 </b>
               </Typography>
@@ -71,7 +70,7 @@ const UserLikeList = ({ loading, doneLoading, likes, hasMore, loadMore }) => {
                 an image{" "}
                 <b>
                   <Link to={`/image/${like.image._id}`}>
-                    {like.image.title}
+                    {truncateTitlePreview(like.image.title)}
                   </Link>
                 </b>
               </Typography>
