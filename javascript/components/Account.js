@@ -474,8 +474,8 @@ const styles = (theme) => ({
     marginBottom: 54,
   },
   large: {
-    width: 300,
-    height: 300,
+    width: 225,
+    height: 225,
     border: `4px solid ${theme.palette.secondary.main}`,
     borderRadius: 0,
     marginBottom: 12,

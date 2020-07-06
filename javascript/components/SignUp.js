@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 400,
     display: "block",
     padding: 12,
+    marginTop: 48,
   },
   section: {
     margin: `${theme.spacing(2)}px 0 0 0`,

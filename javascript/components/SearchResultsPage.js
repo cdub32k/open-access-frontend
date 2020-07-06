@@ -87,7 +87,7 @@ const SearchResultsPage = ({
     <Grid container className={classes.container}>
       <Grid item xs={12}>
         <Typography className={classes.header} variant="h4">
-          Search Results {s ? s : null}{" "}
+          Search Results: {s ? s : null}{" "}
           {h ? h.split(",").map((tag) => "#" + tag + " ") : null}
         </Typography>
         <Tabs

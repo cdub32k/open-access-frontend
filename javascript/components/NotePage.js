@@ -97,7 +97,7 @@ const NotePage = ({
           </Fragment>
         )}
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} md={6} className="note-comments-section">
         <CommentsSection
           loading={commentsLoading}
           newLoading={newCommentLoading}

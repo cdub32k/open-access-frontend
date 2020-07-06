@@ -30,14 +30,18 @@ import SearchBar from "./SearchBar";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
-      backgroundColor: "transparent",
-      maxWidth: 1450,
-      height: 116,
-      justifyContent: "center",
+      backgroundColor: "#f5f5f5",
+      height: 64,
+      alignItems: "center",
+      justifyContent: "flex-start",
       margin: "auto",
       [theme.breakpoints.down("xs")]: {
+        padding: "2px 0",
         height: "auto",
       },
+      top: 0,
+      zIndex: 10,
+      borderBottom: `1px solid lightgray`,
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -64,7 +68,7 @@ const useStyles = makeStyles((theme) => {
         flexDirection: "column",
         alignItems: "flex-start",
         "& > .auth-actions": {
-          marginTop: 12,
+          marginTop: 0,
           marginLeft: 0,
           "& > a:first-child": {
             paddingLeft: 0,
@@ -289,10 +293,10 @@ const SiteNav = ({
     </Menu>
   );
   return (
-    <AppBar position="static" elevation={0} className={classes.container}>
+    <AppBar elevation={0} className={classes.container}>
       <Toolbar
+        style={{ width: "100%", maxWidth: 1450 }}
         className={!loggedIn ? classes.toolbar : ""}
-        style={{ paddingTop: 12 }}
       >
         {loggedIn && (
           <Fragment>

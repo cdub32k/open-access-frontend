@@ -27,8 +27,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 24,
   },
   counter: {
-    marginTop: 24,
     display: "inline-block",
+    textAlign: "right",
+    width: "100%",
+    maxWidth: 600,
   },
   btn: {
     margin: `${theme.spacing(2)}px 0`,
@@ -80,7 +82,11 @@ const NoteUploader = ({ username }) => {
       <div className={classes.form}>
         <Grid container>
           <Grid item xs={12}>
-            <Typography color="primary" variant="h3">
+            <Typography
+              color="primary"
+              variant="h3"
+              style={{ marginBottom: 32 }}
+            >
               Post Note
             </Typography>
             <Typography className={classes.counter} variant="caption">

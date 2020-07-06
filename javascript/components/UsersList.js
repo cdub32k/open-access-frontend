@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 820,
     minHeight: 1200,
     padding: 12,
+    paddingTop: 0,
   },
   link: {
     display: "flex",

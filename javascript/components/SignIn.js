@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 400,
     display: "block",
     padding: 12,
+    marginTop: 48,
   },
   error: {
     position: "absolute",

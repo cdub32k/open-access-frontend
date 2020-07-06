@@ -11,9 +11,6 @@ const useStyles = makeStyles((theme) => ({
   container: {
     width: 345,
   },
-  topRow: {
-    marginBottom: 5,
-  },
   caption: {},
   title: {
     flexGrow: 1,
@@ -44,11 +41,6 @@ const MainLogo = (props) => {
             <Link to="/">Open Access</Link>
           </Typography>
         </Grid>
-      </Grid>
-      <Grid item>
-        <Typography variant="subtitle1" className={classes.caption}>
-          this is a free speech network
-        </Typography>
       </Grid>
     </Grid>
   );

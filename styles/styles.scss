@@ -37,11 +37,12 @@ a:visited {
   min-width: 320px;
   margin: auto;
   padding: 12px;
+  padding-top: 116px;
   padding-bottom: 120px;
   display: flex;
   justify-content: center;
   height: 100%;
-  margin-top: 32px;
+  margin-top: 0 auto;
 }
 
 //Material UI Overrides
@@ -57,7 +58,7 @@ a:visited {
   transform: translate(14px, -5px) scale(0.8) !important;
 }
 .MuiOutlinedInput-multiline {
-  padding: 13px !important;
+  padding: 12px !important;
 }
 .MuiInputBase-inputMultiline {
   //height: 1.1876em !important;
@@ -153,6 +154,12 @@ a:visited {
 
 .user-comments-list {
   width: 600px;
+}
+
+@media (min-width: 1382px) {
+  .note-comments-section {
+    margin-left: 44px;
+  }
 }
 
 @media (max-width: 1280px) {
