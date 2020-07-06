@@ -231,11 +231,12 @@ const SignUp = ({ error, signupStart, ...rest }) => {
                     }
                     label={
                       <span>
-                        <span className={classes.star}>*</span>Renew every month
+                        <span className={classes.star}>*</span>
+                        <b>Subscribe</b>
                       </span>
                     }
                   />
-                  <Typography variant="caption" style={{ fontWeight: "bold" }}>
+                  <Typography variant="caption">
                     <span className={classes.star}>*</span>Check this box if you
                     would like to have your membership automatically renewed
                     each month. If you leave this box unchecked, you can still

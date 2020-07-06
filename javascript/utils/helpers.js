@@ -162,6 +162,17 @@ export function getPaymentId(search) {
   }
   return null;
 }
+export function getSubId(search) {
+  search = decodeURI(search.slice(1));
+  if (search.indexOf("s=") > -1) {
+    let s = null;
+    search.split("&").forEach((kv) => {
+      if (kv.split("=")[0] == "s") s = kv.split("=")[1];
+    });
+    return s;
+  }
+  return null;
+}
 
 export function getSearchQuery(search) {
   search = decodeURI(search.slice(1));

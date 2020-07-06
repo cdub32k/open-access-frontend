@@ -23,7 +23,12 @@ import axios from "axios";
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
 
-import { date2str, printCentsToCurreny, getPaymentId } from "../utils/helpers";
+import {
+  date2str,
+  printCentsToCurreny,
+  getPaymentId,
+  getSubId,
+} from "../utils/helpers";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -90,6 +95,7 @@ const Payment = ({
   const classes = useStyles();
   const theme = useTheme();
   const [paymentId, setPaymentId] = useState(null);
+  const [subId, setSubId] = useState(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmOpen2, setConfirmOpen2] = useState(false);
   const [confirmDeleteText, setConfirmDeleteText] = useState("");
@@ -124,6 +130,8 @@ const Payment = ({
     loadPaymentInfo();
     let p = getPaymentId(location.search);
     if (p) setPaymentId(p);
+    let s = getSubId(location.search);
+    if (s) setSubId(s);
   }, []);
 
   const confirmClose = () => {
@@ -138,7 +146,12 @@ const Payment = ({
       <Grid className={classes.main} item xs={12}>
         {paymentId && (
           <Typography style={{ marginBottom: 28 }} color="primary" variant="h5">
-            Payment Received! Confirmation #{paymentId}
+            Payment Received! Confirmation #<b>{paymentId}</b>
+          </Typography>
+        )}
+        {subId && (
+          <Typography style={{ marginBottom: 28 }} color="primary" variant="h5">
+            You Are Subscribed! Confirmation #<b>{subId}</b>
           </Typography>
         )}
         <Typography className={classes.header} variant="h3">
@@ -146,12 +159,12 @@ const Payment = ({
         </Typography>
         {!active && (
           <Typography variant="h5">
-            Your account became inactive on {date2str(activeUntil)}
+            Your account became inactive on <b>{date2str(activeUntil)}</b>
           </Typography>
         )}
         {active && activeUntil && (
           <Typography variant="h5">
-            Account will be active until {date2str(activeUntil)}
+            Account will be active until <b>{date2str(activeUntil)}</b>
           </Typography>
         )}
         {active && !activeUntil && (
@@ -168,7 +181,7 @@ const Payment = ({
           </div>
         )}
         {(loading || deleting) && (
-          <CircularProgress style={{ margin: "28px 0" }} />
+          <CircularProgress disableShrink style={{ margin: "28px 0" }} />
         )}
       </Grid>
       {(activeUntil || !active) && (

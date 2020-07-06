@@ -8,6 +8,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
 import CardSection from "./CardSection";
@@ -22,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
   orderBtn: {
     marginTop: 28,
     marginLeft: 0,
+  },
+  star: {
+    color: theme.palette.alert.main,
   },
 }));
 
@@ -78,7 +82,7 @@ const CheckoutForm = ({
             window.location.href = url;
           } else {
             let sub = res.data.subscription;
-            url += `?p=${sub._id.substring(sub._id.length - 8).toUpperCase()}`;
+            url += `?s=${sub._id.substring(sub._id.length - 8).toUpperCase()}`;
             window.location.href = url;
           }
         })
@@ -100,13 +104,21 @@ const CheckoutForm = ({
                 color="primary"
               />
             }
-            label="Renew every month"
+            label={
+              <span>
+                <span className={classes.star}>*</span>
+                <b>Subscribe</b>
+              </span>
+            }
           />
+          <Typography variant="caption">
+            <span className={classes.star}>*</span>Check this box if you would
+            like to have your membership automatically renewed each month. If
+            you subscribe, your first charge will not be made until your current
+            membership runs out. Then, you will be automatically billed $25/mo.
+          </Typography>
         </FormGroup>
         {cardError && <div className={classes.error}>{cardError}</div>}
-        {loading && (
-          <CircularProgress style={{ marginTop: 28, display: "block" }} />
-        )}
         <CustomButton
           className={classes.orderBtn}
           type="submit"
