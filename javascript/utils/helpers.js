@@ -176,14 +176,14 @@ export function getSearchQuery(search) {
 }
 
 export function parseHashtags(str) {
-  let tags = str.match(/(#[a-z\d-]+)/g);
+  let tags = str.match(/(#[a-z0-9_-]+)/gi);
   if (tags) return tags.map((tag) => tag.slice(1).toLowerCase());
   else return [];
 }
 export function removeHashtags(str) {
   let terms = str
-    .replace(/[.,\/!$%\^&\*;:{}=\-_`~()]/g, "")
-    .replace(/(#[a-z\d-]+)/g, "__removed_981_hashtag__")
+    .replace(/[.,\/!$%\^&\*;:{}=\`~()]/g, "")
+    .replace(/(#[a-z0-9_-]+)/gi, "__removed_981_hashtag__")
     .split("__removed_981_hashtag__")
     .map((term) => term.trim())
     .filter((term) => term);
