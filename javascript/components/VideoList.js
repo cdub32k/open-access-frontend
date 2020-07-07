@@ -1,13 +1,15 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 
 import Typography from "@material-ui/core/Typography";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 import ContentPreview from "./ContentPreview";
 import PreviewPlaceholder from "./PreviewPlaceholder";
 import CustomButton from "./CustomButton";
 
-const styles = (theme) => ({
+import throttle from "lodash.throttle";
+
+const useStyles = makeStyles((theme) => ({
   container: {
     textAlign: "center",
     margin: "32px 0",
@@ -19,53 +21,46 @@ const styles = (theme) => ({
     width: 1248,
     padding: 0,
   },
-});
+}));
 
-class VideoList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      videoPage: 0,
-    };
+const VideoList = ({ loading, videos, loadMore, hasMore, doneLoading }) => {
+  const classes = useStyles();
+  const [page, setPage] = useState(0);
 
-    this.loadMore = this.loadMore.bind(this);
-  }
+  useEffect(() => doneLoading(), []);
 
-  componentDidMount() {
-    this.props.doneLoading();
-  }
+  useEffect(() => {
+    if (hasMore) {
+      document.addEventListener("scroll", scrollVideosLoader);
+      return () => {
+        scrollVideosLoader.cancel();
+        document.removeEventListener("scroll", scrollVideosLoader);
+      };
+    }
+  }, [videos, page]);
 
-  loadMore = () => {
-    this.props.loadMore(this.state.videoPage + 1);
-    this.setState({
-      videoPage: this.state.videoPage + 1,
-    });
+  const scrollVideosLoader = throttle(
+    (e) => {
+      let pos =
+        (document.documentElement.scrollTop || document.body.scrollTop) +
+        document.documentElement.offsetHeight;
+      let max = document.documentElement.scrollHeight - 100;
+      if (pos > max) {
+        _loadMore();
+      }
+    },
+    500,
+    { leading: false }
+  );
+
+  const _loadMore = () => {
+    loadMore(page + 1);
+    setPage(page + 1);
   };
 
-  render() {
-    const { classes, loading, videos, hasMore } = this.props;
-    let videoListHTML = loading
-      ? videos
-          .map((video) => {
-            return (
-              <ContentPreview
-                contentType="video"
-                user={video.user}
-                id={video._id}
-                thumbUrl={video.thumbUrl}
-                title={video.title}
-                viewCount={video.viewCount}
-                uploadedAt={video.uploadedAt}
-                key={video._id}
-              />
-            );
-          })
-          .concat(
-            Array.from({ length: 4 }).map((preview, i) => {
-              return <PreviewPlaceholder key={i} />;
-            })
-          )
-      : videos.map((video, i) => {
+  let videoListHTML = loading
+    ? videos
+        .map((video) => {
           return (
             <ContentPreview
               contentType="video"
@@ -75,30 +70,43 @@ class VideoList extends Component {
               title={video.title}
               viewCount={video.viewCount}
               uploadedAt={video.uploadedAt}
-              key={i}
+              key={video._id}
             />
           );
-        });
+        })
+        .concat(
+          Array.from({ length: 4 }).map((preview, i) => {
+            return <PreviewPlaceholder key={i} />;
+          })
+        )
+    : videos.map((video, i) => {
+        return (
+          <ContentPreview
+            contentType="video"
+            user={video.user}
+            id={video._id}
+            thumbUrl={video.thumbUrl}
+            title={video.title}
+            viewCount={video.viewCount}
+            uploadedAt={video.uploadedAt}
+            key={i}
+          />
+        );
+      });
 
-    if (!loading && (!videos || videos.length == 0))
-      videoListHTML = (
-        <Typography variant="body1">Nothing to show here (yet)</Typography>
-      );
-
-    return (
-      <div className={`${classes.container} content-container`}>
-        <div className={`${classes.contentList} content-list`}>
-          {videoListHTML}
-          <br />
-        </div>
-        {!loading && hasMore && (
-          <div>
-            <CustomButton text="Load more" onClick={this.loadMore} />
-          </div>
-        )}
-      </div>
+  if (!loading && (!videos || videos.length == 0))
+    videoListHTML = (
+      <Typography variant="body1">Nothing to show here (yet)</Typography>
     );
-  }
-}
 
-export default withStyles(styles)(VideoList);
+  return (
+    <div className={`${classes.container} content-container`}>
+      <div className={`${classes.contentList} content-list`}>
+        {videoListHTML}
+        <br />
+      </div>
+    </div>
+  );
+};
+
+export default VideoList;

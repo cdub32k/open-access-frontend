@@ -106,7 +106,7 @@ const NotePage = ({
           comments={comments}
           contentType="note"
           id={noteId}
-          hasMoreComments={hasMoreComments}
+          hasMore={hasMoreComments}
         />
       </Grid>
     </Grid>

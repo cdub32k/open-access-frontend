@@ -13,6 +13,8 @@ import TabPanel from "./TabPanel";
 import CustomButton from "./CustomButton";
 import { getSearchQuery, getHashtag } from "../utils/helpers";
 
+import throttle from "lodash.throttle";
+
 const useStyles = makeStyles((theme) => ({
   container: {
     maxWidth: 820,
@@ -83,6 +85,82 @@ const SearchResultsPage = ({
     newsfeedNoteSubscriptions,
   ]);
 
+  useEffect(() => {
+    if (hasMoreVideos) {
+      document.addEventListener("scroll", scrollVideosLoader);
+      return () => {
+        scrollVideosLoader.cancel();
+        document.removeEventListener("scroll", scrollVideosLoader);
+      };
+    }
+  }, [videos, tab]);
+
+  const scrollVideosLoader = throttle(
+    (e) => {
+      if (tab == 0) {
+        let pos =
+          (document.documentElement.scrollTop || document.body.scrollTop) +
+          document.documentElement.offsetHeight;
+        let max = document.documentElement.scrollHeight - 100;
+        if (pos > max) {
+          loadVideoSearchResults(s, h);
+        }
+      }
+    },
+    500,
+    { leading: false }
+  );
+  useEffect(() => {
+    if (hasMoreImages) {
+      document.addEventListener("scroll", scrollImagesLoader);
+      return () => {
+        scrollImagesLoader.cancel();
+        document.removeEventListener("scroll", scrollImagesLoader);
+      };
+    }
+  }, [images, tab]);
+
+  const scrollImagesLoader = throttle(
+    (e) => {
+      if (tab == 1) {
+        let pos =
+          (document.documentElement.scrollTop || document.body.scrollTop) +
+          document.documentElement.offsetHeight;
+        let max = document.documentElement.scrollHeight - 100;
+        if (pos > max) {
+          loadImageSearchResults(s, h);
+        }
+      }
+    },
+    500,
+    { leading: false }
+  );
+  useEffect(() => {
+    if (hasMoreNotes) {
+      document.addEventListener("scroll", scrollNotesLoader);
+      return () => {
+        scrollNotesLoader.cancel();
+        document.removeEventListener("scroll", scrollNotesLoader);
+      };
+    }
+  }, [notes, tab]);
+
+  const scrollNotesLoader = throttle(
+    (e) => {
+      if (tab == 2) {
+        let pos =
+          (document.documentElement.scrollTop || document.body.scrollTop) +
+          document.documentElement.offsetHeight;
+        let max = document.documentElement.scrollHeight - 100;
+        if (pos > max) {
+          loadNoteSearchResults(s, h);
+        }
+      }
+    },
+    500,
+    { leading: false }
+  );
+
   return (
     <Grid container className={classes.container}>
       <Grid item xs={12}>
@@ -104,30 +182,12 @@ const SearchResultsPage = ({
         </Tabs>
         <TabPanel selectedTab={tab} index={0}>
           <NewsFeedItems items={videos} type="video" loading={loading} />
-          {!loading && hasMoreVideos && (
-            <CustomButton
-              text="Load more"
-              onClick={() => loadVideoSearchResults(s, h)}
-            />
-          )}
         </TabPanel>
         <TabPanel selectedTab={tab} index={1}>
           <NewsFeedItems items={images} type="image" loading={loading} />
-          {!loading && hasMoreImages && (
-            <CustomButton
-              text="Load more"
-              onClick={() => loadImageSearchResults(s, h)}
-            />
-          )}
         </TabPanel>
         <TabPanel selectedTab={tab} index={2}>
           <NewsFeedItems items={notes} type="note" loading={loading} />
-          {!loading && hasMoreNotes && (
-            <CustomButton
-              text="Load more"
-              onClick={() => loadNoteSearchResults(s, h)}
-            />
-          )}
         </TabPanel>
       </Grid>
     </Grid>

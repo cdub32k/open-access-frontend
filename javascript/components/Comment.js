@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
   ownerActions: {
     position: "absolute",
-    right: 10,
+    right: 2,
     top: -14,
   },
   replyLink: {

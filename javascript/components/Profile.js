@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { ActionCreators } from "../actions";
 import { Link } from "react-router-dom";
@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 import ProfileHeader from "./ProfileHeader";
 import VideoList from "./VideoList";
@@ -20,179 +20,165 @@ import Error from "./Error";
 
 import { num2str } from "../utils/helpers";
 
-class Profile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedTab: 0,
-    };
-    this.changeTab = this.changeTab.bind(this);
-  }
+const Profile = ({
+  match,
+  getUserInfo,
+  viewedUserLoading,
+  clearUserData,
+  initialLoad,
+  loading,
+  error,
+  videos,
+  images,
+  notes,
+  loadUserVideoPage,
+  videoCount,
+  loadUserImagePage,
+  imageCount,
+  loadUserNotePage,
+  noteCount,
+  loadUserCommentsPage,
+  comments,
+  commentCount,
+  loadUserLikesPage,
+  likes,
+  likeCount,
+  loadUserDislikesPage,
+  dislikes,
+  dislikeCount,
+  mineUsername,
+  viewedUserDoneLoading,
+}) => {
+  const classes = useStyles();
+  const [selectedTab, setSelectedTab] = useState(0);
+  const { username } = match.params;
 
-  componentDidMount() {
-    const { username } = this.props.match.params;
-    this.props.getUserInfo(username);
-  }
+  useEffect(() => {
+    getUserInfo(username);
+    return () => clearUserData();
+  }, []);
 
-  componentWillUnmount() {
-    this.props.clearUserData();
-  }
+  const changeTab = (e, newValue) => {
+    viewedUserLoading();
+    setSelectedTab(newValue);
+  };
+  if (error) return <Error />;
 
-  changeTab(e, newValue) {
-    this.props.viewedUserLoading();
-    this.setState({
-      selectedTab: newValue,
-    });
-  }
-
-  render() {
-    const { username } = this.props.match.params;
-    const {
-      initialLoad,
-      loading,
-      error,
-      classes,
-      videos,
-      images,
-      notes,
-      loadUserVideoPage,
-      videoCount,
-      loadUserImagePage,
-      imageCount,
-      loadUserNotePage,
-      noteCount,
-      loadUserCommentsPage,
-      comments,
-      commentCount,
-      loadUserLikesPage,
-      likes,
-      likeCount,
-      loadUserDislikesPage,
-      dislikes,
-      dislikeCount,
-      mineUsername,
-      viewedUserDoneLoading,
-    } = this.props;
-
-    if (error) return <Error />;
-
-    const { selectedTab } = this.state;
-    return (
-      <div className={`${classes.container} profile-container`}>
-        <ProfileHeader loading={initialLoad} />
-        <Tabs
-          value={selectedTab}
-          onChange={this.changeTab}
-          indicatorColor="primary"
-          textColor="inherit"
-          className={`${classes.tabHeaders} content-list`}
-          variant="scrollable"
-          scrollButtons="on"
-        >
-          <Tab
-            className={classes.tabHeader}
-            label={`Videos (${num2str(videoCount)})`}
-            wrapped={true}
-          />
-          <Tab
-            className={classes.tabHeader}
-            label={`Images (${num2str(imageCount)})`}
-            wrapped={true}
-          />
-          <Tab
-            className={classes.tabHeader}
-            label={`Notes (${num2str(noteCount)})`}
-            wrapped={true}
-          />
-          <Tab
-            className={classes.tabHeader}
-            label={`Comments (${num2str(commentCount)})`}
-            wrapped={true}
-          />
-          <Tab
-            className={classes.tabHeader}
-            label={`Likes (${num2str(likeCount)})`}
-            wrapped={true}
-          />
-          <Tab
-            className={classes.tabHeader}
-            label={`Dislikes (${num2str(dislikeCount)})`}
-            wrapped={true}
-          />
-        </Tabs>
-        <TabPanel selectedTab={selectedTab} index={0}>
-          {mineUsername == username && (
-            <Link to="/video-upload">
-              <CustomButton text="+New Video" />
-            </Link>
-          )}
-          <VideoList
-            hasMore={videoCount > videos.length}
-            loadMore={(page) => loadUserVideoPage(username, page)}
-            videos={videos}
-            loading={loading}
-            doneLoading={viewedUserDoneLoading}
-          />
-        </TabPanel>
-        <TabPanel selectedTab={selectedTab} index={1}>
-          {mineUsername == username && (
-            <Link to="/image-upload">
-              <CustomButton text="+New Image" />
-            </Link>
-          )}
-          <ImageList
-            hasMore={imageCount > images.length}
-            loadMore={(page) => loadUserImagePage(username, page)}
-            images={images}
-            loading={loading}
-            doneLoading={viewedUserDoneLoading}
-          />
-        </TabPanel>
-        <TabPanel selectedTab={selectedTab} index={2}>
-          {mineUsername == username && (
-            <Link to="/note-upload">
-              <CustomButton text="+New Note" />
-            </Link>
-          )}
-          <NoteList
-            hasMore={noteCount > notes.length}
-            loadMore={(page) => loadUserNotePage(username, page)}
-            notes={notes}
-            loading={loading}
-            doneLoading={viewedUserDoneLoading}
-          />
-        </TabPanel>
-        <TabPanel selectedTab={selectedTab} index={3}>
-          <UserCommentList
-            hasMore={commentCount > comments.length}
-            loadMore={(page) => loadUserCommentsPage(username, page)}
-            comments={comments}
-            loading={loading}
-            doneLoading={viewedUserDoneLoading}
-          />
-        </TabPanel>
-        <TabPanel selectedTab={selectedTab} index={4}>
-          <UserLikeList
-            hasMore={likeCount > likes.length}
-            loadMore={(page) => loadUserLikesPage(username, page)}
-            likes={likes}
-            loading={loading}
-            doneLoading={viewedUserDoneLoading}
-          />
-        </TabPanel>
-        <TabPanel selectedTab={selectedTab} index={5}>
-          <UserLikeList
-            hasMore={dislikeCount > dislikes.length}
-            loadMore={(page) => loadUserDislikesPage(username, page)}
-            likes={dislikes}
-            loading={loading}
-            doneLoading={viewedUserDoneLoading}
-          />
-        </TabPanel>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={`${classes.container} profile-container`}>
+      <ProfileHeader loading={initialLoad} />
+      <Tabs
+        value={selectedTab}
+        onChange={changeTab}
+        indicatorColor="primary"
+        textColor="inherit"
+        className={`${classes.tabHeaders} content-list`}
+        variant="scrollable"
+        scrollButtons="on"
+      >
+        <Tab
+          className={classes.tabHeader}
+          label={`Videos (${num2str(videoCount)})`}
+          wrapped={true}
+        />
+        <Tab
+          className={classes.tabHeader}
+          label={`Images (${num2str(imageCount)})`}
+          wrapped={true}
+        />
+        <Tab
+          className={classes.tabHeader}
+          label={`Notes (${num2str(noteCount)})`}
+          wrapped={true}
+        />
+        <Tab
+          className={classes.tabHeader}
+          label={`Comments (${num2str(commentCount)})`}
+          wrapped={true}
+        />
+        <Tab
+          className={classes.tabHeader}
+          label={`Likes (${num2str(likeCount)})`}
+          wrapped={true}
+        />
+        <Tab
+          className={classes.tabHeader}
+          label={`Dislikes (${num2str(dislikeCount)})`}
+          wrapped={true}
+        />
+      </Tabs>
+      <TabPanel selectedTab={selectedTab} index={0}>
+        {mineUsername == username && (
+          <Link to="/video-upload">
+            <CustomButton text="+New Video" />
+          </Link>
+        )}
+        <VideoList
+          hasMore={videoCount > videos.length}
+          loadMore={(page) => loadUserVideoPage(username, page)}
+          videos={videos}
+          loading={loading}
+          doneLoading={viewedUserDoneLoading}
+        />
+      </TabPanel>
+      <TabPanel selectedTab={selectedTab} index={1}>
+        {mineUsername == username && (
+          <Link to="/image-upload">
+            <CustomButton text="+New Image" />
+          </Link>
+        )}
+        <ImageList
+          hasMore={imageCount > images.length}
+          loadMore={(page) => loadUserImagePage(username, page)}
+          images={images}
+          loading={loading}
+          doneLoading={viewedUserDoneLoading}
+        />
+      </TabPanel>
+      <TabPanel selectedTab={selectedTab} index={2}>
+        {mineUsername == username && (
+          <Link to="/note-upload">
+            <CustomButton text="+New Note" />
+          </Link>
+        )}
+        <NoteList
+          hasMore={noteCount > notes.length}
+          loadMore={(page) => loadUserNotePage(username, page)}
+          notes={notes}
+          loading={loading}
+          doneLoading={viewedUserDoneLoading}
+        />
+      </TabPanel>
+      <TabPanel selectedTab={selectedTab} index={3}>
+        <UserCommentList
+          hasMore={commentCount > comments.length}
+          loadMore={(page) => loadUserCommentsPage(username, page)}
+          comments={comments}
+          loading={loading}
+          doneLoading={viewedUserDoneLoading}
+        />
+      </TabPanel>
+      <TabPanel selectedTab={selectedTab} index={4}>
+        <UserLikeList
+          hasMore={likeCount > likes.length}
+          loadMore={(page) => loadUserLikesPage(username, page)}
+          likes={likes}
+          loading={loading}
+          doneLoading={viewedUserDoneLoading}
+        />
+      </TabPanel>
+      <TabPanel selectedTab={selectedTab} index={5}>
+        <UserLikeList
+          hasMore={dislikeCount > dislikes.length}
+          loadMore={(page) => loadUserDislikesPage(username, page)}
+          likes={dislikes}
+          loading={loading}
+          doneLoading={viewedUserDoneLoading}
+        />
+      </TabPanel>
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => ({
   mineUsername: state.user.username,
@@ -236,7 +222,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreators.loadUserDislikesPageStart(username, page)),
 });
 
-const styles = {
+const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     flexDirection: "column",
@@ -248,8 +234,6 @@ const styles = {
   tabHeader: {
     fontSize: 16,
   },
-};
+}));
 
-export default withStyles(styles)(
-  connect(mapStateToProps, mapDispatchToProps)(Profile)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

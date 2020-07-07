@@ -7,6 +7,8 @@ import ContentPreview from "./ContentPreview";
 import PreviewPlaceholder from "./PreviewPlaceholder";
 import CustomButton from "./CustomButton";
 
+import throttle from "lodash.throttle";
+
 const useStyles = makeStyles((theme) => ({
   container: {
     textAlign: "center",
@@ -29,6 +31,30 @@ const NoteList = ({ loading, doneLoading, notes, hasMore, loadMore }) => {
     if (hasMore && notes.length == 0) loadMore(0);
     else doneLoading();
   }, []);
+
+  useEffect(() => {
+    if (hasMore) {
+      document.addEventListener("scroll", scrollNotesLoader);
+      return () => {
+        scrollNotesLoader.cancel();
+        document.removeEventListener("scroll", scrollNotesLoader);
+      };
+    }
+  }, [notes, page]);
+
+  const scrollNotesLoader = throttle(
+    (e) => {
+      let pos =
+        (document.documentElement.scrollTop || document.body.scrollTop) +
+        document.documentElement.offsetHeight;
+      let max = document.documentElement.scrollHeight - 100;
+      if (pos > max) {
+        _loadMore();
+      }
+    },
+    500,
+    { leading: false }
+  );
 
   const _loadMore = () => {
     loadMore(page + 1);
@@ -79,11 +105,6 @@ const NoteList = ({ loading, doneLoading, notes, hasMore, loadMore }) => {
       <div className={`${classes.contentList} content-list`}>
         {noteListHTML}
       </div>
-      {!loading && hasMore && (
-        <div>
-          <CustomButton text="Load more" onClick={_loadMore} />
-        </div>
-      )}
     </div>
   );
 };

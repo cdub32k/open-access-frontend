@@ -10,6 +10,8 @@ import CommentForm from "./CommentForm";
 import Comment from "./Comment";
 import CustomButton from "./CustomButton";
 
+import throttle from "lodash.throttle";
+
 const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
@@ -17,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   section: {
     overflow: "auto",
-    maxHeight: 1080,
+    maxHeight: 920,
     paddingTop: 24,
   },
 }));
@@ -31,10 +33,55 @@ const CommentsSection = ({
   contentType,
   id,
   loadMoreComments,
-  hasMoreComments,
+  hasMore,
 }) => {
   const classes = useStyles();
 
+  const ccontainer = useRef();
+
+  useEffect(() => {
+    if (hasMore) {
+      document.addEventListener("scroll", scrollWindow);
+      ccontainer.current.addEventListener("scroll", scrollContainer);
+      return () => {
+        scrollWindow.cancel();
+        scrollContainer.cancel();
+        document.removeEventListener("scroll", scrollWindow);
+        ccontainer.current.removeEventListener("scroll", scrollContainer);
+      };
+    }
+  }, [comments, hasMore]);
+
+  const scrollWindow = throttle(
+    (e) => {
+      if (ccontainer.current.scrollHeight != ccontainer.current.clientHeight)
+        return;
+      let pos =
+        (document.documentElement.scrollTop || document.body.scrollTop) +
+        document.documentElement.offsetHeight;
+      let max = document.documentElement.scrollHeight - 100;
+      if (pos > max) {
+        loadMoreComments(contentType, id);
+        ccontainer.current.scrollTop = ccontainer.current.scrollHeight;
+      }
+    },
+    500,
+    { leading: false }
+  );
+  const scrollContainer = throttle(
+    (e) => {
+      let pos =
+        ccontainer.current.scrollHeight -
+        ccontainer.current.scrollTop -
+        ccontainer.current.clientHeight;
+      if (pos < 20) {
+        loadMoreComments(contentType, id);
+        ccontainer.current.scrollTop = ccontainer.current.scrollHeight;
+      }
+    },
+    500,
+    { leading: false }
+  );
   return (
     <div className={`${classes.container} comments-container`}>
       <CommentForm
@@ -42,7 +89,7 @@ const CommentsSection = ({
         contentType={contentType}
         id={id}
       />
-      <div className={`${classes.section} comments-section`}>
+      <div className={`${classes.section} comments-section`} ref={ccontainer}>
         <TransitionGroup component="section">
           {comments.map((comment, i) => (
             <CSSTransition
@@ -79,12 +126,6 @@ const CommentsSection = ({
           <CircularProgress
             disableShrink
             style={{ margin: "0 12px", display: "block" }}
-          />
-        )}
-        {!loading && hasMoreComments && (
-          <CustomButton
-            text="Load More"
-            onClick={() => loadMoreComments(contentType, id)}
           />
         )}
       </div>

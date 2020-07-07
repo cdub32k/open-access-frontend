@@ -7,6 +7,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import UserComment from "./UserComment";
 import CustomButton from "./CustomButton";
 
+import throttle from "lodash.throttle";
+
 const useStyles = makeStyles((theme) => ({
   container: {
     margin: "32px 0",
@@ -39,6 +41,30 @@ const UserCommentList = ({
     else doneLoading();
   }, []);
 
+  useEffect(() => {
+    if (hasMore) {
+      document.addEventListener("scroll", scrollCommentsLoader);
+      return () => {
+        scrollCommentsLoader.cancel();
+        document.removeEventListener("scroll", scrollCommentsLoader);
+      };
+    }
+  }, [comments, page]);
+
+  const scrollCommentsLoader = throttle(
+    (e) => {
+      let pos =
+        (document.documentElement.scrollTop || document.body.scrollTop) +
+        document.documentElement.offsetHeight;
+      let max = document.documentElement.scrollHeight - 100;
+      if (pos > max) {
+        _loadMore();
+      }
+    },
+    500,
+    { leading: false }
+  );
+
   const _loadMore = () => {
     loadMore(page + 1);
     setPage(page + 1);
@@ -58,15 +84,6 @@ const UserCommentList = ({
           return <UserComment key={i} comment={comment} />;
         })}
         {loading && <CircularProgress style={{ margin: "28px 0" }} />}
-        {!loading && hasMore && (
-          <div>
-            <CustomButton
-              text="Load more"
-              onClick={_loadMore}
-              style={{ marginLeft: 0 }}
-            />
-          </div>
-        )}
       </div>
     </div>
   );

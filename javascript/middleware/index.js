@@ -1420,7 +1420,7 @@ export default [
       next(action);
 
       let lastOldest = store.getState().note.comments.slice(-1)[0].createdAt;
-      let videoId = action.payload.noteId;
+      let noteId = action.payload.noteId;
 
       axios
         .post("api", {

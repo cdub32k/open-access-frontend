@@ -12,6 +12,8 @@ import NewsFeedItems from "./NewsFeedItems";
 import TabPanel from "./TabPanel";
 import CustomButton from "./CustomButton";
 
+import throttle from "lodash.throttle";
+
 const useStyles = makeStyles((theme) => ({
   container: {
     maxWidth: 820,
@@ -55,10 +57,85 @@ const NewsFeed = ({
   const classes = useStyles();
   useEffect(() => {
     if (videos.length == 0) loadNewsfeedVideos();
-    return () => {
-      clearFeedData();
-    };
+
+    return () => clearFeedData();
   }, []);
+
+  useEffect(() => {
+    if (hasMoreVideos) {
+      document.addEventListener("scroll", scrollVideosLoader);
+      return () => {
+        scrollVideosLoader.cancel();
+        document.removeEventListener("scroll", scrollVideosLoader);
+      };
+    }
+  }, [videos, tab]);
+
+  const scrollVideosLoader = throttle(
+    (e) => {
+      if (tab == 0) {
+        let pos =
+          (document.documentElement.scrollTop || document.body.scrollTop) +
+          document.documentElement.offsetHeight;
+        let max = document.documentElement.scrollHeight - 100;
+        if (pos > max) {
+          loadNewsfeedVideos();
+        }
+      }
+    },
+    500,
+    { leading: false }
+  );
+  useEffect(() => {
+    if (hasMoreImages) {
+      document.addEventListener("scroll", scrollImagesLoader);
+      return () => {
+        scrollImagesLoader.cancel();
+        document.removeEventListener("scroll", scrollImagesLoader);
+      };
+    }
+  }, [images, tab]);
+
+  const scrollImagesLoader = throttle(
+    (e) => {
+      if (tab == 1) {
+        let pos =
+          (document.documentElement.scrollTop || document.body.scrollTop) +
+          document.documentElement.offsetHeight;
+        let max = document.documentElement.scrollHeight - 100;
+        if (pos > max) {
+          loadNewsfeedImages();
+        }
+      }
+    },
+    500,
+    { leading: false }
+  );
+  useEffect(() => {
+    if (hasMoreNotes) {
+      document.addEventListener("scroll", scrollNotesLoader);
+      return () => {
+        scrollNotesLoader.cancel();
+        document.removeEventListener("scroll", scrollNotesLoader);
+      };
+    }
+  }, [notes, tab]);
+
+  const scrollNotesLoader = throttle(
+    (e) => {
+      if (tab == 2) {
+        let pos =
+          (document.documentElement.scrollTop || document.body.scrollTop) +
+          document.documentElement.offsetHeight;
+        let max = document.documentElement.scrollHeight - 100;
+        if (pos > max) {
+          loadNewsfeedNotes();
+        }
+      }
+    },
+    500,
+    { leading: false }
+  );
 
   useEffect(() => {
     return () => {
@@ -98,30 +175,12 @@ const NewsFeed = ({
         </Tabs>
         <TabPanel selectedTab={tab} index={0}>
           <NewsFeedItems items={videos} type="video" loading={loading} />
-          {!loading && hasMoreVideos && (
-            <CustomButton
-              text="Load more"
-              onClick={() => loadNewsfeedVideos()}
-            />
-          )}
         </TabPanel>
         <TabPanel selectedTab={tab} index={1}>
           <NewsFeedItems items={images} type="image" loading={loading} />
-          {!loading && hasMoreImages && (
-            <CustomButton
-              text="Load more"
-              onClick={() => loadNewsfeedImages()}
-            />
-          )}
         </TabPanel>
         <TabPanel selectedTab={tab} index={2}>
           <NewsFeedItems items={notes} type="note" loading={loading} />
-          {!loading && hasMoreNotes && (
-            <CustomButton
-              text="Load more"
-              onClick={() => loadNewsfeedNotes()}
-            />
-          )}
         </TabPanel>
       </Grid>
     </Grid>

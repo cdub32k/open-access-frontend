@@ -172,7 +172,7 @@ const ImagePage = ({
           comments={comments}
           contentType="image"
           id={imageId}
-          hasMoreComments={hasMoreComments}
+          hasMore={hasMoreComments}
         />
       </Grid>
     </Grid>

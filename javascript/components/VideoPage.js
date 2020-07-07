@@ -121,7 +121,7 @@ const VideoPage = ({
           comments={comments}
           contentType="video"
           id={videoId}
-          hasMoreComments={hasMoreComments}
+          hasMore={hasMoreComments}
         />
       </Grid>
     </Grid>
