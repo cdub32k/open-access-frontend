@@ -18,6 +18,9 @@ const initialState = {
   user: {},
   loading: true,
   comments: [],
+  likeCount: " - ",
+  dislikeCount: " - ",
+  commentCount: " - ",
   hasMoreComments: false,
   commentsLoading: false,
   newCommentLoading: false,
@@ -172,6 +175,8 @@ const videoReducer = (state = initialState, action) => {
         commentCount: action.payload.commentCount,
         comments: fComments,
       };
+    case ActionTypes.CLEAR_VIDEO_COMMENTS:
+      return { ...state, comments: [] };
     case ActionTypes.LOAD_MORE_VIDEO_COMMENTS:
       return { ...state, commentsLoading: true };
     case ActionTypes.LOAD_MORE_VIDEO_COMMENTS_SUCCESS: {

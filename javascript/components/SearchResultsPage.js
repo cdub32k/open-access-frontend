@@ -6,6 +6,8 @@ import Grid from "@material-ui/core/Grid";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
 
 import NewsFeedItems from "./NewsFeedItems";
@@ -28,6 +30,16 @@ const useStyles = makeStyles((theme) => ({
   tabHeaders: {
     marginBottom: 24,
     justifyContent: "center",
+  },
+  sortRoot: {
+    marginLeft: 12,
+    padding: "6px 32px 6px 6px",
+  },
+  sortSelect: {
+    marginLeft: 6,
+  },
+  sortOption: {
+    padding: "4px 8px",
   },
 }));
 
@@ -54,16 +66,25 @@ const SearchResultsPage = ({
   let s = getSearchQuery(location.search);
   let h = getHashtag(location.search);
   const [tab, setTab] = useState(0);
+  const [sort, setSort] = useState(0);
+
+  const changeSort = (e) => {
+    clearFeedData();
+    setSort(e.target.value);
+    setTab(0);
+    loadVideoSearchResults(s, h, e.target.value);
+  };
+
   const changeTab = (e, newValue) => {
-    if (newValue == 1 && images.length == 0) loadImageSearchResults(s, h);
-    if (newValue == 2 && notes.length == 0) loadNoteSearchResults(s, h);
+    if (newValue == 1 && images.length == 0) loadImageSearchResults(s, h, sort);
+    if (newValue == 2 && notes.length == 0) loadNoteSearchResults(s, h, sort);
 
     setTab(newValue);
   };
 
   const classes = useStyles();
   useEffect(() => {
-    if (videos.length == 0) loadVideoSearchResults(s, h);
+    if (videos.length == 0) loadVideoSearchResults(s, h, sort);
     return () => {
       clearFeedData();
     };
@@ -93,7 +114,7 @@ const SearchResultsPage = ({
         document.removeEventListener("scroll", scrollVideosLoader);
       };
     }
-  }, [videos, tab]);
+  }, [videos, tab, sort]);
 
   const scrollVideosLoader = throttle(
     (e) => {
@@ -103,7 +124,7 @@ const SearchResultsPage = ({
           document.documentElement.offsetHeight;
         let max = document.documentElement.scrollHeight - 100;
         if (pos > max) {
-          loadVideoSearchResults(s, h);
+          loadVideoSearchResults(s, h, sort);
         }
       }
     },
@@ -118,7 +139,7 @@ const SearchResultsPage = ({
         document.removeEventListener("scroll", scrollImagesLoader);
       };
     }
-  }, [images, tab]);
+  }, [images, tab, sort]);
 
   const scrollImagesLoader = throttle(
     (e) => {
@@ -128,7 +149,7 @@ const SearchResultsPage = ({
           document.documentElement.offsetHeight;
         let max = document.documentElement.scrollHeight - 100;
         if (pos > max) {
-          loadImageSearchResults(s, h);
+          loadImageSearchResults(s, h, sort);
         }
       }
     },
@@ -143,7 +164,7 @@ const SearchResultsPage = ({
         document.removeEventListener("scroll", scrollNotesLoader);
       };
     }
-  }, [notes, tab]);
+  }, [notes, tab, sort]);
 
   const scrollNotesLoader = throttle(
     (e) => {
@@ -153,7 +174,7 @@ const SearchResultsPage = ({
           document.documentElement.offsetHeight;
         let max = document.documentElement.scrollHeight - 100;
         if (pos > max) {
-          loadNoteSearchResults(s, h);
+          loadNoteSearchResults(s, h, sort);
         }
       }
     },
@@ -168,6 +189,30 @@ const SearchResultsPage = ({
           Search Results: {s ? s : null}{" "}
           {h ? h.split(",").map((tag) => "#" + tag + " ") : null}
         </Typography>
+        <Select
+          style={{ marginLeft: 12 }}
+          classes={{ root: classes.sortRoot, select: classes.sortSelect }}
+          value={sort}
+          defaultValue={0}
+          onChange={changeSort}
+          variant="outlined"
+        >
+          <MenuItem className={classes.sortOption} value={0}>
+            Newest
+          </MenuItem>
+          <MenuItem className={classes.sortOption} value={1}>
+            Most Liked (trending)
+          </MenuItem>
+          <MenuItem className={classes.sortOption} value={2}>
+            Most Disliked (trending)
+          </MenuItem>
+          <MenuItem className={classes.sortOption} value={3}>
+            Most Liked (all time)
+          </MenuItem>
+          <MenuItem className={classes.sortOption} value={4}>
+            Most Disliked (all time)
+          </MenuItem>
+        </Select>
         <Tabs
           value={tab}
           onChange={changeTab}
@@ -211,12 +256,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadVideoSearchResults: (query, hashtag) =>
-    dispatch(ActionCreators.loadVideoSearchResultsStart(query, hashtag)),
-  loadImageSearchResults: (query, hashtag) =>
-    dispatch(ActionCreators.loadImageSearchResultsStart(query, hashtag)),
-  loadNoteSearchResults: (query, hashtag) =>
-    dispatch(ActionCreators.loadNoteSearchResultsStart(query, hashtag)),
+  loadVideoSearchResults: (query, hashtag, sort) =>
+    dispatch(ActionCreators.loadVideoSearchResultsStart(query, hashtag, sort)),
+  loadImageSearchResults: (query, hashtag, sort) =>
+    dispatch(ActionCreators.loadImageSearchResultsStart(query, hashtag, sort)),
+  loadNoteSearchResults: (query, hashtag, sort) =>
+    dispatch(ActionCreators.loadNoteSearchResultsStart(query, hashtag, sort)),
   clearFeedData: () => dispatch(ActionCreators.clearFeedData()),
 });
 

@@ -30,6 +30,8 @@ axios.interceptors.response.use(
 import apolloCache from "../apollo";
 import { parse } from "graphql";
 
+import { perPage } from "../constants";
+
 const GET_ALL_USERNAMES_QUERY = `
   query Usernames {
     users {
@@ -318,8 +320,8 @@ const USER_COMMENTS_PAGE_QUERY = `
 `;
 
 const VIDEO_SEARCH_RESULTS_PAGE_WITH_COUNTS_QUERY = `
-  query VideoSearchResultsPage($page: Int, $query: String, $hashtag: String, $lastOldest: Date){
-    videoSearch(query: $query, hashtag: $hashtag, page: $page, lastOldest: $lastOldest) {
+  query VideoSearchResultsPage($page: Int, $query: String, $hashtag: String, $sort: Int){
+    videoSearch(query: $query, hashtag: $hashtag, page: $page, sort: $sort) {
       videos {
         _id
         user {
@@ -342,8 +344,8 @@ const VIDEO_SEARCH_RESULTS_PAGE_WITH_COUNTS_QUERY = `
   }
 `;
 const VIDEO_SEARCH_RESULTS_PAGE_QUERY = `
-  query VideoSearchResultsPage($page: Int, $query: String, $hashtag: String, $lastOldest: Date){
-    videoSearch(query: $query, hashtag: $hashtag, page: $page, lastOldest: $lastOldest) {
+  query VideoSearchResultsPage($page: Int, $query: String, $hashtag: String, $sort: Int){
+    videoSearch(query: $query, hashtag: $hashtag, page: $page, sort: $sort) {
       videos {
         _id
         user {
@@ -363,8 +365,8 @@ const VIDEO_SEARCH_RESULTS_PAGE_QUERY = `
   }
 `;
 const IMAGE_SEARCH_RESULTS_PAGE_QUERY = `
-  query ImageSearchResultsPage($page: Int, $query: String, $hashtag: String, $lastOldest: Date){
-    imageSearch(query: $query, hashtag: $hashtag, page: $page, lastOldest: $lastOldest) {
+  query ImageSearchResultsPage($page: Int, $query: String, $hashtag: String, $sort: Int){
+    imageSearch(query: $query, hashtag: $hashtag, page: $page, sort: $sort) {
       images {
         _id
         user {
@@ -382,8 +384,8 @@ const IMAGE_SEARCH_RESULTS_PAGE_QUERY = `
   }
 `;
 const NOTE_SEARCH_RESULTS_PAGE_QUERY = `
-  query NoteSearchResultsPage($page: Int, $query: String, $hashtag: String, $lastOldest: Date){
-    noteSearch(query: $query, hashtag: $hashtag, page: $page, lastOldest: $lastOldest) {
+  query NoteSearchResultsPage($page: Int, $query: String, $hashtag: String, $sort: Int){
+    noteSearch(query: $query, hashtag: $hashtag, page: $page, sort: $sort) {
       notes {
         _id
         user {
@@ -490,8 +492,8 @@ const MARK_NOTIFICATIONS_READ_QUERY = `
 `;
 
 const GET_NEWSFEED_VIDEOS_QUERY = `
-  query NewsfeedVideos($lastOldest: Date) {
-    newsfeedVideos(lastOldest: $lastOldest) {
+  query NewsfeedVideos($page: Int, $sort: Int) {
+    newsfeedVideos(page: $page, sort: $sort) {
       _id
       user {
         username
@@ -508,8 +510,8 @@ const GET_NEWSFEED_VIDEOS_QUERY = `
   }
 `;
 const GET_NEWSFEED_IMAGES_QUERY = `
-  query NewsfeedImages($lastOldest: Date) {
-    newsfeedImages(lastOldest: $lastOldest) {
+  query NewsfeedImages($page: Int, $sort: Int) {
+    newsfeedImages(page: $page, sort: $sort) {
       _id
       user {
         username
@@ -524,8 +526,8 @@ const GET_NEWSFEED_IMAGES_QUERY = `
   }
 `;
 const GET_NEWSFEED_NOTES_QUERY = `
-  query NewsfeedNotes($lastOldest: Date) {
-    newsfeedNotes(lastOldest: $lastOldest) {
+  query NewsfeedNotes($page: Int, $sort: Int) {
+    newsfeedNotes(page: $page, sort: $sort) {
       _id
       user {
         username
@@ -541,9 +543,9 @@ const GET_NEWSFEED_NOTES_QUERY = `
 `;
 
 const LOAD_MORE_IMAGE_COMMENTS_QUERY = `
-  query ImageInfo($imageId: String!, $lastOldest: Date) {
+  query ImageInfo($imageId: String!, $page: Int, $sort: Int) {
     image(id: $imageId) {
-      comments(lastOldest: $lastOldest) {
+      comments(page: $page, sort: $sort) {
         _id
         user {
           username
@@ -551,14 +553,19 @@ const LOAD_MORE_IMAGE_COMMENTS_QUERY = `
         }
         body
         createdAt
+        likeCount
+        dislikeCount
+        liked
+        disliked
+        replyCount
       }
     }
   }
 `;
 const LOAD_MORE_VIDEO_COMMENTS_QUERY = `
-  query VideoInfo($videoId: String!, $lastOldest: Date) {
+  query VideoInfo($videoId: String!, $page: Int, $sort: Int) {
     video(id: $videoId) {
-      comments(lastOldest: $lastOldest) {
+      comments(page: $page, sort: $sort) {
         _id
         user {
           username
@@ -566,14 +573,19 @@ const LOAD_MORE_VIDEO_COMMENTS_QUERY = `
         }
         body
         createdAt
+        likeCount
+        dislikeCount
+        liked
+        disliked
+        replyCount
       }
     }
   }
 `;
 const LOAD_MORE_NOTE_COMMENTS_QUERY = `
-  query NoteInfo($noteId: String!, $lastOldest: Date) {
+  query NoteInfo($noteId: String!, $page: Int, $sort: Int) {
     note(id: $noteId) {
-      comments(lastOldest: $lastOldest) {
+      comments(page: $page, sort: $sort) {
         _id
         user {
           username
@@ -581,6 +593,11 @@ const LOAD_MORE_NOTE_COMMENTS_QUERY = `
         }
         body
         createdAt
+        likeCount
+        dislikeCount
+        liked
+        disliked
+        replyCount
       }
     }
   }
@@ -1236,14 +1253,13 @@ export default [
         .catch((err) => next(ActionCreators.postNoteCommentError(err)));
     } else if (action.type == ActionTypes.LOAD_NEWSFEED_VIDEO_START) {
       next(action);
-      let lastOldest =
+      let page =
         store.getState().feed.videos.length > 0
-          ? store.getState().feed.videos.slice(-1)[0].uploadedAt
-          : null;
-
+          ? Math.ceil(store.getState().feed.videos.length / perPage)
+          : 0;
       const cachedQ = apolloCache.readQuery({
         query: parse(GET_NEWSFEED_VIDEOS_QUERY),
-        variables: { lastOldest },
+        variables: { page, sort: action.payload.sort },
       });
       if (cachedQ)
         return next(
@@ -1253,7 +1269,7 @@ export default [
       axios
         .post("/api", {
           query: GET_NEWSFEED_VIDEOS_QUERY,
-          variables: { lastOldest },
+          variables: { page, sort: action.payload.sort },
         })
         .then((res) => {
           const videoData = res.data.data;
@@ -1261,7 +1277,7 @@ export default [
           if (videoData.newsfeedVideos) {
             apolloCache.writeQuery({
               query: parse(GET_NEWSFEED_VIDEOS_QUERY),
-              variables: { lastOldest },
+              variables: { page, sort: action.payload.sort },
               data: { ...videoData },
             });
 
@@ -1273,14 +1289,14 @@ export default [
         .catch((error) => next(ActionCreators.loadNewsfeedVideoError(error)));
     } else if (action.type == ActionTypes.LOAD_NEWSFEED_IMAGES_START) {
       next(action);
-      let lastOldest =
+      let page =
         store.getState().feed.images.length > 0
-          ? store.getState().feed.images.slice(-1)[0].uploadedAt
-          : null;
+          ? Math.ceil(store.getState().feed.images.length / perPage)
+          : 0;
 
       const cachedQ = apolloCache.readQuery({
         query: parse(GET_NEWSFEED_IMAGES_QUERY),
-        variables: { lastOldest },
+        variables: { page, sort: action.payload.sort },
       });
       if (cachedQ)
         return next(
@@ -1290,14 +1306,14 @@ export default [
       axios
         .post("/api", {
           query: GET_NEWSFEED_IMAGES_QUERY,
-          variables: { lastOldest },
+          variables: { page, sort: action.payload.sort },
         })
         .then((res) => {
           const imageData = res.data.data;
           if (imageData.newsfeedImages) {
             apolloCache.writeQuery({
               query: parse(GET_NEWSFEED_IMAGES_QUERY),
-              variables: { lastOldest },
+              variables: { page, sort: action.payload.sort },
               data: { ...imageData },
             });
 
@@ -1309,14 +1325,14 @@ export default [
         .catch((error) => next(ActionCreators.loadNewsfeedVideoError(error)));
     } else if (action.type == ActionTypes.LOAD_NEWSFEED_NOTES_START) {
       next(action);
-      let lastOldest =
+      let page =
         store.getState().feed.notes.length > 0
-          ? store.getState().feed.notes.slice(-1)[0].uploadedAt
-          : null;
+          ? Math.ceil(store.getState().feed.notes.length / perPage)
+          : 0;
 
       const cachedQ = apolloCache.readQuery({
         query: parse(GET_NEWSFEED_NOTES_QUERY),
-        variables: { lastOldest },
+        variables: { page, sort: action.payload.sort },
       });
       if (cachedQ)
         return next(
@@ -1326,7 +1342,7 @@ export default [
       axios
         .post("/api", {
           query: GET_NEWSFEED_NOTES_QUERY,
-          variables: { lastOldest },
+          variables: { page, sort: action.payload.sort },
         })
         .then((res) => {
           const noteData = res.data.data;
@@ -1334,7 +1350,7 @@ export default [
           if (noteData.newsfeedNotes) {
             apolloCache.writeQuery({
               query: parse(GET_NEWSFEED_NOTES_QUERY),
-              variables: { lastOldest },
+              variables: { page, sort: action.payload.sort },
               data: { ...noteData },
             });
 
@@ -1363,7 +1379,7 @@ export default [
         .catch((error) => next(ActionCreators.loadUserNotePageError(error)));
     } else if (action.type == ActionTypes.LOAD_MORE_IMAGE_COMMENTS) {
       next(action);
-      let lastOldest = store.getState().image.comments.slice(-1)[0].createdAt;
+      let page = Math.ceil(store.getState().image.comments.length / perPage);
       let imageId = action.payload.imageId;
 
       axios
@@ -1371,7 +1387,8 @@ export default [
           query: LOAD_MORE_IMAGE_COMMENTS_QUERY,
           variables: {
             imageId,
-            lastOldest,
+            page,
+            sort: action.payload.sort,
           },
         })
         .then((res) => {
@@ -1391,7 +1408,7 @@ export default [
         );
     } else if (action.type == ActionTypes.LOAD_MORE_VIDEO_COMMENTS) {
       next(action);
-      let lastOldest = store.getState().video.comments.slice(-1)[0].createdAt;
+      let page = Math.ceil(store.getState().video.comments.length / perPage);
       let videoId = action.payload.videoId;
 
       axios
@@ -1399,7 +1416,8 @@ export default [
           query: LOAD_MORE_VIDEO_COMMENTS_QUERY,
           variables: {
             videoId,
-            lastOldest,
+            page,
+            sort: action.payload.sort,
           },
         })
         .then((res) => {
@@ -1419,7 +1437,7 @@ export default [
     } else if (action.type == ActionTypes.LOAD_MORE_NOTE_COMMENTS) {
       next(action);
 
-      let lastOldest = store.getState().note.comments.slice(-1)[0].createdAt;
+      let page = Math.ceil(store.getState().note.comments.length / perPage);
       let noteId = action.payload.noteId;
 
       axios
@@ -1427,7 +1445,8 @@ export default [
           query: LOAD_MORE_NOTE_COMMENTS_QUERY,
           variables: {
             noteId,
-            lastOldest,
+            page,
+            sort: action.payload.sort,
           },
         })
         .then((res) => {
@@ -1637,18 +1656,16 @@ export default [
         });
     } else if (action.type == ActionTypes.LOAD_VIDEO_SEARCH_RESULTS_START) {
       next(action);
-      const { page, query, hashtag } = action.payload;
-      let lastOldest =
-        store.getState().feed.videos.length > 0
-          ? store.getState().feed.videos.slice(-1)[0].uploadedAt
-          : null;
+      const { query, hashtag, sort } = action.payload;
 
-      let q = lastOldest
+      let page = Math.ceil(store.getState().feed.videos.length / perPage);
+
+      let q = page
         ? VIDEO_SEARCH_RESULTS_PAGE_QUERY
         : VIDEO_SEARCH_RESULTS_PAGE_WITH_COUNTS_QUERY;
       const cachedQ = apolloCache.readQuery({
         query: parse(q),
-        variables: { page, query, hashtag, lastOldest },
+        variables: { page, query, hashtag, sort },
       });
       if (cachedQ)
         return next(
@@ -1664,14 +1681,14 @@ export default [
       axios
         .post("/api", {
           query: q,
-          variables: { page, query, hashtag, lastOldest },
+          variables: { page, query, hashtag, sort },
         })
         .then((res) => {
           const videoData = res.data.data;
 
           apolloCache.writeQuery({
             query: parse(q),
-            variables: { page, query, hashtag, lastOldest },
+            variables: { page, query, hashtag, sort },
             data: { ...videoData },
           });
 
@@ -1688,15 +1705,13 @@ export default [
         .catch((error) => ActionCreators.loadVideoSearchResultsError(error));
     } else if (action.type == ActionTypes.LOAD_IMAGE_SEARCH_RESULTS_START) {
       next(action);
-      const { page, query, hashtag } = action.payload;
-      let lastOldest =
-        store.getState().feed.images.length > 0
-          ? store.getState().feed.images.slice(-1)[0].uploadedAt
-          : null;
+      const { query, hashtag, sort } = action.payload;
+
+      let page = Math.ceil(store.getState().feed.images.length / perPage);
 
       const cachedQ = apolloCache.readQuery({
         query: parse(IMAGE_SEARCH_RESULTS_PAGE_QUERY),
-        variables: { page, query, hashtag, lastOldest },
+        variables: { page, query, hashtag, sort },
       });
       if (cachedQ)
         return next(
@@ -1709,14 +1724,14 @@ export default [
       axios
         .post("/api", {
           query: IMAGE_SEARCH_RESULTS_PAGE_QUERY,
-          variables: { page, query, hashtag, lastOldest },
+          variables: { page, query, hashtag, sort },
         })
         .then((res) => {
           const imageData = res.data.data;
 
           apolloCache.writeQuery({
             query: parse(IMAGE_SEARCH_RESULTS_PAGE_QUERY),
-            variables: { page, query, hashtag, lastOldest },
+            variables: { page, query, hashtag, sort },
             data: { ...imageData },
           });
 
@@ -1730,15 +1745,13 @@ export default [
         .catch((error) => ActionCreators.loadImageSearchResultsError(error));
     } else if (action.type == ActionTypes.LOAD_NOTE_SEARCH_RESULTS_START) {
       next(action);
-      const { page, query, hashtag } = action.payload;
-      let lastOldest =
-        store.getState().feed.notes.length > 0
-          ? store.getState().feed.notes.slice(-1)[0].uploadedAt
-          : null;
+      const { query, hashtag, sort } = action.payload;
+
+      let page = Math.ceil(store.getState().feed.notes.length / perPage);
 
       const cachedQ = apolloCache.readQuery({
         query: parse(NOTE_SEARCH_RESULTS_PAGE_QUERY),
-        variables: { page, query, hashtag, lastOldest },
+        variables: { page, query, hashtag, sort },
       });
       if (cachedQ)
         return next(
@@ -1751,14 +1764,14 @@ export default [
       axios
         .post("/api", {
           query: NOTE_SEARCH_RESULTS_PAGE_QUERY,
-          variables: { page, query, hashtag, lastOldest },
+          variables: { page, query, hashtag, sort },
         })
         .then((res) => {
           const noteData = res.data.data;
 
           apolloCache.writeQuery({
             query: parse(NOTE_SEARCH_RESULTS_PAGE_QUERY),
-            variables: { page, query, hashtag, lastOldest },
+            variables: { page, query, hashtag, sort },
             data: { ...noteData },
           });
 

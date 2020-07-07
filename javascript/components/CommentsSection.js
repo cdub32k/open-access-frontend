@@ -1,9 +1,12 @@
-import React, { useRef, useEffect, Fragment } from "react";
+import React, { useState, useRef, useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import { ActionCreators } from "../actions";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
 import CommentForm from "./CommentForm";
@@ -16,11 +19,21 @@ const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
     padding: 12,
+    paddingTop: 0,
   },
   section: {
     overflow: "auto",
     maxHeight: 920,
     paddingTop: 24,
+  },
+  sortRoot: {
+    padding: "6px 32px 6px 6px",
+  },
+  sortSelect: {
+    marginLeft: 6,
+  },
+  sortOption: {
+    padding: "4px 8px",
   },
 }));
 
@@ -30,14 +43,24 @@ const CommentsSection = ({
   newReplyId,
   repliesLoading,
   comments,
+  totalCount,
   contentType,
   id,
   loadMoreComments,
+  clearComments,
   hasMore,
 }) => {
   const classes = useStyles();
 
   const ccontainer = useRef();
+
+  const [sort, setSort] = useState(0);
+
+  const changeSort = (e) => {
+    clearComments(contentType);
+    setSort(e.target.value);
+    loadMoreComments(contentType, id, e.target.value);
+  };
 
   useEffect(() => {
     if (hasMore) {
@@ -61,7 +84,7 @@ const CommentsSection = ({
         document.documentElement.offsetHeight;
       let max = document.documentElement.scrollHeight - 100;
       if (pos > max) {
-        loadMoreComments(contentType, id);
+        loadMoreComments(contentType, id, sort);
         ccontainer.current.scrollTop = ccontainer.current.scrollHeight;
       }
     },
@@ -75,7 +98,7 @@ const CommentsSection = ({
         ccontainer.current.scrollTop -
         ccontainer.current.clientHeight;
       if (pos < 20) {
-        loadMoreComments(contentType, id);
+        loadMoreComments(contentType, id, sort);
         ccontainer.current.scrollTop = ccontainer.current.scrollHeight;
       }
     },
@@ -84,6 +107,33 @@ const CommentsSection = ({
   );
   return (
     <div className={`${classes.container} comments-container`}>
+      <div style={{ marginBottom: 48 }}>
+        <Typography variant="h4" style={{ display: "inline" }}>
+          Comments ({totalCount})
+        </Typography>
+        <Select
+          style={{
+            display: "inline-block",
+            verticalAlign: "middle",
+            marginLeft: 12,
+          }}
+          classes={{ root: classes.sortRoot, select: classes.sortSelect }}
+          value={sort}
+          defaultValue={0}
+          onChange={changeSort}
+          variant="outlined"
+        >
+          <MenuItem className={classes.sortOption} value={0}>
+            Newest
+          </MenuItem>
+          <MenuItem className={classes.sortOption} value={3}>
+            Most Liked
+          </MenuItem>
+          <MenuItem className={classes.sortOption} value={4}>
+            Most Disliked
+          </MenuItem>
+        </Select>
+      </div>
       <CommentForm
         loading={newLoading && !newReplyId}
         contentType={contentType}
@@ -136,8 +186,11 @@ const CommentsSection = ({
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-  loadMoreComments: (type, _id) =>
-    dispatch(ActionCreators.loadMoreComments(type, _id)),
+  loadMoreComments: (type, _id, sort) =>
+    dispatch(ActionCreators.loadMoreComments(type, _id, sort)),
+  clearComments: (type) => {
+    dispatch(ActionCreators.clearComments(type));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentsSection);

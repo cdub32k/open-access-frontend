@@ -6,6 +6,8 @@ import Grid from "@material-ui/core/Grid";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
 
 import NewsFeedItems from "./NewsFeedItems";
@@ -28,6 +30,16 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 24,
     justifyContent: "center",
   },
+  sortRoot: {
+    marginLeft: 12,
+    padding: "6px 32px 6px 6px",
+  },
+  sortSelect: {
+    marginLeft: 6,
+  },
+  sortOption: {
+    padding: "4px 8px",
+  },
 }));
 
 const NewsFeed = ({
@@ -47,16 +59,25 @@ const NewsFeed = ({
   clearFeedData,
 }) => {
   const [tab, setTab] = useState(0);
+  const [sort, setSort] = useState(0);
+
+  const changeSort = (e) => {
+    clearFeedData();
+    setSort(e.target.value);
+    setTab(0);
+    loadNewsfeedVideos(e.target.value);
+  };
+
   const changeTab = (e, newValue) => {
-    if (newValue == 1 && images.length == 0) loadNewsfeedImages();
-    if (newValue == 2 && notes.length == 0) loadNewsfeedNotes();
+    if (newValue == 1 && images.length == 0) loadNewsfeedImages(sort);
+    if (newValue == 2 && notes.length == 0) loadNewsfeedNotes(sort);
 
     setTab(newValue);
   };
 
   const classes = useStyles();
   useEffect(() => {
-    if (videos.length == 0) loadNewsfeedVideos();
+    if (videos.length == 0) loadNewsfeedVideos(sort);
 
     return () => clearFeedData();
   }, []);
@@ -79,7 +100,7 @@ const NewsFeed = ({
           document.documentElement.offsetHeight;
         let max = document.documentElement.scrollHeight - 100;
         if (pos > max) {
-          loadNewsfeedVideos();
+          loadNewsfeedVideos(sort);
         }
       }
     },
@@ -104,7 +125,7 @@ const NewsFeed = ({
           document.documentElement.offsetHeight;
         let max = document.documentElement.scrollHeight - 100;
         if (pos > max) {
-          loadNewsfeedImages();
+          loadNewsfeedImages(sort);
         }
       }
     },
@@ -129,7 +150,7 @@ const NewsFeed = ({
           document.documentElement.offsetHeight;
         let max = document.documentElement.scrollHeight - 100;
         if (pos > max) {
-          loadNewsfeedNotes();
+          loadNewsfeedNotes(sort);
         }
       }
     },
@@ -161,6 +182,30 @@ const NewsFeed = ({
         <Typography className={classes.header} variant="h4">
           NewsFeed
         </Typography>
+        <Select
+          style={{ marginLeft: 12 }}
+          classes={{ root: classes.sortRoot, select: classes.sortSelect }}
+          value={sort}
+          defaultValue={0}
+          onChange={changeSort}
+          variant="outlined"
+        >
+          <MenuItem className={classes.sortOption} value={0}>
+            Newest
+          </MenuItem>
+          <MenuItem className={classes.sortOption} value={1}>
+            Most Liked (trending)
+          </MenuItem>
+          <MenuItem className={classes.sortOption} value={2}>
+            Most Disliked (trending)
+          </MenuItem>
+          <MenuItem className={classes.sortOption} value={3}>
+            Most Liked (all time)
+          </MenuItem>
+          <MenuItem className={classes.sortOption} value={4}>
+            Most Disliked (all time)
+          </MenuItem>
+        </Select>
         <Tabs
           value={tab}
           onChange={changeTab}
@@ -201,9 +246,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadNewsfeedVideos: () => dispatch(ActionCreators.loadNewsfeedVideoStart()),
-  loadNewsfeedImages: () => dispatch(ActionCreators.loadNewsfeedImagesStart()),
-  loadNewsfeedNotes: () => dispatch(ActionCreators.loadNewsfeedNotesStart()),
+  loadNewsfeedVideos: (s) => dispatch(ActionCreators.loadNewsfeedVideoStart(s)),
+  loadNewsfeedImages: (s) =>
+    dispatch(ActionCreators.loadNewsfeedImagesStart(s)),
+  loadNewsfeedNotes: (s) => dispatch(ActionCreators.loadNewsfeedNotesStart(s)),
   clearFeedData: () => dispatch(ActionCreators.clearFeedData()),
 });
 

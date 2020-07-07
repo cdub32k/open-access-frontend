@@ -64,6 +64,15 @@ a:visited {
   //height: 1.1876em !important;
 }
 
+.MuiSelect-select:focus {
+  background-color: transparent !important;
+}
+
+.MuiList-padding {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
 //Stripe form styles:
 .StripeElement {
   height: 40px;

@@ -119,6 +119,7 @@ const VideoPage = ({
           newReplyId={newCommentReplyId}
           repliesLoading={repliesLoading}
           comments={comments}
+          totalCount={commentCount}
           contentType="video"
           id={videoId}
           hasMore={hasMoreComments}

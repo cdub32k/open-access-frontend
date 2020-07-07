@@ -133,6 +133,9 @@ export const ActionTypes = {
   DELETE_VIDEO_COMMENT: "DELETE_VIDEO_COMMENT",
   DELETE_IMAGE_COMMENT: "DELETE_IMAGE_COMMENT",
   DELETE_NOTE_COMMENT: "DELETE_NOTE_COMMENT",
+  CLEAR_VIDEO_COMMENTS: "CLEAR_VIDEO_COMMENTS",
+  CLEAR_IMAGE_COMMENTS: "CLEAR_IMAGE_COMMENTS",
+  CLEAR_NOTE_COMMENTS: "CLEAR_NOTE_COMMENTS",
   LOAD_MORE_VIDEO_COMMENTS: "LOAD_MORE_VIDEO_COMMENTS",
   LOAD_MORE_IMAGE_COMMENTS: "LOAD_MORE_IMAGE_COMMENTS",
   LOAD_MORE_NOTE_COMMENTS: "LOAD_MORE_NOTE_COMMENTS",
@@ -564,10 +567,10 @@ export const ActionCreators = {
   newsfeedNoteItemUpdate: (note) => {
     return { type: ActionTypes.NEWSFEED_NOTE_ITEM_UPDATE, payload: { note } };
   },
-  loadVideoSearchResultsStart: (query, hashtag) => {
+  loadVideoSearchResultsStart: (query, hashtag, sort) => {
     return {
       type: ActionTypes.LOAD_VIDEO_SEARCH_RESULTS_START,
-      payload: { query, hashtag },
+      payload: { query, hashtag, sort },
     };
   },
   loadVideoSearchResultsSuccess: (
@@ -585,10 +588,10 @@ export const ActionCreators = {
   loadVideoSearchResultsError: (error) => {
     return { type: ActionTypes.LOAD_VIDEO_SEARCH_RESULTS_ERROR, error };
   },
-  loadImageSearchResultsStart: (query, hashtag) => {
+  loadImageSearchResultsStart: (query, hashtag, sort) => {
     return {
       type: ActionTypes.LOAD_IMAGE_SEARCH_RESULTS_START,
-      payload: { query, hashtag },
+      payload: { query, hashtag, sort },
     };
   },
   loadImageSearchResultsSuccess: (images, hasMore) => {
@@ -600,10 +603,10 @@ export const ActionCreators = {
   loadImageSearchResultsError: (error) => {
     return { type: ActionTypes.LOAD_IMAGE_SEARCH_RESULTS_ERROR, error };
   },
-  loadNoteSearchResultsStart: (query, hashtag) => {
+  loadNoteSearchResultsStart: (query, hashtag, sort) => {
     return {
       type: ActionTypes.LOAD_NOTE_SEARCH_RESULTS_START,
-      payload: { query, hashtag },
+      payload: { query, hashtag, sort },
     };
   },
   loadNoteSearchResultsSuccess: (notes, hasMore) => {
@@ -615,8 +618,8 @@ export const ActionCreators = {
   loadNoteSearchResultsError: (error) => {
     return { type: ActionTypes.LOAD_NOTE_SEARCH_RESULTS_ERROR, error };
   },
-  loadNewsfeedVideoStart: () => {
-    return { type: ActionTypes.LOAD_NEWSFEED_VIDEO_START };
+  loadNewsfeedVideoStart: (sort) => {
+    return { type: ActionTypes.LOAD_NEWSFEED_VIDEO_START, payload: { sort } };
   },
   loadNewsfeedVideoSuccess: (videos) => {
     return {
@@ -627,8 +630,8 @@ export const ActionCreators = {
   loadNewsfeedVideoError: (error) => {
     return { type: ActionTypes.LOAD_NEWSFEED_VIDEO_ERROR, error };
   },
-  loadNewsfeedImagesStart: () => {
-    return { type: ActionTypes.LOAD_NEWSFEED_IMAGES_START };
+  loadNewsfeedImagesStart: (sort) => {
+    return { type: ActionTypes.LOAD_NEWSFEED_IMAGES_START, payload: { sort } };
   },
   loadNewsfeedImagesSuccess: (images) => {
     return {
@@ -639,8 +642,8 @@ export const ActionCreators = {
   loadNewsfeedImagesError: (error) => {
     return { type: ActionTypes.LOAD_NEWSFEED_IMAGES_ERROR, error };
   },
-  loadNewsfeedNotesStart: () => {
-    return { type: ActionTypes.LOAD_NEWSFEED_NOTES_START };
+  loadNewsfeedNotesStart: (sort) => {
+    return { type: ActionTypes.LOAD_NEWSFEED_NOTES_START, payload: { sort } };
   },
   loadNewsfeedNotesSuccess: (notes) => {
     return {
@@ -709,22 +712,38 @@ export const ActionCreators = {
         };
     }
   },
-  loadMoreComments: (type, _id) => {
+  clearComments: (type) => {
+    switch (type) {
+      case "video":
+        return {
+          type: ActionTypes.CLEAR_VIDEO_COMMENTS,
+        };
+      case "image":
+        return {
+          type: ActionTypes.CLEAR_IMAGE_COMMENTS,
+        };
+      case "note":
+        return {
+          type: ActionTypes.CLEAR_NOTE_COMMENTS,
+        };
+    }
+  },
+  loadMoreComments: (type, _id, sort) => {
     switch (type) {
       case "video":
         return {
           type: ActionTypes.LOAD_MORE_VIDEO_COMMENTS,
-          payload: { videoId: _id },
+          payload: { videoId: _id, sort },
         };
       case "image":
         return {
           type: ActionTypes.LOAD_MORE_IMAGE_COMMENTS,
-          payload: { imageId: _id },
+          payload: { imageId: _id, sort },
         };
       case "note":
         return {
           type: ActionTypes.LOAD_MORE_NOTE_COMMENTS,
-          payload: { noteId: _id },
+          payload: { noteId: _id, sort },
         };
     }
   },

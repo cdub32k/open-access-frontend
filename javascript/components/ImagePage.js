@@ -170,6 +170,7 @@ const ImagePage = ({
           newReplyId={newCommentReplyId}
           repliesLoading={repliesLoading}
           comments={comments}
+          totalCount={commentCount}
           contentType="image"
           id={imageId}
           hasMore={hasMoreComments}

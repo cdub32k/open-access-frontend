@@ -17,6 +17,9 @@ const initialState = {
   user: {},
   loading: true,
   comments: [],
+  likeCount: " - ",
+  dislikeCount: " - ",
+  commentCount: " - ",
   commentsLoading: false,
   newCommentLoading: false,
 };
@@ -166,6 +169,8 @@ const imageReducer = (state = initialState, action) => {
         commentCount: action.payload.commentCount,
         comments: fComments,
       };
+    case ActionTypes.CLEAR_IMAGE_COMMENTS:
+      return { ...state, comments: [] };
     case ActionTypes.LOAD_MORE_IMAGE_COMMENTS:
       return { ...state, commentsLoading: true };
     case ActionTypes.LOAD_MORE_IMAGE_COMMENTS_SUCCESS: {
