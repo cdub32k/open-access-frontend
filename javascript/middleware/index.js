@@ -985,17 +985,17 @@ export default [
       next(action);
       const { username, page } = action.payload;
 
-      const cachedQ = apolloCache.readQuery({
-        query: parse(USER_COMMENTS_PAGE_QUERY),
-        variables: { username, page },
-      });
-      if (cachedQ)
-        return next(
-          ActionCreators.loadUserCommentsPageSuccess(
-            cachedQ.commentsSearch.comments,
-            cachedQ.commentsSearch.hasMore
-          )
-        );
+      // const cachedQ = apolloCache.readQuery({
+      //   query: parse(USER_COMMENTS_PAGE_QUERY),
+      //   variables: { username, page },
+      // });
+      // if (cachedQ)
+      //   return next(
+      //     ActionCreators.loadUserCommentsPageSuccess(
+      //       cachedQ.commentsSearch.comments,
+      //       cachedQ.commentsSearch.hasMore
+      //     )
+      //   );
 
       axios
         .post("/api", {
@@ -1005,11 +1005,11 @@ export default [
         .then((res) => {
           const commentData = res.data.data;
 
-          apolloCache.writeQuery({
-            query: parse(USER_COMMENTS_PAGE_QUERY),
-            variables: { username, page },
-            data: { ...commentData },
-          });
+          // apolloCache.writeQuery({
+          //   query: parse(USER_COMMENTS_PAGE_QUERY),
+          //   variables: { username, page },
+          //   data: { ...commentData },
+          // });
 
           next(
             ActionCreators.loadUserCommentsPageSuccess(
@@ -1025,17 +1025,17 @@ export default [
       next(action);
       const { username, page } = action.payload;
 
-      const cachedQ = apolloCache.readQuery({
-        query: parse(USER_LIKES_PAGE_QUERY),
-        variables: { username, page },
-      });
-      if (cachedQ)
-        return next(
-          ActionCreators.loadUserLikesPageSuccess(
-            cachedQ.likesSearch.likes,
-            cachedQ.likesSearch.hasMore
-          )
-        );
+      // const cachedQ = apolloCache.readQuery({
+      //   query: parse(USER_LIKES_PAGE_QUERY),
+      //   variables: { username, page },
+      // });
+      // if (cachedQ)
+      //   return next(
+      //     ActionCreators.loadUserLikesPageSuccess(
+      //       cachedQ.likesSearch.likes,
+      //       cachedQ.likesSearch.hasMore
+      //     )
+      //   );
 
       axios
         .post("/api", {
@@ -1045,11 +1045,11 @@ export default [
         .then((res) => {
           const likeData = res.data.data;
 
-          apolloCache.writeQuery({
-            query: parse(USER_LIKES_PAGE_QUERY),
-            variables: { username, page },
-            data: { ...likeData },
-          });
+          // apolloCache.writeQuery({
+          //   query: parse(USER_LIKES_PAGE_QUERY),
+          //   variables: { username, page },
+          //   data: { ...likeData },
+          // });
 
           next(
             ActionCreators.loadUserLikesPageSuccess(
@@ -1065,17 +1065,17 @@ export default [
       next(action);
       const { username, page } = action.payload;
 
-      const cachedQ = apolloCache.readQuery({
-        query: parse(USER_DISLIKES_PAGE_QUERY),
-        variables: { username, page },
-      });
-      if (cachedQ)
-        return next(
-          ActionCreators.loadUserDislikesPageSuccess(
-            cachedQ.dislikesSearch.dislikes,
-            cachedQ.dislikesSearch.hasMore
-          )
-        );
+      // const cachedQ = apolloCache.readQuery({
+      //   query: parse(USER_DISLIKES_PAGE_QUERY),
+      //   variables: { username, page },
+      // });
+      // if (cachedQ)
+      //   return next(
+      //     ActionCreators.loadUserDislikesPageSuccess(
+      //       cachedQ.dislikesSearch.dislikes,
+      //       cachedQ.dislikesSearch.hasMore
+      //     )
+      //   );
 
       axios
         .post("/api", {
@@ -1085,11 +1085,11 @@ export default [
         .then((res) => {
           const dislikeData = res.data.data;
 
-          apolloCache.writeQuery({
-            query: parse(USER_DISLIKES_PAGE_QUERY),
-            variables: { username, page },
-            data: { ...dislikeData },
-          });
+          // apolloCache.writeQuery({
+          //   query: parse(USER_DISLIKES_PAGE_QUERY),
+          //   variables: { username, page },
+          //   data: { ...dislikeData },
+          // });
 
           next(
             ActionCreators.loadUserDislikesPageSuccess(

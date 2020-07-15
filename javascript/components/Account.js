@@ -22,6 +22,8 @@ import CustomButton from "./CustomButton";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/lib/ReactCrop.scss";
 
+import { stripLinks } from "../utils/helpers";
+
 class Account extends Component {
   constructor(props) {
     super(props);
@@ -161,7 +163,7 @@ class Account extends Component {
       displayName: this.props.displayName,
       email: this.props.email,
       phoneNumber: this.props.phoneNumber,
-      bio: this.props.bio,
+      bio: stripLinks(this.props.bio),
       editInfo: true,
     });
   };
@@ -305,7 +307,14 @@ class Account extends Component {
                 </Typography>
                 <Typography className={classes.userField} variant="body1">
                   <b>Bio:</b>
-                  <br /> {bio || "N/A"}
+                  <br />{" "}
+                  {(
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: bio,
+                      }}
+                    ></span>
+                  ) || "N/A"}
                 </Typography>
               </Fragment>
             )}
@@ -363,7 +372,9 @@ class Account extends Component {
                   />
                   <CustomButton
                     style={{ marginTop: 32, marginLeft: 0 }}
-                    onClick={() => this.setState({ editInfo: false })}
+                    onClick={() =>
+                      this.setState({ editInfo: false, bio: this.props.bio })
+                    }
                     text="Cancel"
                   />
                 </div>

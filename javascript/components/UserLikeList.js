@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     margin: "32px 0",
     padding: "0 32px",
+    width: 1248,
   },
   contentList: {
     display: "flex",

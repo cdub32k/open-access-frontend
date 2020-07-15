@@ -99,9 +99,13 @@ const ProfileHeader = ({
           <Typography variant="body2">
             Member since {dayjs(joinedAt).format("MMM YYYY")}
           </Typography>
-          <Typography variant="body1" className={classes.bio}>
-            {bio}
-          </Typography>
+          <Typography
+            variant="body1"
+            className={classes.bio}
+            dangerouslySetInnerHTML={{
+              __html: bio,
+            }}
+          ></Typography>
         </div>
       </Grid>
       <Modal

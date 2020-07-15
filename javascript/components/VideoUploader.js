@@ -239,7 +239,7 @@ class VideoUploader extends Component {
                   type="file"
                   name="video"
                   onChange={this.videoHandler}
-                  accept="video/mp4,video/ogg,video/,video/webm"
+                  accept="video/mp4,video/ogg,video/,video/webm,video/m4v"
                 />
                 <CustomButton
                   style={{ margin: "12px 0" }}

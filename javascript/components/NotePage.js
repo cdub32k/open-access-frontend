@@ -103,6 +103,7 @@ const NotePage = ({
           newLoading={newCommentLoading}
           newReplyId={newCommentReplyId}
           repliesLoading={repliesLoading}
+          totalCount={commentCount}
           comments={comments}
           contentType="note"
           id={noteId}
