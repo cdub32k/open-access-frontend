@@ -60,7 +60,7 @@ const UserLikeList = ({
       let pos =
         (document.documentElement.scrollTop || document.body.scrollTop) +
         document.documentElement.offsetHeight;
-      let max = document.documentElement.scrollHeight - 100;
+      let max = document.documentElement.scrollHeight - 25;
       if (pos > max) {
         _loadMore();
       }

@@ -233,9 +233,11 @@ const SiteNav = ({
         {renderMobileMenu}
         {renderMenu}
         <NotifsList
+          markNotificationsRead={markNotificationsRead}
           isNotifsMenuOpen={isNotifsMenuOpen}
           notifsAnchorEl={notifsAnchorEl}
           isNotifsMenuOpen={isNotifsMenuOpen}
+          unreadCount={unreadNotifsCount}
           notifications={notifications}
           handleNotifsMenuClose={handleNotifsMenuClose}
         />
@@ -294,7 +296,7 @@ const mapStateToProps = (state) => ({
   unreadNotifsCount: state.user.unreadNotifsCount,
 });
 const mapDispatchToProps = (dispatch) => ({
-  markNotificationsRead: () =>
-    dispatch(ActionCreators.markNotificationsReadStart()),
+  markNotificationsRead: (all) =>
+    dispatch(ActionCreators.markNotificationsReadStart(all)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(memo(SiteNav));

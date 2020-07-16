@@ -21,6 +21,7 @@ const initialState = {
   notifications: [],
   notificationsSubscription: null,
   unreadNotifsCount: 0,
+  unreadNotifsOnly: false,
   loggedIn: false,
   loading: true,
   ai_loading: true,
@@ -159,12 +160,36 @@ const userReducer = (state = initialState, action) => {
         ...state,
         error: action.error,
       };
+    case ActionTypes.LOAD_NOTIFS_SUCCESS:
+      return {
+        ...state,
+        notifications: [...action.payload.notifsInfo.notifications],
+        unreadNotifsCount: action.payload.notifsInfo.unreadCount,
+        unreadNotifsOnly: false,
+      };
+    case ActionTypes.LOAD_NOTIFS_ERROR:
+      return {
+        ...state,
+        error: action.error,
+      };
+    case ActionTypes.LOAD_UNREAD_NOTIFS_SUCCESS:
+      return {
+        ...state,
+        notifications: [...action.payload.notifsInfo.notifications],
+        unreadNotifsCount: action.payload.notifsInfo.unreadCount,
+        unreadNotifsOnly: true,
+      };
+    case ActionTypes.LOAD_UNREAD_NOTIFS_ERROR:
+      return {
+        ...state,
+        error: action.error,
+      };
     case ActionTypes.LOAD_MORE_NOTIFS_SUCCESS:
       return {
         ...state,
         notifications: [
           ...state.notifications,
-          ...action.payload.userData.notifsInfo.notifications,
+          ...action.payload.notifsInfo.notifications,
         ],
       };
     case ActionTypes.GET_STARTUP_INFO_ERROR:
@@ -306,11 +331,10 @@ const userReducer = (state = initialState, action) => {
         viewed: { ...initialState.viewed },
       };
     case ActionTypes.MARK_NOTIFICATIONS_READ_SUCCESS:
-      const readNotifs = state.notifications.map((notif) => {
-        notif.read = true;
-        return notif;
-      });
-      return { ...state, notifications: readNotifs };
+      return {
+        ...state,
+        unreadNotifsCount: action.payload.unreadCount,
+      };
     case ActionTypes.MARK_NOTIFICATIONS_READ_ERROR:
       return { ...state, error: action.error };
     case ActionTypes.ADD_NOTIFICATION:

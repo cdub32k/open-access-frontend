@@ -98,7 +98,7 @@ const NewsFeed = ({
         let pos =
           (document.documentElement.scrollTop || document.body.scrollTop) +
           document.documentElement.offsetHeight;
-        let max = document.documentElement.scrollHeight - 100;
+        let max = document.documentElement.scrollHeight - 50;
         if (pos > max) {
           loadNewsfeedVideos(sort);
         }
@@ -123,7 +123,7 @@ const NewsFeed = ({
         let pos =
           (document.documentElement.scrollTop || document.body.scrollTop) +
           document.documentElement.offsetHeight;
-        let max = document.documentElement.scrollHeight - 100;
+        let max = document.documentElement.scrollHeight - 50;
         if (pos > max) {
           loadNewsfeedImages(sort);
         }
@@ -148,7 +148,7 @@ const NewsFeed = ({
         let pos =
           (document.documentElement.scrollTop || document.body.scrollTop) +
           document.documentElement.offsetHeight;
-        let max = document.documentElement.scrollHeight - 100;
+        let max = document.documentElement.scrollHeight - 50;
         if (pos > max) {
           loadNewsfeedNotes(sort);
         }

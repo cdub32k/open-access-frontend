@@ -84,6 +84,12 @@ export const ActionTypes = {
   GET_USER_ACCOUNT_INFO_ERROR: "GET_USER_ACCOUNT_INFO_ERROR",
   GET_STARTUP_INFO_SUCCESS: "GET_STARTUP_INFO_SUCCESS",
   GET_STARTUP_INFO_ERROR: "GET_STARTUP_INFO_ERROR",
+  LOAD_NOTIFS: "LOAD_NOTIFS",
+  LOAD_NOTIFS_SUCCESS: "LOAD_NOTIFS_SUCCESS",
+  LOAD_NOTIFS_ERROR: "LOAD_NOTIFS_ERROR",
+  LOAD_UNREAD_NOTIFS: "LOAD_UNREAD_NOTIFS",
+  LOAD_UNREAD_NOTIFS_SUCCESS: "LOAD_UNREAD_NOTIFS_SUCCESS",
+  LOAD_UNREAD_NOTIFS_ERROR: "LOAD_UNREAD_NOTIFS_ERROR",
   LOAD_MORE_NOTIFS: "LOAD_MORE_NOTIFS",
   LOAD_MORE_NOTIFS_SUCCESS: "LOAD_MORE_NOTIFS_SUCCESS",
   LOAD_MORE_NOTIFS_ERROR: "LOAD_MORE_NOTIFS_ERROR",
@@ -201,6 +207,27 @@ export const ActionCreators = {
   },
   autoLogin: (token) => {
     return { type: ActionTypes.AUTO_LOGIN, payload: { token } };
+  },
+  loadAllNotifs: () => {
+    return { type: ActionTypes.LOAD_NOTIFS };
+  },
+  loadUnreadNotifs: () => {
+    return { type: ActionTypes.LOAD_UNREAD_NOTIFS };
+  },
+  loadAllNotifsSuccess: (notifsInfo) => {
+    return { type: ActionTypes.LOAD_NOTIFS_SUCCESS, payload: { notifsInfo } };
+  },
+  loadAllNotifsError: (error) => {
+    return { type: ActionTypes.LOAD_NOTIFS_ERROR, error };
+  },
+  loadUnreadNotifsSuccess: (notifsInfo) => {
+    return {
+      type: ActionTypes.LOAD_UNREAD_NOTIFS_SUCCESS,
+      payload: { notifsInfo },
+    };
+  },
+  loadUnreadNotifsError: (error) => {
+    return { type: ActionTypes.LOAD_UNREAD_NOTIFS_ERROR, error };
   },
   logout: () => {
     return { type: ActionTypes.LOGOUT };
@@ -511,10 +538,10 @@ export const ActionCreators = {
   loadMoreNotifs: (page) => {
     return { type: ActionTypes.LOAD_MORE_NOTIFS, payload: { page } };
   },
-  loadMoreNotifsSuccess: (userData) => {
+  loadMoreNotifsSuccess: (notifsInfo) => {
     return {
       type: ActionTypes.LOAD_MORE_NOTIFS_SUCCESS,
-      payload: { userData },
+      payload: { notifsInfo },
     };
   },
   loadMoreNotifsError: (error) => {
@@ -544,11 +571,17 @@ export const ActionCreators = {
   updateAccountInfoError: (error) => {
     return { type: ActionTypes.UPDATE_ACCOUNT_INFO_ERROR, error };
   },
-  markNotificationsReadStart: () => {
-    return { type: ActionTypes.MARK_NOTIFICATIONS_READ_START };
+  markNotificationsReadStart: (all) => {
+    return {
+      type: ActionTypes.MARK_NOTIFICATIONS_READ_START,
+      payload: { all },
+    };
   },
-  markNotificationsReadSuccess: () => {
-    return { type: ActionTypes.MARK_NOTIFICATIONS_READ_SUCCESS };
+  markNotificationsReadSuccess: (unreadCount) => {
+    return {
+      type: ActionTypes.MARK_NOTIFICATIONS_READ_SUCCESS,
+      payload: { unreadCount },
+    };
   },
   markNotificationsReadError: (error) => {
     return { type: ActionTypes.MARK_NOTIFICATIONS_READ_ERROR, error };

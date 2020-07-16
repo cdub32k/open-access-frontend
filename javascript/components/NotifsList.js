@@ -6,6 +6,8 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import { Link } from "react-router-dom";
 
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 
 import Typography from "@material-ui/core/Typography";
@@ -34,7 +36,11 @@ const useStyles = makeStyles((theme) => {
 });
 
 const NotifsList = ({
+  unreadCount,
+  markNotificationsRead,
   notifications,
+  loadAll,
+  loadUnread,
   loadMore,
   notifsAnchorEl,
   isNotifsMenuOpen,
@@ -42,6 +48,7 @@ const NotifsList = ({
 }) => {
   const classes = useStyles();
   const [page, setPage] = useState(1);
+  const [unreadOnly, setUnreadOnly] = useState(false);
   const popoverActions = React.useRef();
 
   useEffect(() => {
@@ -50,9 +57,18 @@ const NotifsList = ({
 
       let win = document.querySelector(".notifs-container");
       let list = document.querySelector("section.notifs-list");
-      win.scrollTop = list.clientHeight + 60 - 320;
+      win.scrollTop = list.clientHeight + 150 - 320;
     }
   }, [notifications]);
+
+  const toggleUnread = () => {
+    if (unreadOnly) {
+      markNotificationsRead();
+      loadAll();
+    } else loadUnread();
+    setPage(1);
+    setUnreadOnly(!unreadOnly);
+  };
 
   return (
     <Popover
@@ -70,10 +86,24 @@ const NotifsList = ({
         },
       }}
     >
-      {notifications.length == 0 && (
+      {notifications.length == 0 && !unreadOnly && (
         <MenuItem style={{ pointerEvents: "none" }}>
           No notifications at this time
         </MenuItem>
+      )}
+      {notifications.length && unreadCount > 0 && (
+        <div className={classes.notif}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={unreadOnly}
+                onChange={toggleUnread}
+                color="primary"
+              />
+            }
+            label="unread only"
+          />
+        </div>
       )}
       <TransitionGroup component="section" className="notifs-list">
         {notifications.map((notif, i) => {
@@ -154,7 +184,18 @@ const NotifsList = ({
         >
           Load More
         </Button>
-        <Button color="secondary">See All</Button>
+        {unreadCount > 0 && (
+          <Button
+            color="secondary"
+            onClick={() => {
+              markNotificationsRead(true);
+              loadAll();
+              setUnreadOnly(false);
+            }}
+          >
+            Mark All Read
+          </Button>
+        )}
       </Typography>
     </Popover>
   );
@@ -162,11 +203,14 @@ const NotifsList = ({
 
 const mapDispatchToProps = (dispatch) => ({
   loadMore: (page) => dispatch(ActionCreators.loadMoreNotifs(page)),
+  loadAll: () => dispatch(ActionCreators.loadAllNotifs()),
+  loadUnread: () => dispatch(ActionCreators.loadUnreadNotifs()),
 });
 
 export default memo(
   connect(null, mapDispatchToProps)(NotifsList),
   (prev, next) =>
     prev.isNotifsMenuOpen == next.isNotifsMenuOpen &&
+    prev.unreadCount == next.unreadCount &&
     prev.notifications == next.notifications
 );

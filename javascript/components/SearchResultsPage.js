@@ -122,7 +122,7 @@ const SearchResultsPage = ({
         let pos =
           (document.documentElement.scrollTop || document.body.scrollTop) +
           document.documentElement.offsetHeight;
-        let max = document.documentElement.scrollHeight - 100;
+        let max = document.documentElement.scrollHeight - 25;
         if (pos > max) {
           loadVideoSearchResults(s, h, sort);
         }
@@ -147,7 +147,7 @@ const SearchResultsPage = ({
         let pos =
           (document.documentElement.scrollTop || document.body.scrollTop) +
           document.documentElement.offsetHeight;
-        let max = document.documentElement.scrollHeight - 100;
+        let max = document.documentElement.scrollHeight - 25;
         if (pos > max) {
           loadImageSearchResults(s, h, sort);
         }
@@ -172,7 +172,7 @@ const SearchResultsPage = ({
         let pos =
           (document.documentElement.scrollTop || document.body.scrollTop) +
           document.documentElement.offsetHeight;
-        let max = document.documentElement.scrollHeight - 100;
+        let max = document.documentElement.scrollHeight - 25;
         if (pos > max) {
           loadNoteSearchResults(s, h, sort);
         }

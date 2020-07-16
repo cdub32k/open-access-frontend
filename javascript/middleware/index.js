@@ -456,12 +456,12 @@ const USER_NOTE_PAGE_QUERY = `
   }
 `;
 
-const GET_USER_NOTIFICATIONS_QUERY = `
-  query UserNotifications($username: String!, $page: Int) {
+const GET_STARTUP_INFO_QUERY = `
+  query StartupInfo($username: String!, $page: Int, $unreadOnly: Boolean) {
     user(username: $username) {
       active
       activeUntil
-      notifsInfo(page: $page) {
+      notifsInfo(page: $page, unreadOnly: $unreadOnly) {
         unreadCount
         notifications {
           _id
@@ -470,7 +470,6 @@ const GET_USER_NOTIFICATIONS_QUERY = `
           targetId
           body
           sender
-          read
           commentId
           createdAt
         }
@@ -478,9 +477,26 @@ const GET_USER_NOTIFICATIONS_QUERY = `
     }
   }
 `;
+const GET_USER_NOTIFICATIONS_QUERY = `
+  query UserNotifications($username: String!, $page: Int, $unreadOnly: Boolean) {
+    notifsInfo(username: $username, page: $page, unreadOnly: $unreadOnly) {
+      unreadCount
+      notifications {
+        _id
+        type
+        target
+        targetId
+        body
+        sender
+        commentId
+        createdAt
+      }
+    }
+  }
+`;
 
 const MARK_NOTIFICATIONS_READ_QUERY = `
-  mutation MarkNotificationsRead($ids: [String]!) {
+  mutation MarkNotificationsRead($ids: [String]) {
     markNotificationsRead(ids: $ids)
   }
 `;
@@ -657,17 +673,20 @@ const LOAD_NOTE_COMMENT_REPLIES_QUERY = `
 export default [
   (store) => (next) => (action) => {
     if (action.type == ActionTypes.MARK_NOTIFICATIONS_READ_START) {
+      let { all } = action.payload;
+      let ids = all
+        ? null
+        : store.getState().user.notifications.map((notif) => notif._id);
       axios
         .post("/api", {
           query: MARK_NOTIFICATIONS_READ_QUERY,
           variables: {
-            ids: store.getState().user.notifications.map((notif) => notif._id),
+            ids,
           },
         })
         .then((res) => {
-          if (res.data.data.markNotificationsRead)
-            next(ActionCreators.markNotificationsReadSuccess());
-          else next(ActionCreators.markNotificationsReadError());
+          let unreadCount = res.data.data.markNotificationsRead;
+          next(ActionCreators.markNotificationsReadSuccess(unreadCount));
         })
         .catch((err) => next(ActionCreators.markNotificationsReadError(err)));
     } else if (action.type == ActionTypes.LOGIN_START) {
@@ -678,14 +697,21 @@ export default [
             next(
               ActionCreators.loginSuccess(res.data.token, res.data.refreshToken)
             );
-
+            let username = action.payload.credentials.username;
             axios
               .post("/api", {
-                query: GET_USER_NOTIFICATIONS_QUERY,
-                variables: { username: action.payload.credentials.username },
+                query: GET_STARTUP_INFO_QUERY,
+                variables: { username },
               })
               .then((res) => {
-                next(ActionCreators.getStartupInfoSuccess(res.data.data.user));
+                let ret = res.data.data;
+                apolloCache.writeQuery({
+                  query: parse(GET_USER_NOTIFICATIONS_QUERY),
+                  variables: { username },
+                  data: { notifsInfo: ret.user.notifsInfo },
+                });
+
+                next(ActionCreators.getStartupInfoSuccess(ret.user));
               })
               .catch((err) => next(ActionCreators.getStartupInfoError(err)));
           } else throw new Error("authentication failed!");
@@ -693,15 +719,67 @@ export default [
         .catch((err) => next(ActionCreators.loginError(err)));
     } else if (action.type == ActionTypes.AUTO_LOGIN) {
       next(action);
+      let username = action.payload.token.username;
+      axios
+        .post("/api", {
+          query: GET_STARTUP_INFO_QUERY,
+          variables: { username },
+        })
+        .then((res) => {
+          let ret = res.data.data;
+          apolloCache.writeQuery({
+            query: parse(GET_USER_NOTIFICATIONS_QUERY),
+            variables: { username },
+            data: { notifsInfo: ret.user.notifsInfo },
+          });
+          next(ActionCreators.getStartupInfoSuccess(ret.user));
+        })
+        .catch((err) => next(ActionCreators.getStartupInfoError(err)));
+    } else if (action.type == ActionTypes.LOAD_NOTIFS) {
+      let username = store.getState().user.username;
+
+      const cachedQ = apolloCache.readQuery({
+        query: parse(GET_USER_NOTIFICATIONS_QUERY),
+        variables: { username },
+      });
+      if (cachedQ)
+        return next(ActionCreators.loadAllNotifsSuccess(cachedQ.notifsInfo));
+
       axios
         .post("/api", {
           query: GET_USER_NOTIFICATIONS_QUERY,
-          variables: { username: action.payload.token.username },
+          variables: { username },
         })
         .then((res) => {
-          next(ActionCreators.getStartupInfoSuccess(res.data.data.user));
+          let ret = res.data.data;
+
+          apolloCache.writeQuery({
+            query: parse(GET_USER_NOTIFICATIONS_QUERY),
+            variables: { username },
+            data: { ...ret },
+          });
+
+          next(ActionCreators.loadAllNotifsSuccess(ret.notifsInfo));
         })
-        .catch((err) => next(ActionCreators.getStartupInfoError(err)));
+        .catch((err) => next(ActionCreators.loadAllNotifsError(err)));
+    } else if (action.type == ActionTypes.LOAD_UNREAD_NOTIFS) {
+      let username = store.getState().user.username;
+      let unreadOnly = true;
+      const cachedQ = apolloCache.readQuery({
+        query: parse(GET_USER_NOTIFICATIONS_QUERY),
+        variables: { username, unreadOnly },
+      });
+      axios
+        .post("/api", {
+          query: GET_USER_NOTIFICATIONS_QUERY,
+          variables: { username, unreadOnly },
+        })
+        .then((res) => {
+          let ret = res.data.data;
+
+          next(ActionCreators.loadUnreadNotifsSuccess(ret.notifsInfo));
+        })
+        .catch((err) => next(ActionCreators.loadUnreadNotifsError(err)));
     } else if (action.type == ActionTypes.SIGN_UP_START) {
       axios
         .post("auth/sign-up", action.payload.userInfo)
@@ -712,7 +790,7 @@ export default [
             );
             axios
               .post("/api", {
-                query: GET_USER_NOTIFICATIONS_QUERY,
+                query: GET_STARTUP_INFO_QUERY,
                 variables: { username: action.payload.userInfo.username },
               })
               .then((res) => {
@@ -725,29 +803,33 @@ export default [
     } else if (action.type == ActionTypes.LOAD_MORE_NOTIFS) {
       let { page } = action.payload;
       let username = store.getState().user.username;
+      let unreadOnly = store.getState().user.unreadNotifsOnly;
 
-      const cachedQ = apolloCache.readQuery({
-        query: parse(GET_USER_NOTIFICATIONS_QUERY),
-        variables: { username, page },
-      });
-      if (cachedQ)
-        return next(ActionCreators.loadMoreNotifsSuccess(cachedQ.user));
+      if (!unreadOnly) {
+        const cachedQ = apolloCache.readQuery({
+          query: parse(GET_USER_NOTIFICATIONS_QUERY),
+          variables: { username, page },
+        });
+        if (cachedQ)
+          return next(ActionCreators.loadMoreNotifsSuccess(cachedQ.notifsInfo));
+      }
 
       axios
         .post("/api", {
           query: GET_USER_NOTIFICATIONS_QUERY,
-          variables: { username, page },
+          variables: { username, page, unreadOnly },
         })
         .then((res) => {
           let ret = res.data.data;
 
-          apolloCache.writeQuery({
-            query: parse(GET_USER_NOTIFICATIONS_QUERY),
-            variables: { username, page },
-            data: { ...ret },
-          });
+          if (!unreadOnly)
+            apolloCache.writeQuery({
+              query: parse(GET_USER_NOTIFICATIONS_QUERY),
+              variables: { username, page },
+              data: { ...ret },
+            });
 
-          next(ActionCreators.loadMoreNotifsSuccess(ret.user));
+          next(ActionCreators.loadMoreNotifsSuccess(ret.notifsInfo));
         })
         .catch((err) => next(ActionCreators.loadMoreNotifsError(err)));
     } else if (action.type == ActionTypes.GET_USER_INFO_START) {
