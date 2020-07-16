@@ -92,6 +92,7 @@ const SiteNav = ({
   loggedIn,
   username,
   notifications,
+  unreadNotifsCount,
   markNotificationsRead,
 }) => {
   const classes = useStyles();
@@ -176,7 +177,7 @@ const SiteNav = ({
     >
       <MenuItem onClick={handleNotifsMenuOpen}>
         <IconButton color="inherit">
-          <NotifsBadge notifications={notifications} />
+          <NotifsBadge unreadCount={unreadNotifsCount} />
         </IconButton>
         <Typography variant="body1" style={{ fontSize: 16 }}>
           Notifications
@@ -257,7 +258,7 @@ const SiteNav = ({
                 onClick={handleNotifsMenuOpen}
                 color="inherit"
               >
-                <NotifsBadge notifications={notifications} />
+                <NotifsBadge unreadCount={unreadNotifsCount} />
               </IconButton>
               <IconButton component={Link} to="/feed" color="inherit">
                 <NewReleasesIcon className={classes.icon} />
@@ -290,6 +291,7 @@ const mapStateToProps = (state) => ({
   loggedIn: state.user.loggedIn,
   username: state.user.username,
   notifications: state.user.notifications,
+  unreadNotifsCount: state.user.unreadNotifsCount,
 });
 const mapDispatchToProps = (dispatch) => ({
   markNotificationsRead: () =>

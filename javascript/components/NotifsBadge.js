@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 const NotifsBadge = ({
-  notifications,
+  unreadCount,
   notifsAnchorEl,
   isNotifsMenuOpen,
   handleNotifsMenuClose,
@@ -23,7 +23,7 @@ const NotifsBadge = ({
   const classes = useStyles();
   return (
     <Badge
-      badgeContent={notifications.filter((notif) => !notif.read).length}
+      badgeContent={unreadCount}
       classes={{ badge: classes.badge }}
       max={99}
     >
@@ -34,5 +34,5 @@ const NotifsBadge = ({
 
 export default memo(
   NotifsBadge,
-  (prev, next) => prev.notifications == next.notifications
+  (prev, next) => prev.unreadCount == next.unreadCount
 );

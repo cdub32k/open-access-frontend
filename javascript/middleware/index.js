@@ -457,20 +457,23 @@ const USER_NOTE_PAGE_QUERY = `
 `;
 
 const GET_USER_NOTIFICATIONS_QUERY = `
-  query UserNotifications($username: String!) {
+  query UserNotifications($username: String!, $page: Int) {
     user(username: $username) {
       active
       activeUntil
-      notifications {
-        _id
-        type
-        target
-        targetId
-        body
-        sender
-        read
-        commentId
-        createdAt
+      notifsInfo(page: $page) {
+        unreadCount
+        notifications {
+          _id
+          type
+          target
+          targetId
+          body
+          sender
+          read
+          commentId
+          createdAt
+        }
       }
     }
   }
@@ -682,13 +685,9 @@ export default [
                 variables: { username: action.payload.credentials.username },
               })
               .then((res) => {
-                next(
-                  ActionCreators.getUserAccountInfoSuccess(res.data.data.user)
-                );
+                next(ActionCreators.getStartupInfoSuccess(res.data.data.user));
               })
-              .catch((err) =>
-                next(ActionCreators.getUserAccountInfoError(err))
-              );
+              .catch((err) => next(ActionCreators.getStartupInfoError(err)));
           } else throw new Error("authentication failed!");
         })
         .catch((err) => next(ActionCreators.loginError(err)));
@@ -700,9 +699,9 @@ export default [
           variables: { username: action.payload.token.username },
         })
         .then((res) => {
-          next(ActionCreators.getUserAccountInfoSuccess(res.data.data.user));
+          next(ActionCreators.getStartupInfoSuccess(res.data.data.user));
         })
-        .catch((err) => next(ActionCreators.getUserAccountInfoError(err)));
+        .catch((err) => next(ActionCreators.getStartupInfoError(err)));
     } else if (action.type == ActionTypes.SIGN_UP_START) {
       axios
         .post("auth/sign-up", action.payload.userInfo)
@@ -717,16 +716,40 @@ export default [
                 variables: { username: action.payload.userInfo.username },
               })
               .then((res) => {
-                next(
-                  ActionCreators.getUserAccountInfoSuccess(res.data.data.user)
-                );
+                next(ActionCreators.getStartupInfoSuccess(res.data.data.user));
               })
-              .catch((err) =>
-                next(ActionCreators.getUserAccountInfoError(err))
-              );
+              .catch((err) => next(ActionCreators.getStartupInfoError(err)));
           } else throw new Error("sign up failed!");
         })
         .catch((err) => next(ActionCreators.signupError(err)));
+    } else if (action.type == ActionTypes.LOAD_MORE_NOTIFS) {
+      let { page } = action.payload;
+      let username = store.getState().user.username;
+
+      const cachedQ = apolloCache.readQuery({
+        query: parse(GET_USER_NOTIFICATIONS_QUERY),
+        variables: { username, page },
+      });
+      if (cachedQ)
+        return next(ActionCreators.loadMoreNotifsSuccess(cachedQ.user));
+
+      axios
+        .post("/api", {
+          query: GET_USER_NOTIFICATIONS_QUERY,
+          variables: { username, page },
+        })
+        .then((res) => {
+          let ret = res.data.data;
+
+          apolloCache.writeQuery({
+            query: parse(GET_USER_NOTIFICATIONS_QUERY),
+            variables: { username, page },
+            data: { ...ret },
+          });
+
+          next(ActionCreators.loadMoreNotifsSuccess(ret.user));
+        })
+        .catch((err) => next(ActionCreators.loadMoreNotifsError(err)));
     } else if (action.type == ActionTypes.GET_USER_INFO_START) {
       next(ActionCreators.userInfoLoading());
 

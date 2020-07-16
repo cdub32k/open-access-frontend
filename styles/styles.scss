@@ -115,6 +115,20 @@ a:visited {
   opacity: 0;
   transition: opacity 500ms;
 }
+.notif-enter li {
+  opacity: 0;
+}
+.notif-enter-active li {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+.notif-exit li {
+  opacity: 1;
+}
+.notif-exit-active li {
+  opacity: 0;
+  transition: opacity 500ms;
+}
 
 // logo styles
 

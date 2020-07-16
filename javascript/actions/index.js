@@ -82,6 +82,11 @@ export const ActionTypes = {
   GET_USER_ACCOUNT_INFO_START: "GET_USER_ACCOUNT_INFO_START",
   GET_USER_ACCOUNT_INFO_SUCCESS: "GET_USER_ACCOUNT_INFO_SUCCESS",
   GET_USER_ACCOUNT_INFO_ERROR: "GET_USER_ACCOUNT_INFO_ERROR",
+  GET_STARTUP_INFO_SUCCESS: "GET_STARTUP_INFO_SUCCESS",
+  GET_STARTUP_INFO_ERROR: "GET_STARTUP_INFO_ERROR",
+  LOAD_MORE_NOTIFS: "LOAD_MORE_NOTIFS",
+  LOAD_MORE_NOTIFS_SUCCESS: "LOAD_MORE_NOTIFS_SUCCESS",
+  LOAD_MORE_NOTIFS_ERROR: "LOAD_MORE_NOTIFS_ERROR",
   UPDATE_ACCOUNT_INFO_START: "UPDATE_ACCOUNT_INFO_START",
   UPDATE_ACCOUNT_INFO_SUCCESS: "UPDATE_ACCOUNT_INFO_SUCCESS",
   UPDATE_ACCOUNT_INFO_ERROR: "UPDATE_ACCOUNT_INFO_ERROR",
@@ -493,6 +498,27 @@ export const ActionCreators = {
       type: ActionTypes.GET_USER_ACCOUNT_INFO_START,
       payload: { username },
     };
+  },
+  getStartupInfoSuccess: (userData) => {
+    return {
+      type: ActionTypes.GET_STARTUP_INFO_SUCCESS,
+      payload: { userData },
+    };
+  },
+  getStartupInfoError: (error) => {
+    return { type: ActionTypes.GET_STARTUP_INFO_ERROR, error };
+  },
+  loadMoreNotifs: (page) => {
+    return { type: ActionTypes.LOAD_MORE_NOTIFS, payload: { page } };
+  },
+  loadMoreNotifsSuccess: (userData) => {
+    return {
+      type: ActionTypes.LOAD_MORE_NOTIFS_SUCCESS,
+      payload: { userData },
+    };
+  },
+  loadMoreNotifsError: (error) => {
+    return { type: ActionTypes.LOAD_MORE_NOTIFS_ERROR, error };
   },
   getUserAccountInfoSuccess: (userData) => {
     return {

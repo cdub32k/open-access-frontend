@@ -20,6 +20,7 @@ const initialState = {
   error: null,
   notifications: [],
   notificationsSubscription: null,
+  unreadNotifsCount: 0,
   loggedIn: false,
   loading: true,
   ai_loading: true,
@@ -147,6 +148,30 @@ const userReducer = (state = initialState, action) => {
       };
     case ActionTypes.GET_USER_ACCOUNT_INFO_START:
       return { ...state, ai_loading: true };
+    case ActionTypes.GET_STARTUP_INFO_SUCCESS:
+      return {
+        ...state,
+        notifications: action.payload.userData.notifsInfo.notifications,
+        unreadNotifsCount: action.payload.userData.notifsInfo.unreadCount,
+      };
+    case ActionTypes.GET_STARTUP_INFO_ERROR:
+      return {
+        ...state,
+        error: action.error,
+      };
+    case ActionTypes.LOAD_MORE_NOTIFS_SUCCESS:
+      return {
+        ...state,
+        notifications: [
+          ...state.notifications,
+          ...action.payload.userData.notifsInfo.notifications,
+        ],
+      };
+    case ActionTypes.GET_STARTUP_INFO_ERROR:
+      return {
+        ...state,
+        error: action.error,
+      };
     case ActionTypes.GET_USER_ACCOUNT_INFO_SUCCESS:
       return {
         ...state,
