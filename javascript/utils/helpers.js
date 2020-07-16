@@ -96,15 +96,25 @@ export function findAndDeleteComment(comms, id) {
 
 export function truncateCaptionPreview(caption, strip) {
   let stripped = stripLinks(caption);
-  let ret = stripped.substring(0, 222);
-  if (strip) return ret + "...";
-  return parseLinks(ret) + "...";
+  if (stripped.length > 222) {
+    let ret = stripped.substring(0, 222);
+    if (strip) return ret + "...";
+    return parseLinks(ret) + "...";
+  } else {
+    if (strip) return stripped;
+    return caption;
+  }
 }
 export function truncateTitlePreview(title, strip) {
   let stripped = stripLinks(title);
-  let ret = stripped.substring(0, 52);
-  if (strip) return ret + "...";
-  return parseLinks(ret) + "...";
+  if (stripped.length > 42) {
+    let ret = stripped.substring(0, 52);
+    if (strip) return ret + "...";
+    return parseLinks(ret) + "...";
+  } else {
+    if (strip) return stripped;
+    return title;
+  }
 }
 
 export function convertHashtagsToLinks(str) {

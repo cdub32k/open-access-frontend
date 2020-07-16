@@ -151,6 +151,7 @@ const Profile = ({
       </TabPanel>
       <TabPanel selectedTab={selectedTab} index={3}>
         <UserCommentList
+          username={username}
           hasMore={commentCount > comments.length}
           loadMore={(page) => loadUserCommentsPage(username, page)}
           comments={comments}
@@ -160,6 +161,7 @@ const Profile = ({
       </TabPanel>
       <TabPanel selectedTab={selectedTab} index={4}>
         <UserLikeList
+          username={username}
           hasMore={likeCount > likes.length}
           loadMore={(page) => loadUserLikesPage(username, page)}
           likes={likes}
@@ -169,9 +171,11 @@ const Profile = ({
       </TabPanel>
       <TabPanel selectedTab={selectedTab} index={5}>
         <UserLikeList
+          username={username}
           hasMore={dislikeCount > dislikes.length}
           loadMore={(page) => loadUserDislikesPage(username, page)}
           likes={dislikes}
+          negative={true}
           loading={loading}
           doneLoading={viewedUserDoneLoading}
         />

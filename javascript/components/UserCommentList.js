@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -11,7 +11,7 @@ import throttle from "lodash.throttle";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    margin: "32px 0",
+    margin: "18px 6px",
     padding: "0 32px",
     width: 1248,
   },
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const UserCommentList = ({
   loading,
   doneLoading,
+  username,
   comments,
   hasMore,
   loadMore,
@@ -81,7 +82,12 @@ const UserCommentList = ({
     <div className={`${classes.container} user-comments-list content-list`}>
       <div className={classes.contentList}>
         {comments.map((comment, i) => {
-          return <UserComment key={i} comment={comment} />;
+          return (
+            <Fragment key={i}>
+              <UserComment username={username} comment={comment} />
+              <hr style={{ margin: "48px 0" }} />
+            </Fragment>
+          );
         })}
         {loading && <CircularProgress style={{ margin: "28px 0" }} />}
       </div>

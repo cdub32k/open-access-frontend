@@ -223,7 +223,7 @@ const USER_LIKES_PAGE_QUERY = `
           image {
             _id
             title
-            thumbUrl
+            url
           }
           createdAt
         }
@@ -257,7 +257,7 @@ const USER_DISLIKES_PAGE_QUERY = `
           image {
             _id
             title
-            thumbUrl
+            url
           }
           createdAt
         }
@@ -281,11 +281,7 @@ const USER_COMMENTS_PAGE_QUERY = `
         ... on VideoComment {
           _id
           video {
-            title
             _id
-            user {
-              username
-            }
           }
           replyId
           body
@@ -294,11 +290,7 @@ const USER_COMMENTS_PAGE_QUERY = `
         ... on ImageComment {
           _id
           image {
-            title
             _id
-            user {
-              username
-            }
           }
           body
           replyId
@@ -308,9 +300,6 @@ const USER_COMMENTS_PAGE_QUERY = `
           _id
           note {
             _id
-            user {
-              username
-            }
           }
           body
           replyId
