@@ -231,6 +231,7 @@ const USER_LIKES_PAGE_QUERY = `
           _id
           note {
             _id
+            caption
           }
           createdAt
         }
@@ -264,6 +265,7 @@ const USER_DISLIKES_PAGE_QUERY = `
           _id
           note {
             _id
+            caption
           }
           createdAt
         }

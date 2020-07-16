@@ -338,7 +338,7 @@ class VideoUploader extends Component {
 
 const styles = (theme) => ({
   form: {
-    maxWidth: 820,
+    maxWidth: "100%",
     display: "flex",
     justifyContent: "space-between",
     margin: "auto",

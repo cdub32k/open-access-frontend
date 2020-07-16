@@ -22,7 +22,7 @@ const initialState = {
   notificationsSubscription: null,
   loggedIn: false,
   loading: true,
-  ai_loading: false,
+  ai_loading: true,
   viewed: {
     loading: true,
     username: "",
@@ -146,19 +146,17 @@ const userReducer = (state = initialState, action) => {
         viewed: { ...state.viewed, error: action.error },
       };
     case ActionTypes.GET_USER_ACCOUNT_INFO_START:
-      return { ...state, loading: true, ai_loading: true };
+      return { ...state, ai_loading: true };
     case ActionTypes.GET_USER_ACCOUNT_INFO_SUCCESS:
       return {
         ...state,
         ...action.payload.userData,
-        loading: false,
         ai_loading: false,
       };
     case ActionTypes.GET_USER_ACCOUNT_INFO_ERROR:
       return {
         ...state,
         error: action.error,
-        loading: false,
         ai_loading: false,
       };
     case ActionTypes.UPDATE_ACCOUNT_INFO_START:

@@ -62,7 +62,7 @@ class VideoEdit extends Component {
         let videoData = res.data.data.video;
         this.setState({
           _id: videoData._id,
-          title: videoData.title,
+          title: stripLinks(videoData.title),
           caption: stripLinks(videoData.caption),
         });
       })
@@ -234,7 +234,6 @@ class VideoEdit extends Component {
                 </Typography>
                 <CustomInput
                   multiline={true}
-                  rows={3}
                   name="caption"
                   label="Caption"
                   value={caption}
@@ -277,7 +276,7 @@ class VideoEdit extends Component {
 const styles = (theme) => ({
   form: {
     display: "flex",
-    maxWidth: 820,
+    maxWidth: "100%",
     justifyContent: "space-between",
     margin: "auto",
   },

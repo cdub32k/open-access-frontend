@@ -6,7 +6,11 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 
 import CustomButton from "./CustomButton";
-import { date2rel, truncateTitlePreview } from "../utils/helpers";
+import {
+  date2rel,
+  truncateTitlePreview,
+  truncateCaptionPreview,
+} from "../utils/helpers";
 
 import throttle from "lodash.throttle";
 
@@ -83,32 +87,28 @@ const UserLikeList = ({ loading, doneLoading, likes, hasMore, loadMore }) => {
           if (like.video) {
             link = (
               <Typography variant="body1">
-                a video{" "}
-                <b>
-                  <Link to={`/video-player/${like.video._id}`}>
-                    {truncateTitlePreview(like.video.title)}
-                  </Link>
-                </b>
+                <b>a video:</b> <br />
+                <Link to={`/video-player/${like.video._id}`}>
+                  {truncateTitlePreview(like.video.title, true)}
+                </Link>
               </Typography>
             );
           } else if (like.image) {
             link = (
               <Typography variant="body1">
-                an image{" "}
-                <b>
-                  <Link to={`/image/${like.image._id}`}>
-                    {truncateTitlePreview(like.image.title)}
-                  </Link>
-                </b>
+                <b>an image:</b> <br />
+                <Link to={`/image/${like.image._id}`}>
+                  {truncateTitlePreview(like.image.title, true)}
+                </Link>
               </Typography>
             );
           } else if (like.note) {
             link = (
               <Typography variant="body1">
-                a{" "}
-                <b>
-                  <Link to={`/note/${like.note._id}`}>note</Link>
-                </b>
+                <b>a note:</b> <br />
+                <Link to={`/note/${like.note._id}`}>
+                  {truncateCaptionPreview(like.note.caption, true)}
+                </Link>
               </Typography>
             );
           }
@@ -116,7 +116,7 @@ const UserLikeList = ({ loading, doneLoading, likes, hasMore, loadMore }) => {
             <div className={classes.likeLink} key={like._id}>
               {link}
               <Typography variant="body2">
-                {date2rel(like.createdAt)}
+                <i>{date2rel(like.createdAt)}</i>
               </Typography>
             </div>
           );

@@ -251,7 +251,7 @@ class ImageUploader extends Component {
 const styles = (theme) => ({
   form: {
     display: "flex",
-    maxWidth: 820,
+    maxWidth: "100%",
     justifyContent: "space-between",
     margin: "auto",
   },

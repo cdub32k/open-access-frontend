@@ -286,8 +286,9 @@ class Account extends Component {
             </FormGroup>
           </form>
         </div>
-        {loading ||
-          (uploading && <CircularProgress style={{ marginBottom: 28 }} />)}
+        {(loading || uploading) && (
+          <CircularProgress style={{ marginBottom: 42 }} />
+        )}
         <Grid className={classes.sectionsContainer} container>
           <Grid className={classes.section} item xs={12} md={6}>
             {!editInfo && (

@@ -112,7 +112,7 @@ const NewsFeedItem = ({
         <div>
           <Typography variant="body2" className={classes.userInfo}>
             <Link to={`/profile/${username}`}>
-              <b>{username}</b>
+              <b>@{username}</b>
             </Link>{" "}
             posted{" "}
             <Link to={link}>
@@ -156,9 +156,10 @@ const NewsFeedItem = ({
               style={{ color: f, padding: 12, marginBottom: 0 }}
               gutterBottom
               variant="h5"
-            >
-              {title}
-            </Typography>
+              dangerouslySetInnerHTML={{
+                __html: title,
+              }}
+            ></Typography>
           )}
           {!title && (
             <div

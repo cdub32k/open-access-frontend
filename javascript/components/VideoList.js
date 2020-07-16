@@ -27,7 +27,9 @@ const VideoList = ({ loading, videos, loadMore, hasMore, doneLoading }) => {
   const classes = useStyles();
   const [page, setPage] = useState(0);
 
-  useEffect(() => doneLoading(), []);
+  useEffect(() => {
+    if (videos.length) doneLoading();
+  }, []);
 
   useEffect(() => {
     if (hasMore) {
