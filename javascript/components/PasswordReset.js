@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+import Grid from "@material-ui/core/Grid";
+import FormGroup from "@material-ui/core/FormGroup";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,6 +11,13 @@ import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    position: "relative",
+    maxWidth: 400,
+    display: "block",
+    padding: 12,
+    marginTop: 48,
+  },
   btn: {
     marginLeft: 0,
     marginTop: 18,
@@ -49,37 +58,57 @@ const PasswordReset = ({ match }) => {
     };
 
     return (
-      <div>
-        <Typography variant="h3" color="primary">
-          Reset Password
-        </Typography>
-        <div className={classes.inputContainer}>
-          <CustomInput
-            label="New Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            minLength={6}
-            required
-          />
-        </div>
-        <div className={classes.inputContainer}>
-          <CustomInput
-            label="Confirm Password"
-            value={cPassword}
-            onChange={(e) => setCPassword(e.target.value)}
-            minLength={6}
-            required
-          />
-        </div>
-        <CustomButton
-          className={classes.btn}
-          disabled={!password || password.length < 6 || password != cPassword}
-          text="Update Password"
-          onClick={updatePassword}
-        />
-        {success && <Typography variant="body1">Password Updated!</Typography>}
-        {error && <Typography variant="body1">{error}</Typography>}
-      </div>
+      <Grid className={classes.container} container justify="center">
+        <Grid item xs={12}>
+          <Typography variant="h3" color="primary" style={{ marginBottom: 12 }}>
+            Reset Password
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <form>
+            <FormGroup>
+              <Grid container justify="center">
+                <Grid item xs={12}>
+                  <div className={classes.inputContainer}>
+                    <CustomInput
+                      label="New Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      minLength={6}
+                      required
+                    />
+                  </div>
+                </Grid>
+                <Grid item xs={12}>
+                  <div className={classes.inputContainer}>
+                    <CustomInput
+                      label="Confirm Password"
+                      value={cPassword}
+                      onChange={(e) => setCPassword(e.target.value)}
+                      minLength={6}
+                      required
+                    />
+                  </div>
+                </Grid>
+                <Grid item xs={12} className={classes.btn}>
+                  <CustomButton
+                    style={{ marginLeft: 0 }}
+                    disabled={
+                      !password || password.length < 6 || password != cPassword
+                    }
+                    text="Update Password"
+                    onClick={updatePassword}
+                  />
+                  {success && (
+                    <Typography variant="body1">Password Updated!</Typography>
+                  )}
+                  {error && <Typography variant="body1">{error}</Typography>}
+                </Grid>
+              </Grid>
+            </FormGroup>
+          </form>
+        </Grid>
+      </Grid>
     );
   }
 
@@ -106,30 +135,46 @@ const PasswordReset = ({ match }) => {
   };
 
   return (
-    <div>
-      <Typography variant="h3" color="primary">
-        Reset Password
-      </Typography>
-      <div className={classes.inputContainer}>
-        <CustomInput
-          label="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      <CustomButton
-        className={classes.btn}
-        disabled={!username}
-        text="Send Reset Email"
-        onClick={sendEmail}
-      />
-      {success && <Typography variant="body1">Email sent!</Typography>}
-      {error && (
-        <Typography variant="body1">
-          There was an error. Try again please
+    <Grid className={classes.container} container justify="center">
+      <Grid item xs={12}>
+        <Typography variant="h3" color="primary" style={{ marginBottom: 12 }}>
+          Reset Password
         </Typography>
-      )}
-    </div>
+      </Grid>
+      <Grid item xs={12}>
+        <form>
+          <FormGroup>
+            <Grid container justify="center">
+              <Grid item xs={12}>
+                <div className={classes.inputContainer}>
+                  <CustomInput
+                    label="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} className={classes.btn}>
+                <CustomButton
+                  style={{ marginLeft: 0 }}
+                  disabled={!username}
+                  text="Send Reset Email"
+                  onClick={sendEmail}
+                />
+                {success && (
+                  <Typography variant="body1">Email sent!</Typography>
+                )}
+                {error && (
+                  <Typography variant="body1">
+                    There was an error. Try again please
+                  </Typography>
+                )}
+              </Grid>
+            </Grid>
+          </FormGroup>
+        </form>
+      </Grid>
+    </Grid>
   );
 };
 

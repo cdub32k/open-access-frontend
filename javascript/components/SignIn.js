@@ -2,6 +2,8 @@ import React, { Component, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { ActionCreators } from "../actions";
 
+import { Link } from "react-router-dom";
+
 import Grid from "@material-ui/core/Grid";
 import FormGroup from "@material-ui/core/FormGroup";
 import Typography from "@material-ui/core/Typography";
@@ -28,6 +30,11 @@ const useStyles = makeStyles((theme) => ({
   },
   btn: {
     marginTop: 12,
+  },
+  forgotPassword: {
+    marginLeft: "auto",
+    fontSize: 11,
+    display: "inline-block",
   },
   ...theme.globalClasses,
 }));
@@ -94,6 +101,10 @@ const Login = ({ error, loginStart }) => {
                   onChange={updateCredentials}
                 />
               </Grid>
+
+              <Link className={classes.forgotPassword} to={"/password-reset"}>
+                forgot password?
+              </Link>
             </Grid>
             <Grid container justify="center" className={classes.btn}>
               <Grid item xs={12}>

@@ -27,6 +27,15 @@ const Terms = () => {
         OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THIS SOCIAL
         NETWORK OR THE USE OR OTHER DEALINGS IN THE SOCIAL NETWORK.
       </Typography>
+      <br />
+      <Typography variant="body1">
+        ALL WORKS POSTED BY MEMBERS MUST BE THEIR OWN ORIGINAL CREATION. WE DO
+        NOT CENSOR THE TYPE OF CONTENT POSTED TO THIS NETWORK, HOWEVER{" "}
+        <b>
+          WE WILL REPORT ANY CRIMINAL ACTIVITY WHICH INCLUDES COPYRIGHT
+          VIOLATIONS AND PIRACY.
+        </b>
+      </Typography>
     </div>
   );
 };

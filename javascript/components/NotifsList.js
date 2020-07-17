@@ -82,7 +82,7 @@ const NotifsList = ({
       PaperProps={{
         className: "notifs-container",
         style: {
-          maxHeight: 320,
+          maxHeight: 470,
         },
       }}
     >

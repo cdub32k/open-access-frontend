@@ -41,7 +41,7 @@ const HomeHero = (props) => {
       <HeroCard
         Icon={LocalOfferIcon}
         title="No Ads"
-        body="Open Access is 100% user-supported and will never accept a dime from advertisers or sponsors. We answer to no one except our users, and our only goal is to create a happy community. You won't have to deal with unwanted interuptions of any kind."
+        body="Open Access is 100% user-supported and we will never accept a dime from advertisers or sponsors. We answer to no one except our users, and our only goal is to create a happy community. You won't have to deal with unwanted interuptions of any kind."
       />
       <HeroCard
         Icon={PublicIcon}
@@ -56,7 +56,7 @@ const HomeHero = (props) => {
       <HeroCard
         Icon={BusinessCenterIcon}
         title="Caring Small Business"
-        body="The social media companies you already know are working at such a large scale, your concerns and questions are almost always left unaddressed. Here at Open Access, take to our users' feedback to heart and response promptly. Email <b>openaccess@usa.com</b>"
+        body="The social media companies you already know are working at such a large scale, your concerns and questions are almost always left unaddressed. Here at Open Access, we take our members' feedback to heart and response promptly. Email <b>openaccess@usa.com</b>"
       />
       <HeroCard
         Icon={RecordVoiceOverIcon}
