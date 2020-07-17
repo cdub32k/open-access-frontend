@@ -35,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: "100%",
     height: 72,
+    paddingRight: 0,
+    paddingLeft: 12,
   },
   title: {
     fontSize: 13,
