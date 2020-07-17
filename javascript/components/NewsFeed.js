@@ -183,7 +183,7 @@ const NewsFeed = ({
           NewsFeed
         </Typography>
         <Select
-          style={{ marginLeft: 12 }}
+          style={{ marginLeft: 12, height: 36 }}
           classes={{ root: classes.sortRoot, select: classes.sortSelect }}
           value={sort}
           defaultValue={0}

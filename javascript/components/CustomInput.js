@@ -51,6 +51,7 @@ const CustomInput = ({
   onChange,
   multiline,
   maxLength,
+  onKeyDown,
   ...rest
 }) => {
   const classes = useStyles();
@@ -72,6 +73,7 @@ const CustomInput = ({
         label={label}
         value={value}
         onChange={onChange}
+        onKeyDown={onKeyDown}
         multiline={multiline}
         {...rest}
       />

@@ -65,8 +65,14 @@ const Login = ({ error, loginStart }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
     setLoading(true);
     loginStart({ username, password });
+  };
+  const onEnter = (e) => {
+    if (event.key === "Enter" && !(!username || !password || loading)) {
+      onSubmit(e);
+    }
   };
 
   return (
@@ -82,7 +88,7 @@ const Login = ({ error, loginStart }) => {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <form>
+        <form onSubmit={onSubmit}>
           <FormGroup>
             <Grid container justify="center">
               <Grid className={classes.inputContainer} item xs={12}>
@@ -90,6 +96,7 @@ const Login = ({ error, loginStart }) => {
                   name="username"
                   label="Username"
                   onChange={updateCredentials}
+                  onKeyDown={onEnter}
                 />
               </Grid>
             </Grid>
@@ -99,6 +106,7 @@ const Login = ({ error, loginStart }) => {
                   name="password"
                   label="Password"
                   onChange={updateCredentials}
+                  onKeyDown={onEnter}
                 />
               </Grid>
 

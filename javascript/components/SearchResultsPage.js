@@ -190,7 +190,7 @@ const SearchResultsPage = ({
           {h ? h.split(",").map((tag) => "#" + tag + " ") : null}
         </Typography>
         <Select
-          style={{ marginLeft: 12 }}
+          style={{ marginLeft: 12, height: 36 }}
           classes={{ root: classes.sortRoot, select: classes.sortSelect }}
           value={sort}
           defaultValue={0}
