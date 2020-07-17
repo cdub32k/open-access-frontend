@@ -47,7 +47,7 @@ const NewsFeedItem = ({
   item: {
     _id,
     user: { username, profilePic },
-    uploadedAt,
+    createdAt,
     title,
     caption,
     likeCount,
@@ -118,7 +118,7 @@ const NewsFeedItem = ({
             <Link to={link}>
               <b>a {type}</b>
             </Link>{" "}
-            {date2rel(uploadedAt)}
+            {date2rel(createdAt)}
           </Typography>
           <div className={classes.stats}>
             <Typography variant="body2">

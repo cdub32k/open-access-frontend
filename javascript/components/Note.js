@@ -76,7 +76,7 @@ class Note extends PureComponent {
       likeCount,
       dislikeCount,
       commentCount,
-      uploadedAt,
+      createdAt,
       likeNote,
       dislikeNote,
       liked,
@@ -104,9 +104,9 @@ class Note extends PureComponent {
           avatar={<Avatar src={user.profilePic} />}
           title={
             <span style={{ fontSize: 12 }}>
-              <Typography variant="body2">by {user.username}</Typography>
+              <Typography variant="body2">by @{user.username}</Typography>
               <Typography variant="body2">
-                <i>{date2rel(uploadedAt)}</i>
+                <i>{date2rel(createdAt)}</i>
               </Typography>
             </span>
           }

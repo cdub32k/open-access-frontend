@@ -62,7 +62,7 @@ const ContentPreview = ({
   likeCount,
   commentCount,
   caption,
-  uploadedAt,
+  createdAt,
 }) => {
   let linkPrefix, metric;
   switch (contentType) {
@@ -135,7 +135,7 @@ const ContentPreview = ({
             <div className={classes.previewDetails}>
               <div>{metric}</div>
               <div>
-                <i>{date2rel(uploadedAt)}</i>
+                <i>{date2rel(createdAt)}</i>
               </div>
             </div>
           }

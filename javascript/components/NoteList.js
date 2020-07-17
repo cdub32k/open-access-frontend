@@ -71,7 +71,7 @@ const NoteList = ({ loading, doneLoading, notes, hasMore, loadMore }) => {
               user={note.user}
               caption={note.caption}
               commentCount={note.commentCount}
-              uploadedAt={note.uploadedAt}
+              createdAt={note.createdAt}
               key={note._id}
             />
           );
@@ -89,7 +89,7 @@ const NoteList = ({ loading, doneLoading, notes, hasMore, loadMore }) => {
             user={note.user}
             caption={note.caption}
             commentCount={note.commentCount}
-            uploadedAt={note.uploadedAt}
+            createdAt={note.createdAt}
             key={i}
           />
         );

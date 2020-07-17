@@ -56,7 +56,7 @@ const ImagePage = ({
   likeCount,
   dislikeCount,
   commentCount,
-  uploadedAt,
+  createdAt,
   liked,
   disliked,
   comments,
@@ -115,7 +115,7 @@ const ImagePage = ({
               title={title}
               caption={caption}
               url={url}
-              uploadedAt={uploadedAt}
+              createdAt={createdAt}
               likeCount={likeCount}
               dislikeCount={dislikeCount}
               commentCount={commentCount}
@@ -194,7 +194,7 @@ const mapStateToProps = (state) => ({
   likeCount: state.image.likeCount,
   dislikeCount: state.image.dislikeCount,
   commentCount: state.image.commentCount,
-  uploadedAt: state.image.uploadedAt,
+  createdAt: state.image.createdAt,
   liked: state.image.liked,
   disliked: state.image.disliked,
   comments: state.image.comments,

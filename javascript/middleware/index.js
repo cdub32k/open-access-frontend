@@ -50,7 +50,7 @@ const GET_USER_INFO_QUERY = `
       profilePic
       displayName
       bio
-      joinedAt
+      createdAt
       videos {
         _id
         user {
@@ -60,7 +60,7 @@ const GET_USER_INFO_QUERY = `
         title
         viewCount
         thumbUrl
-        uploadedAt
+        createdAt
         liked
         disliked
       }
@@ -128,7 +128,7 @@ const GET_VIDEO_INFO_QUERY = `
       commentCount
       url
       thumbUrl
-      uploadedAt
+      createdAt
       liked
       disliked
     }
@@ -164,7 +164,7 @@ const GET_IMAGE_INFO_QUERY = `
       likeCount
       dislikeCount
       commentCount
-      uploadedAt
+      createdAt
       liked
       disliked
     }
@@ -198,7 +198,7 @@ const GET_NOTE_INFO_QUERY = `
       likeCount
       dislikeCount
       commentCount            
-      uploadedAt
+      createdAt
       liked
       disliked
     }
@@ -325,7 +325,7 @@ const VIDEO_SEARCH_RESULTS_PAGE_WITH_COUNTS_QUERY = `
         dislikeCount
         commentCount
         thumbUrl
-        uploadedAt
+        createdAt
       }
       hasMore
       videoCount
@@ -349,7 +349,7 @@ const VIDEO_SEARCH_RESULTS_PAGE_QUERY = `
         dislikeCount
         commentCount
         thumbUrl
-        uploadedAt
+        createdAt
       }
       hasMore
     }
@@ -368,7 +368,7 @@ const IMAGE_SEARCH_RESULTS_PAGE_QUERY = `
         likeCount
         dislikeCount
         commentCount
-        uploadedAt
+        createdAt
       }
       hasMore
     }
@@ -387,7 +387,7 @@ const NOTE_SEARCH_RESULTS_PAGE_QUERY = `
         likeCount
         dislikeCount
         commentCount
-        uploadedAt
+        createdAt
       }
       hasMore
     }
@@ -406,7 +406,7 @@ const USER_VIDEO_PAGE_QUERY = `
         title
         viewCount
         thumbUrl
-        uploadedAt
+        createdAt
         liked
         disliked
       }
@@ -427,7 +427,7 @@ const USER_IMAGE_PAGE_QUERY = `
         title
         likeCount
         url
-        uploadedAt
+        createdAt
         liked
         disliked
       }
@@ -447,7 +447,7 @@ const USER_NOTE_PAGE_QUERY = `
         }
         commentCount
         caption
-        uploadedAt
+        createdAt
         liked
         disliked
       }
@@ -509,7 +509,7 @@ const GET_NEWSFEED_VIDEOS_QUERY = `
         username
         profilePic
       }
-      uploadedAt
+      createdAt
       likeCount
       dislikeCount
       commentCount
@@ -527,7 +527,7 @@ const GET_NEWSFEED_IMAGES_QUERY = `
         username
         profilePic
       }
-      uploadedAt
+      createdAt
       likeCount
       dislikeCount
       commentCount
@@ -543,7 +543,7 @@ const GET_NEWSFEED_NOTES_QUERY = `
         username
         profilePic
       }
-      uploadedAt
+      createdAt
       likeCount
       dislikeCount
       commentCount

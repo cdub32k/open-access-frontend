@@ -64,7 +64,7 @@ const ProfileHeader = ({
   username,
   displayName,
   bio,
-  joinedAt,
+  createdAt,
   loading,
 }) => {
   const classes = useStyles();
@@ -97,7 +97,7 @@ const ProfileHeader = ({
           <Typography variant="h4">{displayName}</Typography>
           <Typography variant="body1">@{username}</Typography>
           <Typography variant="body2">
-            Member since {dayjs(joinedAt).format("MMM YYYY")}
+            Member since {dayjs(createdAt).format("MMM YYYY")}
           </Typography>
           <Typography
             variant="body1"
@@ -133,7 +133,7 @@ const mapStateToProps = (state) => ({
   username: state.user.viewed.username,
   displayName: state.user.viewed.displayName,
   bio: state.user.viewed.bio,
-  joinedAt: state.user.viewed.joinedAt,
+  createdAt: state.user.viewed.createdAt,
 });
 
 export default connect(mapStateToProps)(memo(ProfileHeader));

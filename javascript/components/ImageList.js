@@ -73,7 +73,7 @@ const ImageList = ({ loading, images, hasMore, loadMore, doneLoading }) => {
               title={image.title}
               thumbUrl={image.url}
               likeCount={image.likeCount}
-              uploadedAt={image.uploadedAt}
+              createdAt={image.createdAt}
               key={image._id}
             />
           );
@@ -92,7 +92,7 @@ const ImageList = ({ loading, images, hasMore, loadMore, doneLoading }) => {
             title={image.title}
             thumbUrl={image.url}
             likeCount={image.likeCount}
-            uploadedAt={image.uploadedAt}
+            createdAt={image.createdAt}
             key={i}
           />
         );

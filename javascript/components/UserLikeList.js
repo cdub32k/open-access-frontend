@@ -90,7 +90,7 @@ const UserLikeList = ({
             link = (
               <div>
                 <Typography variant="body1">
-                  <b>@{like.username}</b> {negative ? "disliked " : "liked "}
+                  <b>@{username}</b> {negative ? "disliked " : "liked "}
                   <Link to={`/video-player/${like.video._id}`}>
                     <b>a video:</b>
                   </Link>

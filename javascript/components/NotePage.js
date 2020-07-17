@@ -49,7 +49,7 @@ const NotePage = ({
   likeCount,
   dislikeCount,
   commentCount,
-  uploadedAt,
+  createdAt,
   liked,
   disliked,
   comments,
@@ -80,7 +80,7 @@ const NotePage = ({
               _id={noteId}
               user={user}
               caption={caption}
-              uploadedAt={uploadedAt}
+              createdAt={createdAt}
               likeCount={likeCount}
               dislikeCount={dislikeCount}
               commentCount={commentCount}
@@ -126,7 +126,7 @@ const mapStateToProps = (state) => ({
   likeCount: state.note.likeCount,
   dislikeCount: state.note.dislikeCount,
   commentCount: state.note.commentCount,
-  uploadedAt: state.note.uploadedAt,
+  createdAt: state.note.createdAt,
   liked: state.note.liked,
   disliked: state.note.disliked,
   comments: state.note.comments,

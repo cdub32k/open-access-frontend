@@ -243,11 +243,11 @@ const SiteNav = ({
         />
         {!loggedIn && (
           <span className="auth-actions">
-            <Button color="primary" component={Link} to="/sign-in">
-              Sign in
-            </Button>
             <Button color="primary" component={Link} to="/sign-up">
               Register
+            </Button>
+            <Button color="primary" component={Link} to="/sign-in">
+              Sign in
             </Button>
           </span>
         )}

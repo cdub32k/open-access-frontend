@@ -42,7 +42,7 @@ const subscribeToNewsfeedVideoUpdates = () => {
               username
               profilePic
             }
-            uploadedAt
+            createdAt
             thumbUrl
             likeCount
             dislikeCount
@@ -95,7 +95,7 @@ const subscribeToNewsfeedImageUpdates = () => {
               username
               profilePic
             }
-            uploadedAt
+            createdAt
             thumbUrl
             likeCount
             dislikeCount
@@ -146,7 +146,7 @@ const subscribeToNewsfeedNoteUpdates = () => {
               username
               profilePic
             }
-            uploadedAt
+            createdAt
             likeCount
             dislikeCount
             commentCount

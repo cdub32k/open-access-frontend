@@ -84,7 +84,7 @@ class Image_C extends PureComponent {
       likeCount,
       dislikeCount,
       commentCount,
-      uploadedAt,
+      createdAt,
       likeImage,
       dislikeImage,
       liked,
@@ -103,9 +103,9 @@ class Image_C extends PureComponent {
             <span style={{ fontSize: 12 }}>
               <span style={{ fontSize: 18 }}>{title}</span>
               <br />
-              <Typography variant="body2">by {user.username}</Typography>
+              <Typography variant="body2">by @{user.username}</Typography>
               <Typography variant="body2">
-                <i>{date2rel(uploadedAt)}</i>
+                <i>{date2rel(createdAt)}</i>
               </Typography>
             </span>
           }

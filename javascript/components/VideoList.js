@@ -71,7 +71,7 @@ const VideoList = ({ loading, videos, loadMore, hasMore, doneLoading }) => {
               thumbUrl={video.thumbUrl}
               title={video.title}
               viewCount={video.viewCount}
-              uploadedAt={video.uploadedAt}
+              createdAt={video.createdAt}
               key={video._id}
             />
           );
@@ -90,7 +90,7 @@ const VideoList = ({ loading, videos, loadMore, hasMore, doneLoading }) => {
             thumbUrl={video.thumbUrl}
             title={video.title}
             viewCount={video.viewCount}
-            uploadedAt={video.uploadedAt}
+            createdAt={video.createdAt}
             key={i}
           />
         );

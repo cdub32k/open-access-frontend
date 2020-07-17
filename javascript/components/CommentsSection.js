@@ -113,7 +113,6 @@ const CommentsSection = ({
         </Typography>
         <Select
           style={{
-            display: "inline-block",
             verticalAlign: "middle",
             marginLeft: 12,
             height: 36,

@@ -80,7 +80,7 @@ const VideoPlayer = ({
   dislikeCount,
   commentCount,
   caption,
-  uploadedAt,
+  createdAt,
   recordView,
   likeVideo,
   dislikeVideo,
@@ -130,9 +130,9 @@ const VideoPlayer = ({
               }}
             ></span>
             <br />
-            <Typography variant="body2">by {user.username}</Typography>
+            <Typography variant="body2">by @{user.username}</Typography>
             <Typography variant="body2">
-              <i>{date2rel(uploadedAt)}</i>
+              <i>{date2rel(createdAt)}</i>
             </Typography>
           </span>
         }

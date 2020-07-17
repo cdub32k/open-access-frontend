@@ -52,7 +52,7 @@ const VideoPage = ({
   commentCount,
   url,
   thumbUrl,
-  uploadedAt,
+  createdAt,
   liked,
   disliked,
   comments,
@@ -97,7 +97,7 @@ const VideoPage = ({
               likeCount={likeCount}
               dislikeCount={dislikeCount}
               commentCount={commentCount}
-              uploadedAt={uploadedAt}
+              createdAt={createdAt}
               liked={liked}
               disliked={disliked}
             />
@@ -147,7 +147,7 @@ const mapStateToProps = (state) => ({
   disliked: state.video.disliked,
   url: state.video.url,
   thumbUrl: state.video.thumbUrl,
-  uploadedAt: state.video.uploadedAt,
+  createdAt: state.video.createdAt,
   comments: state.video.comments,
   mineUsername: state.user.username,
   hasMoreComments: state.video.hasMoreComments,
