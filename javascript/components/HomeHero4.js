@@ -81,7 +81,6 @@ const HomeHero4 = ({ subscribe }) => {
         .then((res) => {
           if (res.data) {
             setLoading(false);
-            setEmail("");
             setSnack(true);
           } else {
             setLoading(false);
