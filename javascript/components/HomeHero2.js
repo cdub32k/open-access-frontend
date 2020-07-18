@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
   container: {
     marginBottom: 150,
     justifyContent: "center",
+    [theme.breakpoints.down("xs")]: {
+      marginBottom: 100,
+    },
   },
   header: {
     textAlign: "center",

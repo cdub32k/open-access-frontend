@@ -56,12 +56,12 @@ const AdvocateCard = ({ profilePic }) => {
 
         <Typography className={classes.location} variant="subtitle2">
           <LocationOnIcon size="small" />
-          Atlanta, GA
+          Houston, TX
         </Typography>
         <Typography className={classes.statement} variant="body1">
-          Loren is a content marketing specialist at WordStream and nutrition
-          graduate student at Framingham State. She loves all things digital,
-          learning about nutrition, running, traveling, and cooking.
+          Loren is a technical architect at Plural Soundz and a healthcare
+          graduate student at Deluth University. She loves all things digital,
+          learning about healthcare, hiking, and watching movies.
         </Typography>
       </div>
     </div>

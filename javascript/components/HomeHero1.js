@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -12,9 +13,15 @@ import heroImg from "../images/hero.jpg";
 const useStyles = makeStyles((theme) => ({
   container: {
     marginBottom: 150,
+    [theme.breakpoints.down("xs")]: {
+      marginBottom: 100,
+    },
   },
   tContainer: {
     padding: 50,
+    [theme.breakpoints.down("xs")]: {
+      paddingTop: 24,
+    },
   },
   title: {},
   blurb: {
@@ -25,10 +32,22 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     borderRadius: 10,
   },
+  mcountContainer: {
+    display: "flex",
+    flexDirection: "column",
+    marginTop: 24,
+  },
 }));
 
 const HomeHero = (props) => {
   const classes = useStyles();
+  const [mcount, setMCount] = useState(0);
+
+  useEffect(() => {
+    axios.get("/mcount").then((res) => {
+      setMCount(res.data.mcount);
+    });
+  }, []);
 
   return (
     <Grid container className={`${classes.container} home-hero-container`}>
@@ -42,6 +61,21 @@ const HomeHero = (props) => {
               The ultimate community for those who want to express themselves
               freely
             </Typography>
+            {mcount && (
+              <div className={classes.mcountContainer}>
+                <Typography color="primary" variant="h4">
+                  <b style={{ fontSize: 24 }}>{mcount}</b> active members
+                </Typography>
+                <Typography
+                  style={{ marginTop: 12 }}
+                  color="secondary"
+                  variant="h4"
+                >
+                  <b style={{ fontSize: 24 }}>{5000 - mcount}</b> available
+                  slots
+                </Typography>
+              </div>
+            )}
           </Grid>
           <Grid item xs={12} className={classes.btn}>
             <Link to="/sign-up">

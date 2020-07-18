@@ -23,6 +23,9 @@ import { validateEmail } from "../utils/helpers";
 const useStyles = makeStyles((theme) => ({
   container: {
     padding: "150px 0px 200px 50px",
+    [theme.breakpoints.down("xs")]: {
+      paddingBottom: 100,
+    },
   },
   caption: {
     color: theme.palette.primary.main,
