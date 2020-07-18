@@ -119,8 +119,8 @@ export function truncateTitlePreview(title, strip) {
 
 export function convertHashtagsToLinks(str) {
   return str
-    .replace(/</g, "&lt")
-    .replace(/>/g, "&gt")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
     .replace(
       /(#[a-z0-9_-]+)/g,
       (match) => `<a href='/search?h=${match.slice(1)}'>${match}</a>`
@@ -147,8 +147,8 @@ export function parseLinks(str) {
 
 export function stripLinks(str) {
   return str
-    .replace(/&lt/g, "<")
-    .replace(/&gt/g, ">")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
     .replace(/<a.*?[^=]>/g, "")
     .replace(/<\/a>/g, "");
 }
