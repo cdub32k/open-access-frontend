@@ -325,10 +325,7 @@ class VideoUploader extends Component {
               {!uploading && (
                 <CustomButton
                   onClick={() => history.push(`/profile/${username}`)}
-                  style={{
-                    backgroundColor: theme.palette.secondary.main,
-                    color: theme.palette.light.main,
-                  }}
+                  className={classes.returnBtn}
                   text="cancel"
                 />
               )}
@@ -348,7 +345,7 @@ class VideoUploader extends Component {
 
 const styles = (theme) => ({
   form: {
-    maxWidth: "100%",
+    maxWidth: 1200,
     display: "flex",
     justifyContent: "space-between",
     margin: "auto",

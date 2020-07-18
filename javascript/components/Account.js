@@ -396,7 +396,10 @@ class Account extends Component {
           container
         >
           <Grid className={classes.section} item xs={12}>
-            <hr style={{ marginBottom: 96 }} />
+            <hr style={{ marginBottom: 48 }} />
+            <Typography variant="h4" style={{ marginBottom: 48 }}>
+              Danger Zone
+            </Typography>
             <CustomButton
               className={classes.deleteBtn}
               onClick={() => this.setState({ confirmOpen: true })}

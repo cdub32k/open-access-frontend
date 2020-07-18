@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
   },
   input: {
-    marginBottom: 24,
+    marginBottom: 32,
   },
   counter: {
     display: "inline-block",
@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: 600,
   },
+  returnBtn: theme.globalClasses.returnBtn,
 }));
 
 const POST_NOTE_QUERY = `
@@ -106,16 +107,14 @@ const NoteUploader = ({ username, history }) => {
               )}
               <CustomButton
                 disabled={!caption || loading}
+                style={{ marginLeft: 0 }}
                 text="Post"
                 onClick={onSubmitHandler}
               />
               {!loading && (
                 <CustomButton
                   onClick={() => history.push(`/profile/${username}`)}
-                  style={{
-                    backgroundColor: theme.palette.secondary.main,
-                    color: theme.palette.light.main,
-                  }}
+                  className={classes.returnBtn}
                   text="cancel"
                 />
               )}

@@ -224,11 +224,12 @@ class ImageUploader extends Component {
                   value={caption}
                   maxLength={2000}
                   onChange={this.onTextChange}
+                  style={{ marginBottom: 32 }}
                 />
               </div>
               <CustomButton
                 disabled={!imageSrc || !title || !caption}
-                style={{ marginTop: 28, marginLeft: 0 }}
+                style={{ marginLeft: 0 }}
                 disabled={uploading || !croppedImage || !title || !caption}
                 text={uploading ? "Uploading..." : "Upload"}
                 type="submit"
@@ -236,11 +237,7 @@ class ImageUploader extends Component {
               {!uploading && (
                 <CustomButton
                   onClick={() => history.push(`/profile/${username}`)}
-                  style={{
-                    backgroundColor: theme.palette.secondary.main,
-                    color: theme.palette.light.main,
-                    marginTop: 28,
-                  }}
+                  className={classes.returnBtn}
                   text="cancel"
                 />
               )}
@@ -248,7 +245,6 @@ class ImageUploader extends Component {
                 <ProgressPercentage
                   progress={uploadPercentage}
                   completeMessage="We received your upload. Publishing to newsfeed..."
-                  style={{ marginTop: 28 }}
                 />
               )}
             </Grid>
@@ -262,7 +258,7 @@ class ImageUploader extends Component {
 const styles = (theme) => ({
   form: {
     display: "flex",
-    maxWidth: "100%",
+    maxWidth: 1200,
     justifyContent: "space-between",
     margin: "auto",
   },
