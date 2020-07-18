@@ -1,5 +1,5 @@
 import React, { useState, useEffect, memo } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 
 import SearchIcon from "@material-ui/icons/Search";
 import { makeStyles } from "@material-ui/core/styles";
@@ -35,10 +35,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SearchBar = (props) => {
+const SearchBar = ({ match }) => {
   useEffect(() => {
     setRedirect(false);
   });
+
+  useEffect(() => {
+    setQuery("");
+  }, [match]);
   const classes = useStyles();
   const [redirect, setRedirect] = useState(false);
 
@@ -85,4 +89,4 @@ const SearchBar = (props) => {
   );
 };
 
-export default memo(SearchBar);
+export default withRouter(memo(SearchBar));
