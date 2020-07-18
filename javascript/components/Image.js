@@ -101,7 +101,12 @@ class Image_C extends PureComponent {
           avatar={<Avatar src={user.profilePic} />}
           title={
             <span style={{ fontSize: 12 }}>
-              <span style={{ fontSize: 18 }}>{title}</span>
+              <span
+                style={{ fontSize: 18 }}
+                dangerouslySetInnerHTML={{
+                  __html: title,
+                }}
+              ></span>
               <br />
               <Typography variant="body2">by @{user.username}</Typography>
               <Typography variant="body2">

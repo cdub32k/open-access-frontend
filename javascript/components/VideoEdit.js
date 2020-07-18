@@ -33,7 +33,7 @@ class VideoEdit extends Component {
     title: "",
     caption: "",
 
-    goToProfile: false,
+    goToVideo: false,
   };
 
   constructor(props) {
@@ -158,7 +158,7 @@ class VideoEdit extends Component {
       .then((res) => {
         if (res.data)
           this.setState({
-            goToProfile: true,
+            goToVideo: true,
           });
       })
       .catch((err) => {
@@ -175,7 +175,7 @@ class VideoEdit extends Component {
     const { classes, theme } = this.props;
     const { loading, _id, crop, thumbSrc, title, caption } = this.state;
 
-    if (this.state.goToProfile) return <Redirect to={`/video-player/${_id}`} />;
+    if (this.state.goToVideo) return <Redirect to={`/video-player/${_id}`} />;
 
     return (
       <div style={{ width: "100%", padding: 12 }}>
@@ -260,10 +260,9 @@ class VideoEdit extends Component {
                   backgroundColor: theme.palette.secondary.main,
                   color: theme.palette.light.main,
                   marginTop: 24,
-                  width: 100,
                 }}
                 text="Cancel"
-                onClick={() => this.setState({ goToProfile: true })}
+                onClick={() => this.setState({ goToVideo: true })}
               />
             </Grid>
           </Grid>

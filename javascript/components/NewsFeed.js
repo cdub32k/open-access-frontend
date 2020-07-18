@@ -18,7 +18,7 @@ import throttle from "lodash.throttle";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    maxWidth: 820,
+    maxWidth: 888,
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",

@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
-    maxWidth: 820,
+    maxWidth: 888,
     padding: 12,
   },
 }));

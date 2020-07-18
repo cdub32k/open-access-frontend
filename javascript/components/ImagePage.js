@@ -36,7 +36,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   counter: {
-    marginBottom: 6,
+    marginBottom: 0,
+    textAlign: "right",
+    maxWidth: 600,
     display: "block",
   },
   ...theme.globalClasses,
@@ -128,11 +130,17 @@ const ImagePage = ({
                 _id={imageId}
                 type="image"
                 editTitle="Edit Image"
-                onEditOpen={() => setNewCaption(stripLinks(caption))}
+                onEditOpen={() => {
+                  setNewTitle(stripLinks(title));
+                  setNewCaption(stripLinks(caption));
+                }}
                 editCallback={update}
                 editForm={
                   <Fragment>
-                    <div className={classes.inputContainer}>
+                    <div
+                      className={classes.inputContainer}
+                      style={{ marginTop: 0 }}
+                    >
                       <Typography className={classes.counter} variant="caption">
                         {title.length} / 120 chars
                       </Typography>

@@ -7,7 +7,7 @@ import axios from "axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     display: "flex",
-    maxWidth: 820,
+    maxWidth: 888,
     justifyContent: "space-between",
     margin: "auto",
   },
@@ -32,9 +32,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: 600,
   },
-  btn: {
-    margin: `${theme.spacing(2)}px 0`,
-  },
 }));
 
 const POST_NOTE_QUERY = `
@@ -45,8 +42,10 @@ const POST_NOTE_QUERY = `
   }
 `;
 
-const NoteUploader = ({ username }) => {
+const NoteUploader = ({ username, history }) => {
   const classes = useStyles();
+  const theme = useTheme();
+
   const [loading, setLoading] = useState(false);
   const [caption, setCaption] = useState("");
   const [goToProfile, setGoToProfile] = useState(false);
@@ -107,10 +106,19 @@ const NoteUploader = ({ username }) => {
               )}
               <CustomButton
                 disabled={!caption || loading}
-                className={classes.btn}
                 text="Post"
                 onClick={onSubmitHandler}
               />
+              {!loading && (
+                <CustomButton
+                  onClick={() => history.push(`/profile/${username}`)}
+                  style={{
+                    backgroundColor: theme.palette.secondary.main,
+                    color: theme.palette.light.main,
+                  }}
+                  text="cancel"
+                />
+              )}
             </form>
           </Grid>
         </Grid>

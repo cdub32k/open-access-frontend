@@ -114,7 +114,7 @@ const CommentsSection = ({
         <Select
           style={{
             verticalAlign: "middle",
-            marginLeft: 12,
+            marginLeft: 18,
             height: 36,
           }}
           classes={{ root: classes.sortRoot, select: classes.sortSelect }}

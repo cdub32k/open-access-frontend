@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     padding: 12,
-    maxWidth: 820,
+    maxWidth: 888,
   },
   dialog: {
     padding: 14,

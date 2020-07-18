@@ -22,18 +22,26 @@ const useStyles = makeStyles((theme) => ({
   },
   menu: {},
   dialog: {
-    padding: 14,
     display: "flex",
     flexDirection: "column",
     width: "100%",
-    maxWidth: 650,
+    maxWidth: 716,
     margin: "auto",
   },
   dialogActions: {
     display: "flex",
     justifyContent: "space-evenly",
     padding: 10,
-    marginBottom: 12,
+  },
+  editFormContent: {
+    [theme.breakpoints.down("sm")]: {
+      padding: 8,
+    },
+  },
+  editFormTitle: {
+    [theme.breakpoints.down("sm")]: {
+      padding: 8,
+    },
   },
   returnBtn: theme.globalClasses.returnBtn,
   deleteBtn: theme.globalClasses.deleteBtn,
@@ -182,8 +190,18 @@ const OwnerActions = ({
         fullWidth={true}
         maxWidth={"md"}
       >
-        <DialogTitle>{editTitle}</DialogTitle>
-        <DialogContent style={{ minWidth: 320 }}>{editForm}</DialogContent>
+        <DialogTitle
+          className={classes.editFormTitle}
+          style={{ paddingBottom: 0 }}
+        >
+          {editTitle}
+        </DialogTitle>
+        <DialogContent
+          style={{ paddingTop: 0 }}
+          className={classes.editFormContent}
+        >
+          {editForm}
+        </DialogContent>
         {loading && (
           <CircularProgress style={{ margin: "12px auto", display: "block" }} />
         )}

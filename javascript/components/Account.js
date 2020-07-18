@@ -216,13 +216,13 @@ class Account extends Component {
         <Typography
           variant="h4"
           color="primary"
-          style={{ width: "100%", maxWidth: 820, padding: "0 12px" }}
+          style={{ width: "100%", maxWidth: 888, padding: "0 12px" }}
         >
           <Link to={`/profile/${username}`}>@{username}</Link>
           <span style={{ color: theme.palette.dark.main }}>'s Account</span>
         </Typography>
         <br />
-        <div style={{ width: "100%", maxWidth: 820, padding: "0 12px" }}>
+        <div style={{ width: "100%", maxWidth: 888, padding: "0 12px" }}>
           <form
             onSubmit={this.uploadProfilePic}
             style={{
@@ -473,13 +473,13 @@ const mapDispatchToProps = (dispatch) => ({
 const styles = (theme) => ({
   container: {
     width: "100%",
-    maxWidth: 820,
+    maxWidth: 888,
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
   },
   sectionsContainer: {
-    maxWidth: 820,
+    maxWidth: 888,
   },
   section: {
     padding: "0 12px",

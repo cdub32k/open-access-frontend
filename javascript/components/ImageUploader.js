@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import FormGroup from "@material-ui/core/FormGroup";
 import Grid from "@material-ui/core/Grid";
 import ProgressPercentage from "./ProgressPercentage";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, withTheme } from "@material-ui/core/styles";
 
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
@@ -153,7 +153,7 @@ class ImageUploader extends Component {
     if (this.state.goToProfile)
       return <Redirect to={`/image/${this.state._id}`} />;
 
-    const { classes } = this.props;
+    const { classes, theme, history, username } = this.props;
     const {
       uploading,
       uploadPercentage,
@@ -233,6 +233,17 @@ class ImageUploader extends Component {
                 text={uploading ? "Uploading..." : "Upload"}
                 type="submit"
               />
+              {!uploading && (
+                <CustomButton
+                  onClick={() => history.push(`/profile/${username}`)}
+                  style={{
+                    backgroundColor: theme.palette.secondary.main,
+                    color: theme.palette.light.main,
+                    marginTop: 28,
+                  }}
+                  text="cancel"
+                />
+              )}
               {uploading && (
                 <ProgressPercentage
                   progress={uploadPercentage}
@@ -268,4 +279,6 @@ const mapStateToProps = (state) => ({
   username: state.user.username,
 });
 
-export default withStyles(styles)(connect(mapStateToProps)(ImageUploader));
+export default withTheme(
+  withStyles(styles)(connect(mapStateToProps)(ImageUploader))
+);

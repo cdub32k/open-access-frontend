@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
-    maxWidth: 820,
+    maxWidth: 888,
     minHeight: 1200,
     padding: 12,
     paddingTop: 0,
@@ -50,7 +50,7 @@ const UserList = ({ getAllUsernames, users, loading }) => {
   return (
     <div className={classes.container}>
       <Typography className={classes.header} variant="h4">
-        Users
+        Members
       </Typography>
       {loading &&
         Array.from({ length: 12 }).map((preview, i) => {
