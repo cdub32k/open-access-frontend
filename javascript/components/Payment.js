@@ -157,17 +157,17 @@ const Payment = ({
         <Typography className={classes.header} variant="h3">
           Payment Status
         </Typography>
-        {!active && (
+        {!loading && !active && (
           <Typography variant="h5">
             Your account became inactive on <b>{date2str(activeUntil)}</b>
           </Typography>
         )}
-        {active && activeUntil && (
+        {!loading && active && activeUntil && (
           <Typography variant="h5">
             Account will be active until <b>{date2str(activeUntil)}</b>
           </Typography>
         )}
-        {active && !activeUntil && (
+        {!loading && active && !activeUntil && (
           <div>
             <Typography variant="h5">Thank you loyal subscriber!</Typography>
             <Typography variant="body1">
@@ -204,7 +204,7 @@ const Payment = ({
           Subscriptions
         </Typography>
         <ul className={classes.chargesList}>
-          {subscriptions.length == 0 && (
+          {!loading && subscriptions.length == 0 && (
             <li>
               <div className={classes.charge}>no subscriptions</div>
             </li>
@@ -237,7 +237,7 @@ const Payment = ({
           1 Time Charges
         </Typography>
         <ul className={classes.chargesList}>
-          {charges.length == 0 && (
+          {!loading && charges.length == 0 && (
             <li>
               <div className={classes.charge}>no charges</div>
             </li>
