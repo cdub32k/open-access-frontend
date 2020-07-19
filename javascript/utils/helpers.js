@@ -28,11 +28,13 @@ export function thousandsSeparators(num) {
 }
 
 export function date2rel(dateStr) {
+  if (!dateStr) return "N/A";
   dayjs.extend(relativeTime);
   return dayjs(dateStr).from(dayjs());
 }
 
 export function date2str(dateStr) {
+  if (!dateStr) return "N/A";
   return dayjs(dateStr).format("MM/DD/YYYY");
 }
 
