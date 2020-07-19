@@ -61,7 +61,7 @@ const HomeHero = (props) => {
               The ultimate community for those who want to express themselves
               freely
             </Typography>
-            {mcount && (
+            {mcount != 0 && (
               <div className={classes.mcountContainer}>
                 <Typography color="primary" variant="h4">
                   <b style={{ fontSize: 24 }}>{mcount}</b> active members

@@ -93,13 +93,13 @@ const Logout = (props) => (
 );
 
 //import SignUp from "./SignUp";
-const SignUp = (props) => (
-  <DynamicImport load={() => import("./SignUp")}>
-    {(Component) =>
-      Component == null ? <CompLoader /> : <Component {...props} />
-    }
-  </DynamicImport>
-);
+// const SignUp = (props) => (
+//   <DynamicImport load={() => import("./SignUp")}>
+//     {(Component) =>
+//       Component == null ? <CompLoader /> : <Component {...props} />
+//     }
+//   </DynamicImport>
+// );
 
 import SiteNav from "./SiteNav";
 
@@ -291,13 +291,13 @@ class App extends Component {
                   )}
                 />
                 <Route exact path="/logout" component={Logout} />
-                <Route
+                {/* <Route
                   exact
                   path="/sign-up"
                   render={(props) => (
                     <AuthRedirect {...props} component={SignUp} />
                   )}
-                />
+                /> */}
                 <Route
                   exact
                   path="/my-account"
