@@ -384,7 +384,7 @@ class Account extends Component {
           </Grid>
           {!editInfo && (
             <Grid className={classes.section} item xs={12} md={6}>
-              <Link to={"/payment"}>
+              <Link to={"/pinfo"}>
                 <b style={{ fontSize: 18 }}>Payment Info</b>
               </Link>
             </Grid>

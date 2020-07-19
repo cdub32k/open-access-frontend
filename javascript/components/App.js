@@ -307,7 +307,7 @@ class App extends Component {
                 />
                 <Route
                   exact
-                  path="/payment"
+                  path="/pinfo"
                   render={(props) => (
                     <UnAuthRedirect {...props} component={Payment} />
                   )}
