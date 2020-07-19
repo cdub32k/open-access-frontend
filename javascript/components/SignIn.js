@@ -53,10 +53,10 @@ const Login = ({ error, loginStart }) => {
   const updateCredentials = (e) => {
     switch (e.target.name) {
       case "username":
-        setUsername(e.target.value.toLowerCase());
+        setUsername(e.target.value.toLowerCase().trim());
         break;
       case "password":
-        setPassword(e.target.value);
+        setPassword(e.target.value.trim());
         break;
       default:
         break;
