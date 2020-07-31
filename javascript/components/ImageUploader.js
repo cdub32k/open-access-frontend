@@ -169,7 +169,7 @@ class ImageUploader extends Component {
           <Grid container>
             <Grid item xs={12}>
               <Typography color="primary" variant="h3">
-                Upload Image
+                New Image
               </Typography>
               <FormGroup style={{ marginTop: 32 }}>
                 <input
@@ -231,7 +231,7 @@ class ImageUploader extends Component {
                 disabled={!imageSrc || !title || !caption}
                 style={{ marginLeft: 0 }}
                 disabled={uploading || !croppedImage || !title || !caption}
-                text={uploading ? "Uploading..." : "Upload"}
+                text={uploading ? "Uploading..." : "Post"}
                 type="submit"
               />
               {!uploading && (

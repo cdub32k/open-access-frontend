@@ -87,7 +87,7 @@ const NoteUploader = ({ username, history }) => {
               variant="h3"
               style={{ marginBottom: 32 }}
             >
-              Post Note
+              New Note
             </Typography>
             <Typography className={classes.counter} variant="caption">
               {caption.length} / 800 chars

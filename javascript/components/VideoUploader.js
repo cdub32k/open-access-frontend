@@ -230,7 +230,7 @@ class VideoUploader extends Component {
           <Grid container>
             <Grid item xs={12}>
               <Typography color="primary" variant="h3">
-                Upload Video
+                New Video
               </Typography>
               <FormGroup style={{ marginTop: 32 }}>
                 <input
@@ -319,7 +319,7 @@ class VideoUploader extends Component {
                 disabled={
                   uploading || !videoFile || !croppedThumb || !title || !caption
                 }
-                text={uploading ? "Uploading..." : "Upload"}
+                text={uploading ? "Uploading..." : "Post"}
                 type="submit"
               />
               {!uploading && (
