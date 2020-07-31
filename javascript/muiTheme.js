@@ -68,7 +68,13 @@ const theme = createMuiTheme({
       whiteSpace: "pre-wrap",
       textDecoration: "underline",
     },
-    h5: { color: dark, fontSize: 18, fontWeight: 700, whiteSpace: "pre-wrap" },
+    h5: {
+      ...defaultTheme.typography.h4,
+      color: dark,
+      fontSize: 18,
+      fontWeight: 700,
+      whiteSpace: "pre-wrap",
+    },
     h6: { color: dark, whiteSpace: "pre-wrap" },
     subtitle1: {
       color: dark,

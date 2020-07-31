@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tContainer: {
     padding: 50,
+    paddingTop: 64,
   },
   title: {},
   blurb: {
