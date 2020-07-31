@@ -109,16 +109,16 @@ const SignUp = ({ error, signupStart, ...rest }) => {
   const updateCredentials = (e) => {
     switch (e.target.name) {
       case "email":
-        setEmail(e.target.value.toLowerCase());
-        checkEmail(e.target.value.toLowerCase());
+        setEmail(e.target.value.toLowerCase().trim());
+        checkEmail(e.target.value.toLowerCase().trim());
         break;
       case "username":
-        setUsername(e.target.value.toLowerCase());
-        checkUsername(e.target.value.toLowerCase());
+        setUsername(e.target.value.toLowerCase().trim());
+        checkUsername(e.target.value.toLowerCase().trim());
         break;
       case "password":
-        setPassword(e.target.value);
-        checkPassword(e.target.value);
+        setPassword(e.target.value.trim());
+        checkPassword(e.target.value.trim());
         break;
       default:
         break;

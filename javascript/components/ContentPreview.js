@@ -119,30 +119,29 @@ const ContentPreview = ({
           </CardContent>
         )}
       </Link>
-      {contentType != "image" && (
-        <CardHeader
-          className={classes.previewDetailsContainer}
-          avatar={<Avatar src={user.profilePic} />}
-          title={
-            title && (
-              <div
-                className={classes.title}
-                dangerouslySetInnerHTML={{
-                  __html: truncateTitlePreview(title),
-                }}
-              ></div>
-            )
-          }
-          subheader={
-            <div className={classes.previewDetails}>
-              <div>{metric}</div>
-              <div>
-                <i>{date2rel(createdAt)}</i>
-              </div>
+
+      <CardHeader
+        className={classes.previewDetailsContainer}
+        avatar={<Avatar src={user.profilePic} />}
+        title={
+          title && (
+            <div
+              className={classes.title}
+              dangerouslySetInnerHTML={{
+                __html: truncateTitlePreview(title),
+              }}
+            ></div>
+          )
+        }
+        subheader={
+          <div className={classes.previewDetails}>
+            <div>{metric}</div>
+            <div>
+              <i>{date2rel(createdAt)}</i>
             </div>
-          }
-        />
-      )}
+          </div>
+        }
+      />
     </Card>
   );
 };

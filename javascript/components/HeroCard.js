@@ -40,7 +40,7 @@ const HeroCard = ({ Icon, title, body }) => {
   return (
     <Grid item xs={12} md={6} lg={4} className={classes.container}>
       <Icon fontSize="large" className={`${classes.icon} icon`} />
-      <Typography variant="h4" className={classes.title}>
+      <Typography variant="h5" className={classes.title}>
         {title}
       </Typography>
       <Typography

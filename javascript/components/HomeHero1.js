@@ -19,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
   },
   tContainer: {
     padding: 50,
-    [theme.breakpoints.down("xs")]: {
-      paddingTop: 24,
-    },
   },
   title: {},
   blurb: {
@@ -63,13 +60,13 @@ const HomeHero = (props) => {
             </Typography>
             {mcount != 0 && (
               <div className={classes.mcountContainer}>
-                <Typography color="primary" variant="h4">
+                <Typography color="primary" variant="h5">
                   <b style={{ fontSize: 24 }}>{mcount}</b> active members
                 </Typography>
                 <Typography
                   style={{ marginTop: 12 }}
                   color="secondary"
-                  variant="h4"
+                  variant="h5"
                 >
                   <b style={{ fontSize: 24 }}>{5000 - mcount}</b> available
                   slots

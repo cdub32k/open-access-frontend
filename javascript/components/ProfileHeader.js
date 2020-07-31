@@ -94,7 +94,7 @@ const ProfileHeader = ({
       </Grid>
       <Grid item xs={12} md={6}>
         <div className={`${classes.textContainer} profile-header-text`}>
-          <Typography variant="h4">{displayName}</Typography>
+          <Typography variant="h5">{displayName}</Typography>
           <Typography variant="body1">@{username}</Typography>
           <Typography variant="body2">
             Member since {dayjs(createdAt).format("MMM YYYY")}

@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
   section: {
     overflow: "auto",
     maxHeight: 920,
-    paddingTop: 24,
+    paddingTop: 12,
+    marginTop: 12,
   },
   sortRoot: {
     padding: "6px 32px 6px 6px",
@@ -108,7 +109,7 @@ const CommentsSection = ({
   return (
     <div className={`${classes.container} comments-container`}>
       <div style={{ marginBottom: 48 }}>
-        <Typography variant="h4" style={{ display: "inline" }}>
+        <Typography variant="h5" style={{ display: "inline" }}>
           Comments ({totalCount})
         </Typography>
         <Select

@@ -37,7 +37,7 @@ a:visited {
   min-width: 320px;
   margin: auto;
   padding: 12px;
-  padding-top: 116px;
+  padding-top: 92px;
   padding-bottom: 120px;
   display: flex;
   justify-content: center;
@@ -214,6 +214,9 @@ a:visited {
 }
 
 @media (max-width: 780px) {
+  .site-content {
+    padding-top: 76px !important;
+  }
   .site-content,
   .home-hero-container {
     padding-left: 0 !important;
@@ -250,7 +253,7 @@ a:visited {
     padding-bottom: 56.25% !important;
   }
   .note-thumb {
-    padding: 0 !important;
+    padding: 4px !important;
   }
   .image-thumb {
     padding-bottom: 100% !important;
