@@ -88,10 +88,14 @@ const ContentPreview = ({
   const [elevation, setElevation] = useState(4);
   const onMouseOver = () => setElevation(12);
   const onMouseOut = () => setElevation(4);
+  const cardClass =
+    contentType == "image"
+      ? "image-preview content-preview"
+      : "content-preview";
 
   return (
     <Card
-      className={`${classes.container} content-preview`}
+      className={`${classes.container} ${cardClass}`}
       style={{ height: contentType == "image" ? 300 : 240 }}
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
@@ -119,29 +123,30 @@ const ContentPreview = ({
           </CardContent>
         )}
       </Link>
-
-      <CardHeader
-        className={classes.previewDetailsContainer}
-        avatar={<Avatar src={user.profilePic} />}
-        title={
-          title && (
-            <div
-              className={classes.title}
-              dangerouslySetInnerHTML={{
-                __html: truncateTitlePreview(title),
-              }}
-            ></div>
-          )
-        }
-        subheader={
-          <div className={classes.previewDetails}>
-            <div>{metric}</div>
-            <div>
-              <i>{date2rel(createdAt)}</i>
+      {contentType != "image" && (
+        <CardHeader
+          className={classes.previewDetailsContainer}
+          avatar={<Avatar src={user.profilePic} />}
+          title={
+            title && (
+              <div
+                className={classes.title}
+                dangerouslySetInnerHTML={{
+                  __html: truncateTitlePreview(title),
+                }}
+              ></div>
+            )
+          }
+          subheader={
+            <div className={classes.previewDetails}>
+              <div>{metric}</div>
+              <div>
+                <i>{date2rel(createdAt)}</i>
+              </div>
             </div>
-          </div>
-        }
-      />
+          }
+        />
+      )}
     </Card>
   );
 };

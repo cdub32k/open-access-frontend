@@ -53,13 +53,17 @@ const useStyles = makeStyles((theme) => ({
 
 const PreviewPlaceholder = ({ type }) => {
   const classes = useStyles();
+  const cardClass =
+    type == "image" ? "image-preview content-preview" : "content-preview";
+  const contentClass =
+    type == "image" ? "image-placeholder-thumb" : "preview-placeholder-thumb";
   return (
     <Card
-      className={`${classes.container} content-preview`}
+      className={`${classes.container} ${cardClass}`}
       style={{ height: type == "image" ? 300 : 240 }}
     >
       <CardContent
-        className={`${classes.thumb} preview-placeholder-thumb`}
+        className={`${classes.thumb} ${contentClass}`}
         style={{ height: type == "image" ? 300 : 169 }}
       />
       {type != "image" && (
