@@ -56,7 +56,7 @@ import ScrollTopButton from "./ScrollTopButton";
 const CompLoader = () => (
   <CircularProgress disableShrink style={{ position: "fixed", top: "40%" }} />
 );
-//import Account from "./Account";
+
 const Account = (props) => (
   <DynamicImport load={() => import("./Account")}>
     {(Component) =>
@@ -65,7 +65,6 @@ const Account = (props) => (
   </DynamicImport>
 );
 
-//import Payment from "./Payment";
 const Payment = (props) => (
   <DynamicImport load={() => import("./Payment")}>
     {(Component) =>
@@ -74,7 +73,6 @@ const Payment = (props) => (
   </DynamicImport>
 );
 
-//import SignIn from "./SignIn";
 const SignIn = (props) => (
   <DynamicImport load={() => import("./SignIn")}>
     {(Component) =>
@@ -83,7 +81,6 @@ const SignIn = (props) => (
   </DynamicImport>
 );
 
-//import Logout from "./Logout";
 const Logout = (props) => (
   <DynamicImport load={() => import("./Logout")}>
     {(Component) =>
@@ -103,7 +100,6 @@ const Logout = (props) => (
 
 import SiteNav from "./SiteNav";
 
-//import Profile from "./Profile";
 const Profile = (props) => (
   <DynamicImport load={() => import("./Profile")}>
     {(Component) =>
@@ -112,7 +108,6 @@ const Profile = (props) => (
   </DynamicImport>
 );
 
-//import NotePage from "./NotePage";
 const NotePage = (props) => (
   <DynamicImport load={() => import("./NotePage")}>
     {(Component) =>
@@ -121,7 +116,6 @@ const NotePage = (props) => (
   </DynamicImport>
 );
 
-//import NoteUploader from "./NoteUploader";
 const NoteUploader = (props) => (
   <DynamicImport load={() => import("./NoteUploader")}>
     {(Component) =>
@@ -130,7 +124,6 @@ const NoteUploader = (props) => (
   </DynamicImport>
 );
 
-//import VideoPage from "./VideoPage";
 const VideoPage = (props) => (
   <DynamicImport load={() => import("./VideoPage")}>
     {(Component) =>
@@ -139,7 +132,6 @@ const VideoPage = (props) => (
   </DynamicImport>
 );
 
-//import VideoUploader from "./VideoUploader";
 const VideoUploader = (props) => (
   <DynamicImport load={() => import("./VideoUploader")}>
     {(Component) =>
@@ -148,7 +140,6 @@ const VideoUploader = (props) => (
   </DynamicImport>
 );
 
-//import VideoUploader from "./VideoUploader";
 const VideoEdit = (props) => (
   <DynamicImport load={() => import("./VideoEdit")}>
     {(Component) =>
@@ -157,7 +148,6 @@ const VideoEdit = (props) => (
   </DynamicImport>
 );
 
-//import ImagePage from "./ImagePage";
 const ImagePage = (props) => (
   <DynamicImport load={() => import("./ImagePage")}>
     {(Component) =>
@@ -166,7 +156,6 @@ const ImagePage = (props) => (
   </DynamicImport>
 );
 
-//import ImageUploader from "./ImageUploader";
 const ImageUploader = (props) => (
   <DynamicImport load={() => import("./ImageUploader")}>
     {(Component) =>
@@ -175,7 +164,6 @@ const ImageUploader = (props) => (
   </DynamicImport>
 );
 
-//import NewsFeed from "./NewsFeed";
 const NewsFeed = (props) => (
   <DynamicImport load={() => import("./NewsFeed")}>
     {(Component) =>
@@ -184,7 +172,6 @@ const NewsFeed = (props) => (
   </DynamicImport>
 );
 
-//import NewsFeed from "./SearchResultsPage";
 const SearchResultsPage = (props) => (
   <DynamicImport load={() => import("./SearchResultsPage")}>
     {(Component) =>
@@ -193,7 +180,6 @@ const SearchResultsPage = (props) => (
   </DynamicImport>
 );
 
-//import NewsFeed from "./SearchResultsPage";
 const UsersList = (props) => (
   <DynamicImport load={() => import("./UsersList")}>
     {(Component) =>
@@ -202,7 +188,6 @@ const UsersList = (props) => (
   </DynamicImport>
 );
 
-//import Home from "./Home";
 const Home = (props) => (
   <DynamicImport load={() => import("./Home")}>
     {(Component) =>
@@ -211,7 +196,6 @@ const Home = (props) => (
   </DynamicImport>
 );
 
-//import PasswordReset from "./PasswordReset";
 const PasswordReset = (props) => (
   <DynamicImport load={() => import("./PasswordReset")}>
     {(Component) =>
@@ -219,7 +203,7 @@ const PasswordReset = (props) => (
     }
   </DynamicImport>
 );
-//import Terms from "./Terms";
+
 const Terms = (props) => (
   <DynamicImport load={() => import("./Terms")}>
     {(Component) =>
@@ -227,7 +211,7 @@ const Terms = (props) => (
     }
   </DynamicImport>
 );
-//import PrivacyPolicy from "./PrivacyPolicy";
+
 const PrivacyPolicy = (props) => (
   <DynamicImport load={() => import("./PrivacyPolicy")}>
     {(Component) =>
@@ -236,7 +220,7 @@ const PrivacyPolicy = (props) => (
   </DynamicImport>
 );
 
-//import NotFound from "./NotFound";
+
 const NotFound = (props) => (
   <DynamicImport load={() => import("./404")}>
     {(Component) =>
