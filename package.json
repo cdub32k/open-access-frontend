@@ -4,8 +4,8 @@
   "description": "starter kit",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist/ && webpack --env.MODE=production --env.API_URL=https://open-access-network.herokuapp.com/ -p",
-    "build-dev": "rm -rf dist/ && webpack --env.MODE=development --env.API_URL=https://open-access-network-dev.herokuapp.com/ -p",
+    "build": "rimraf dist/ && webpack --env.MODE=production --env.API_URL=https://open-access-network.herokuapp.com/ -p",
+    "build-dev": "rimraf dist/ && webpack --env.MODE=development --env.API_URL=https://open-access-network-dev.herokuapp.com/ -p",
     "serve": "webpack-dev-server --env.MODE=local --env.API_URL=http://localhost:5000/"
   },
   "author": "Christopher Wood",
@@ -20,6 +20,7 @@
     "babel-loader": "^8.0.6",
     "browserslist": "^4.12.2",
     "compression-webpack-plugin": "^4.0.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^3.2.0",
     "cssnano": "^4.1.10",
     "file-loader": "^4.2.0",
@@ -27,6 +28,7 @@
     "mini-css-extract-plugin": "^0.8.0",
     "postcss-custom-properties": "9.0.2",
     "postcss-loader": "^3.0.0",
+    "rimraf": "^3.0.2",
     "sass": "^1.23.0",
     "sass-loader": "^8.0.0",
     "webpack": "^4.41.2",
